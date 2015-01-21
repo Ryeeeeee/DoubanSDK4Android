@@ -1,1 +1,1 @@
-include ':app', ':doubansdk4android'
+include ':doubansdk4android', ':sample'
