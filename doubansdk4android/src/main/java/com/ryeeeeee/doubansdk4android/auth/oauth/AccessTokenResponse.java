@@ -23,24 +23,57 @@
  */
 package com.ryeeeeee.doubansdk4android.auth.oauth;
 
-import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
-
-import com.ryeeeeee.doubansdk4android.auth.IAuthListener;
-
 /**
  * @author Ryeeeeee
  * @since 2015-01-23
  */
-public class OAuth {
+public class AccessTokenResponse {
 
-    private final static String sOAuthUrl = "https://www.douban.com/service/auth2/auth";
+    /** 访问令牌 */
+    private String mAccessToken;
+    /** 访问令牌有效期 */
+    private int mExpiresIn;
+    /** 刷新令牌 */
+    private String mRefreshToken;
+    /** 令牌对应的用户ID */
+    private String mUserID;
 
-    public static void auth(Context context, IAuthListener listener) {
-        // TODO check Douban init()
-        Activity a = new Activity();
-        context.startActivity(new Intent(context, AuthActivity.class));
+    public AccessTokenResponse(String accessToken, int expiresIn, String refreshToken, String userID){
+        this.mAccessToken = accessToken;
+        this.mExpiresIn = expiresIn;
+        this.mRefreshToken = refreshToken;
+        this.mUserID = userID;
     }
 
+    public String getAccessToken() {
+        return mAccessToken;
+    }
+
+    public int getExpiresIn() {
+        return mExpiresIn;
+    }
+
+    public String getRefreshToken() {
+        return mRefreshToken;
+    }
+
+    public String getUserID() {
+        return mUserID;
+    }
+
+    public void setAccessToken(String accessToken) {
+        mAccessToken = accessToken;
+    }
+
+    public void setExpiresIn(int expiresIn) {
+        mExpiresIn = expiresIn;
+    }
+
+    public void setRefreshToken(String refreshToken) {
+        mRefreshToken = refreshToken;
+    }
+
+    public void setUserID(String userID) {
+        mUserID = userID;
+    }
 }

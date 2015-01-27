@@ -25,26 +25,33 @@ package com.ryeeeeee.doubansdk4android;
 
 import android.content.Context;
 
+import com.ryeeeeee.doubansdk4android.auth.IAuthListener;
+import com.ryeeeeee.doubansdk4android.auth.oauth.OAuth;
+import com.ryeeeeee.doubansdk4android.util.LogUtil;
+
 /**
  * @author Ryeeeeee
  * @since 2015-01-23
  */
 public class Douban {
 
-    /** */
-    private static String sApiKey = "";
-    /** */
-    private static String sSecret = "";
-    /** */
-    private static String sRedirectURI = "";
-    /** */
-    private static String sScope = "";
-    /** */
-    private static Context sContext = null;
-    /** */
+    private final static String TAG = "Douban";
+
+    /** 应用的 API Key */
+    private static String sApiKey;
+    /** 应用的 Secret */
+    private static String sSecret;
+    /** 应用的回调接口 */
+    private static String sRedirectURI;
+    /** 应用的访问权限 */
+    private static String sScope;
+    /** 应用的上下文环境 */
+    private static Context sContext;
+    /** Douban SDK 是否初始化 */
     private static boolean sIsInited = false;
 
     /**
+     * Douban SDK 初始化接口，在调用其他接口之前，必须确保初始化成功
      *
      * @param context
      * @param apiKey
@@ -53,11 +60,11 @@ public class Douban {
      * @return
      */
     public static boolean init(Context context, String apiKey, String secret, String redirectURI) {
-        return init(context, apiKey, secret, "");
+        return init(context, apiKey, secret, redirectURI, "");
     }
 
     /**
-     *
+     *  Douban SDK 初始化接口，在调用其他接口之前，必须确保初始化成功
      * @param apiKey
      * @param secret
      * @param redirectURI
@@ -65,6 +72,11 @@ public class Douban {
      */
     public static boolean init(Context context, String apiKey, String secret, String redirectURI,
                                String scope) {
+        if (isIsInited()) {
+            LogUtil.w(TAG, "Douban has already inited");
+            return false;
+        }
+
         sContext = context;
         sApiKey = apiKey;
         sSecret = secret;
@@ -73,6 +85,10 @@ public class Douban {
 
         sIsInited = true;
         return true;
+    }
+
+    public static void auth(IAuthListener listener){
+        OAuth.auth(sContext, listener);
     }
 
     /**

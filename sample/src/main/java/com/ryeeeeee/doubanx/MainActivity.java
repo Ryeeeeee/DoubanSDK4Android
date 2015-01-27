@@ -32,7 +32,9 @@ import android.view.View;
 import android.widget.Button;
 
 import com.ryeeeeee.doubansdk4android.Douban;
-import com.ryeeeeee.doubansdk4android.auth.oauth.OAuth;
+import com.ryeeeeee.doubansdk4android.auth.IAuthListener;
+import com.ryeeeeee.doubansdk4android.auth.oauth.AccessTokenResponse;
+import com.ryeeeeee.doubansdk4android.exception.DoubanException;
 import com.ryeeeeee.doubansdk4android.util.LogUtil;
 
 
@@ -56,7 +58,27 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 LogUtil.i(TAG, "认证 ...");
-                OAuth.auth();
+                Douban.auth(new IAuthListener() {
+                    @Override
+                    public void onComplete(AccessTokenResponse bundle) {
+                        LogUtil.i(TAG, "onComplete");
+                    }
+
+                    @Override
+                    public void onError(DoubanException exception) {
+                        LogUtil.i(TAG, "onError");
+                    }
+
+                    @Override
+                    public void onCancel() {
+                        LogUtil.i(TAG, "onCancel");
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        LogUtil.i(TAG, "onFinish");
+                    }
+                });
             }
         });
 
