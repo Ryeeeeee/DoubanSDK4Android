@@ -34,9 +34,11 @@ import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 
+import com.google.gson.Gson;
 import com.ryeeeeee.doubansdk4android.Douban;
 import com.ryeeeeee.doubansdk4android.auth.IAuthListener;
 import com.ryeeeeee.doubansdk4android.constant.HttpParam;
+import com.ryeeeeee.doubansdk4android.util.JsonUtil;
 import com.ryeeeeee.doubansdk4android.util.LogUtil;
 
 /**
@@ -124,6 +126,29 @@ public class AuthWebView extends RelativeLayout {
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
             LogUtil.d(TAG, "OverrideUrl : " + url);
 
+            // 拦截跳转值回调接口的 URL
+            if (url.startsWith(Douban.getRedirectURI())) {
+
+                LogUtil.d(TAG, "call redirect_uri");
+
+                String httpParams = url.split("\\?")[1];
+                String[] bundles = httpParams.split("=");
+                if (bundles[0].equals(HttpParam.CODE)) {
+                    // 成功认证，获取 authorization code
+                    String code = bundles[1];
+                    LogUtil.i(TAG, "authorization code:" + code);
+                    OAuth.exchangeAccessToken(code, mAuthListener);
+
+                } else if (bundles[0].equals(HttpParam.ERROR)) {
+                    // 认证出错，获取错误信息
+                    String error = bundles[1];
+                    LogUtil.i(TAG, "authorization error:" + error);
+                    mAuthListener.onCancel();
+                }
+
+                mWebView.stopLoading();
+            }
+
             // return false means the current WebView handles the url.
             // return true means the host application handles the url.
             return false;
@@ -133,39 +158,7 @@ public class AuthWebView extends RelativeLayout {
         public void onPageFinished(WebView view, String url) {
             LogUtil.d(TAG, "onPageFinished : " + url);
             // 拦截认证 URL 出错，返回的 JSON 数据
-            view.loadUrl("javascript:window.handler.getContent(document.body.innerHTML);");
-            super.onPageFinished(view, url);
-        }
-
-        @Override
-        public void onLoadResource(WebView view, String url) {
-            LogUtil.d(TAG, "onLoadResource : " + url);
-        }
-
-        @Override
-        public void onPageStarted(WebView view, String url, Bitmap favicon) {
-            LogUtil.d(TAG, "onPageStarted : " + url);
-
-            // 拦截跳转值回调接口的 URL
-            if (url.startsWith(Douban.getRedirectURI())) {
-
-                String httpParams = url.split("\\?")[1];
-                String[] bundles = httpParams.split("=");
-                if (bundles[0].equals(HttpParam.CODE)) {
-                    // 成功认证，获取 authorization code
-                    String code = bundles[1];
-                    LogUtil.i(TAG, "authorization code:" + code);
-                    // TODO 使用 authorization code 换取 access token
-
-                } else if (bundles[0].equals(HttpParam.ERROR)) {
-                    // 认证出错，获取错误信息
-                    String error = bundles[1];
-                    LogUtil.i(TAG, "authorization error:" + error);
-                    // TODO 回调错误
-                }
-
-                mWebView.stopLoading();
-            }
+            view.loadUrl("javascript:window.handler.getContent(document.getElementsByTagName('pre')[0].innerHTML);");
         }
 
         @Override
@@ -180,8 +173,12 @@ public class AuthWebView extends RelativeLayout {
     private final class JavascriptHandler {
         @JavascriptInterface
         public void getContent(String htmlContent){
-            // TODO
             LogUtil.i(TAG, "html content:" + htmlContent);
+
+            if (!htmlContent.equals("Undefined")) {
+                ErrorResponse errorResponse = JsonUtil.fromJson(htmlContent, ErrorResponse.class);
+                mAuthListener.onAuthFailure(errorResponse);
+            }
         }
 
     }

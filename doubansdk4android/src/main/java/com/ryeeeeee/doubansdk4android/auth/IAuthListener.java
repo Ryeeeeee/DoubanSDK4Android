@@ -24,6 +24,7 @@
 package com.ryeeeeee.doubansdk4android.auth;
 
 import com.ryeeeeee.doubansdk4android.auth.oauth.AccessTokenResponse;
+import com.ryeeeeee.doubansdk4android.auth.oauth.ErrorResponse;
 import com.ryeeeeee.doubansdk4android.exception.DoubanException;
 
 /**
@@ -36,7 +37,12 @@ public interface IAuthListener {
     /**
      * 认证成功回调
      */
-    public void onComplete(AccessTokenResponse bundle);
+    public void onAuthSuccess(AccessTokenResponse response);
+
+    /**
+     * 认证失败回调
+     */
+    public void onAuthFailure(ErrorResponse response);
 
     /**
      * 认证出错回调

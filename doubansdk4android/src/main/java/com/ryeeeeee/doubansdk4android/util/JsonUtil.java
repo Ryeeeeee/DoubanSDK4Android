@@ -21,38 +21,24 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.ryeeeeee.doubansdk4android.exception;
+package com.ryeeeeee.doubansdk4android.util;
+
+import com.google.gson.Gson;
 
 /**
  * @author Ryeeeeee
- * @since 2015-01-24
+ * @since 2015-01-29
  */
-public class NetException extends DoubanException {
+public class JsonUtil {
 
-    private int mErrorCode;
+    private static Gson gson = new Gson();
 
-    private String mDescription;
-
-    public NetException(int errorCode, String description) {
-        mErrorCode = errorCode;
-        mDescription = description;
+    public static String toJson(Object source) {
+        return gson.toJson(source);
     }
 
-    public NetException(String detailMessage, int errorCode, String description) {
-        super(detailMessage);
-        mErrorCode = errorCode;
-        mDescription = description;
+    public static <T> T fromJson(String json, Class<T> classOfT) {
+        return gson.fromJson(json, classOfT);
     }
 
-    public NetException(String detailMessage, Throwable throwable, int errorCode, String description) {
-        super(detailMessage, throwable);
-        mErrorCode = errorCode;
-        mDescription = description;
-    }
-
-    public NetException(Throwable throwable, int errorCode, String description) {
-        super(throwable);
-        mErrorCode = errorCode;
-        mDescription = description;
-    }
 }

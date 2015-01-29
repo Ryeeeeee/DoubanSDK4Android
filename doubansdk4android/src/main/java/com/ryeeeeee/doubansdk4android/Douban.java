@@ -88,7 +88,8 @@ public class Douban {
     }
 
     public static void auth(IAuthListener listener){
-        OAuth.auth(sContext, listener);
+        // TODO check Douban init()
+        OAuth.authorize(sContext, listener);
     }
 
     /**

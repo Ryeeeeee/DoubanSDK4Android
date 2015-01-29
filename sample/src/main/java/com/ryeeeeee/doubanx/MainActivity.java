@@ -34,6 +34,7 @@ import android.widget.Button;
 import com.ryeeeeee.doubansdk4android.Douban;
 import com.ryeeeeee.doubansdk4android.auth.IAuthListener;
 import com.ryeeeeee.doubansdk4android.auth.oauth.AccessTokenResponse;
+import com.ryeeeeee.doubansdk4android.auth.oauth.ErrorResponse;
 import com.ryeeeeee.doubansdk4android.exception.DoubanException;
 import com.ryeeeeee.doubansdk4android.util.LogUtil;
 
@@ -51,7 +52,7 @@ public class MainActivity extends ActionBarActivity {
 
         LogUtil.setLogEnabled(true);
         Douban.init(this, "0abda2e1d3262fea2038e8a579728fbe", "9196f7a84f90c966",
-                "http://Ryeeeeee.com");
+                "http://ryeeeeee.com");
 
         mAuthButton = (Button) this.findViewById(R.id.button_auth);
         mAuthButton.setOnClickListener(new View.OnClickListener() {
@@ -60,8 +61,13 @@ public class MainActivity extends ActionBarActivity {
                 LogUtil.i(TAG, "认证 ...");
                 Douban.auth(new IAuthListener() {
                     @Override
-                    public void onComplete(AccessTokenResponse bundle) {
-                        LogUtil.i(TAG, "onComplete");
+                    public void onAuthSuccess(AccessTokenResponse bundle) {
+                        LogUtil.i(TAG, "onAuthSuccess");
+                    }
+
+                    @Override
+                    public void onAuthFailure(ErrorResponse response) {
+                        LogUtil.d(TAG, response.toString());
                     }
 
                     @Override

@@ -36,9 +36,11 @@ import com.ryeeeeee.doubansdk4android.util.LogUtil;
  * @author Ryeeeeee
  * @since 2015-01-24
  */
-public class AuthActivity extends Activity {
+public class AuthActivity extends Activity implements IAuthListener{
 
     private final static String TAG = "AuthActivity";
+
+    public final static String OAUTH_URL = "extra_oauth_url";
 
     private AuthWebView mAuthWebView;
 
@@ -46,36 +48,39 @@ public class AuthActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mAuthWebView = new AuthWebView(this, new IAuthListener() {
-            @Override
-            public void onComplete(AccessTokenResponse bundle) {
-                LogUtil.i(TAG, "onComplete");
-            }
-
-            @Override
-            public void onError(DoubanException exception) {
-                LogUtil.i(TAG, "onError");
-            }
-
-            @Override
-            public void onCancel() {
-                LogUtil.i(TAG, "onCancel");
-            }
-
-            @Override
-            public void onFinish() {
-                LogUtil.i(TAG, "onFinish");
-            }
-        });
-
+        mAuthWebView = new AuthWebView(this, this);
         this.setContentView(mAuthWebView);
 
+        mAuthWebView.loadUrl(getIntent().getStringExtra(OAUTH_URL));
+    }
 
-        StringBuilder urlStringBuilder = new StringBuilder("https://www.douban.com/service/auth2/auth?");
-        urlStringBuilder.append(HttpParam.CLIENT_ID).append("=").append(Douban.getApiKey());
-        urlStringBuilder.append("&").append(HttpParam.REDIRECT_URI).append("=").append(Douban.getRedirectURI());
-        urlStringBuilder.append("&").append(HttpParam.RESPONSE_TYPE).append("=").append("code");
-        mAuthWebView.loadUrl(urlStringBuilder.toString());
-        //mAuthWebView.loadUrl("http://Ryeeeeee.com");
+    @Override
+    public void onAuthSuccess(AccessTokenResponse response) {
+        OAuth.getIAuthListener().onAuthSuccess(response);
+        onFinish();
+    }
+
+    @Override
+    public void onAuthFailure(ErrorResponse response) {
+        OAuth.getIAuthListener().onAuthFailure(response);
+        onFinish();
+    }
+
+    @Override
+    public void onError(DoubanException exception) {
+        OAuth.getIAuthListener().onError(exception);
+        onFinish();
+    }
+
+    @Override
+    public void onCancel() {
+        OAuth.getIAuthListener().onCancel();
+        onFinish();
+    }
+
+    @Override
+    public void onFinish() {
+        this.finish();
+        OAuth.getIAuthListener().onFinish();
     }
 }
