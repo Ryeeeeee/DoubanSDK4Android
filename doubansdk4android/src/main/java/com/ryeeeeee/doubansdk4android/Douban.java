@@ -26,8 +26,11 @@ package com.ryeeeeee.doubansdk4android;
 import android.content.Context;
 
 import com.ryeeeeee.doubansdk4android.auth.IAuthListener;
+import com.ryeeeeee.doubansdk4android.auth.oauth.AccessTokenResponse;
 import com.ryeeeeee.doubansdk4android.auth.oauth.OAuth;
+import com.ryeeeeee.doubansdk4android.util.JsonUtil;
 import com.ryeeeeee.doubansdk4android.util.LogUtil;
+import com.ryeeeeee.doubansdk4android.util.PreferenceUtil;
 
 /**
  * @author Ryeeeeee
@@ -36,6 +39,7 @@ import com.ryeeeeee.doubansdk4android.util.LogUtil;
 public class Douban {
 
     private final static String TAG = "Douban";
+
 
     /** 应用的 API Key */
     private static String sApiKey;
@@ -49,6 +53,7 @@ public class Douban {
     private static Context sContext;
     /** Douban SDK 是否初始化 */
     private static boolean sIsInited = false;
+
 
     /**
      * Douban SDK 初始化接口，在调用其他接口之前，必须确保初始化成功
@@ -89,6 +94,13 @@ public class Douban {
 
     public static void auth(IAuthListener listener){
         // TODO check Douban init()
+
+        // check local access token
+
+
+        // check access token expires in
+
+        //
         OAuth.authorize(sContext, listener);
     }
 
