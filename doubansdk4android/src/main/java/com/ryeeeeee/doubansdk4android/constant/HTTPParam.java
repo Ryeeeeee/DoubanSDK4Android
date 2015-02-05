@@ -29,13 +29,15 @@ package com.ryeeeeee.doubansdk4android.constant;
  */
 public class HttpParam {
     /** OAuth */
-    public final static String CLIENT_ID = "client_id";
-    public final static String CLIENT_SECRET = "client_secret";
-    public final static String REDIRECT_URI = "redirect_uri";
-    public final static String RESPONSE_TYPE = "response_type";
-    public final static String GRANT_TYPE = "grant_type";
-    public final static String REFRESH_TOKEN = "refresh_token";
-    public final static String SCOPE = "scope";
+    public final static String CLIENT_ID_KEY = "client_id";
+    public final static String CLIENT_SECRET_KEY = "client_secret";
+    public final static String REDIRECT_URI_KEY = "redirect_uri";
+    public final static String RESPONSE_TYPE_KEY = "response_type";
+    public final static String GRANT_TYPE_KEY = "grant_type";
+    public final static String GRANT_TYPE_VALUE_REFRESH_TOKEN = "refresh_token";
+    public final static String GRANT_TYPE_VALUE_CODE = "authorization_code";
+    public final static String REFRESH_TOKEN_KEY = "refresh_token";
+    public final static String SCOPE_KEY = "scope";
     /** 用户授权过程中发生错误，跳转至回调地址时的错误参数 */
     public final static String ERROR = "error";
     /** 用户成功授权，跳转至回调地址时的 authorization code 对应的参数 */

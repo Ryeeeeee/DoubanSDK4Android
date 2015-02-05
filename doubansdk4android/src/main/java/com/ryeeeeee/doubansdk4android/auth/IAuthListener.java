@@ -37,7 +37,7 @@ public interface IAuthListener {
     /**
      * 认证成功回调
      */
-    public void onAuthSuccess(AccessTokenResponse response);
+    public void onAuthSuccess(String userId);
 
     /**
      * 认证失败回调

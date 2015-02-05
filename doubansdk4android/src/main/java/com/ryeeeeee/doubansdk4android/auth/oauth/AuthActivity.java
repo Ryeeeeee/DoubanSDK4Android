@@ -55,8 +55,8 @@ public class AuthActivity extends Activity implements IAuthListener{
     }
 
     @Override
-    public void onAuthSuccess(AccessTokenResponse response) {
-        OAuth.getIAuthListener().onAuthSuccess(response);
+    public void onAuthSuccess(String userId) {
+        OAuth.getIAuthListener().onAuthSuccess(userId);
         onFinish();
     }
 

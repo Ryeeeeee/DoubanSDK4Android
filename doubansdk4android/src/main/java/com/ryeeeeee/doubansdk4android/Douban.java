@@ -92,15 +92,27 @@ public class Douban {
         return true;
     }
 
-    public static void auth(IAuthListener listener){
+    /**
+     * 进行 OAuth 认证，首先先判断本地是否有缓存的认证信息
+     * 如果存在并且没有过期，则复用之前的 access token
+     * 如果存在但是过期了，则获取 fresh token 换取 access token
+     * 如果不存在缓存的信息，则重新进行 OAuth 认证
+     * @param listener
+     */
+    public static void authorize(IAuthListener listener){
         // TODO check Douban init()
 
-        // check local access token
+        long expires_time = PreferenceUtil.getLong(sContext, OAuth.EXPIRES_TIME_KEY);
+        if (expires_time != -1) {
+            if (expires_time > System.currentTimeMillis()) {
+                listener.onAuthSuccess(PreferenceUtil.getString(sContext, OAuth.USER_ID_KEY));
+            } else {
+                String refreshToken = PreferenceUtil.getString(sContext, OAuth.REFRESH_TOKEN_KEY);
+                OAuth.refreshAccessToken(refreshToken, listener);
+            }
+            return;
+        }
 
-
-        // check access token expires in
-
-        //
         OAuth.authorize(sContext, listener);
     }
 
@@ -134,5 +146,13 @@ public class Douban {
      */
     public static String getRedirectURI() {
         return sRedirectURI;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public static Context getContext() {
+        return sContext;
     }
 }

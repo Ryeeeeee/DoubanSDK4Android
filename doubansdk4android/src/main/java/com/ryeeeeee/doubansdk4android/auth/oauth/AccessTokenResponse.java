@@ -38,6 +38,9 @@ public class AccessTokenResponse {
     /** 令牌对应的用户ID */
     private String mUserID;
 
+    public AccessTokenResponse() {
+    }
+
     public AccessTokenResponse(String accessToken, int expiresIn, String refreshToken, String userID){
         this.mAccessToken = accessToken;
         this.mExpiresIn = expiresIn;

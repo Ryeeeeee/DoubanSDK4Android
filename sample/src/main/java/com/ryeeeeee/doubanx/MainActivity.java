@@ -59,9 +59,9 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 LogUtil.i(TAG, "认证 ...");
-                Douban.auth(new IAuthListener() {
+                Douban.authorize(new IAuthListener() {
                     @Override
-                    public void onAuthSuccess(AccessTokenResponse bundle) {
+                    public void onAuthSuccess(String userId) {
                         LogUtil.i(TAG, "onAuthSuccess");
                     }
 
