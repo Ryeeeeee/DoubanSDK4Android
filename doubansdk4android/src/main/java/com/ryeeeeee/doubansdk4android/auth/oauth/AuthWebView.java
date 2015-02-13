@@ -113,13 +113,15 @@ public class AuthWebView extends RelativeLayout {
 
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
+            LogUtil.d(TAG, "OverrideUrl : " + url);
 
             // 拦截跳转值回调接口的 URL
             if (url.startsWith(Douban.getRedirectURI())) {
 
+                LogUtil.d(TAG, "call redirect_uri");
+
                 String httpParams = url.split("\\?")[1];
                 String[] bundles = httpParams.split("=");
-
                 if (bundles[0].equals(HttpParam.CODE)) {
                     // 成功认证，获取 authorization code
                     String code = bundles[1];

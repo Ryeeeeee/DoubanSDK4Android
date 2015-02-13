@@ -49,16 +49,9 @@ public class MainActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        LogUtil.setLogEnabled(true);
-
         setContentView(R.layout.activity_main);
 
-        String json = new String("{\"access_token\":\"65ce9f74cffaa4e7316bde5e6fefeeb5\",\"douban_user_name\":\"Ryeeeeee\",\"douban_user_id\":\"49037237\",\"expires_in\":604800,\"refresh_token\":\"8f9b877f28ce5573aed2967d7a6b0059\"}");
-        AccessTokenResponse response = JsonUtil.fromJson(json, AccessTokenResponse.class);
-        LogUtil.d(TAG, response.toString());
-
-        LogUtil.d(TAG, "Ryeeeeeee");
-
+        LogUtil.setLogEnabled(true);
         Douban.init(this, "0abda2e1d3262fea2038e8a579728fbe", "9196f7a84f90c966",
                 "http://ryeeeeee.com");
 
