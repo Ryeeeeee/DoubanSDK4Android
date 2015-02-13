@@ -30,53 +30,72 @@ package com.ryeeeeee.doubansdk4android.auth.oauth;
 public class AccessTokenResponse {
 
     /** 访问令牌 */
-    private String mAccessToken;
+    private String access_token;
     /** 访问令牌有效期 */
-    private int mExpiresIn;
+    private int expires_in;
     /** 刷新令牌 */
-    private String mRefreshToken;
+    private String refresh_token;
     /** 令牌对应的用户ID */
-    private String mUserID;
+    private String douban_user_id;
+    /** 令牌对应的用户名 */
+    private String douban_user_name;
 
     public AccessTokenResponse() {
     }
 
-    public AccessTokenResponse(String accessToken, int expiresIn, String refreshToken, String userID){
-        this.mAccessToken = accessToken;
-        this.mExpiresIn = expiresIn;
-        this.mRefreshToken = refreshToken;
-        this.mUserID = userID;
+    public AccessTokenResponse(String accessToken, int expiresIn, String refreshToken, String userID,
+                               String userName){
+        this.access_token = accessToken;
+        this.expires_in = expiresIn;
+        this.refresh_token = refreshToken;
+        this.douban_user_id = userID;
+        this.douban_user_name = userName;
     }
 
-    public String getAccessToken() {
-        return mAccessToken;
+    public String getAccess_token() {
+        return access_token;
     }
 
-    public int getExpiresIn() {
-        return mExpiresIn;
+    public int getExpires_in() {
+        return expires_in;
     }
 
-    public String getRefreshToken() {
-        return mRefreshToken;
+    public String getRefresh_token() {
+        return refresh_token;
     }
 
-    public String getUserID() {
-        return mUserID;
+    public String getDouban_user_id() {
+        return douban_user_id;
     }
 
-    public void setAccessToken(String accessToken) {
-        mAccessToken = accessToken;
+    public String getDouban_user_name() {
+        return douban_user_name;
     }
 
-    public void setExpiresIn(int expiresIn) {
-        mExpiresIn = expiresIn;
+    public void setAccess_token(String access_token) {
+        this.access_token = access_token;
     }
 
-    public void setRefreshToken(String refreshToken) {
-        mRefreshToken = refreshToken;
+    public void setExpires_in(int expires_in) {
+        this.expires_in = expires_in;
     }
 
-    public void setUserID(String userID) {
-        mUserID = userID;
+    public void setRefresh_token(String refresh_token) {
+        this.refresh_token = refresh_token;
+    }
+
+    public void setDouban_user_id(String douban_user_id) {
+        this.douban_user_id = douban_user_id;
+    }
+
+    public void setDouban_user_name(String douban_user_name) {
+        this.douban_user_name = douban_user_name;
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() + " access_token:" + access_token + " refresh_token: " + refresh_token
+                + " douban_user_id: " + douban_user_id + " douban_user_name: " + douban_user_name
+                + " expires_in: " + expires_in;
     }
 }

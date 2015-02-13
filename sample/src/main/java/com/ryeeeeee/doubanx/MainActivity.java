@@ -30,12 +30,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.ryeeeeee.doubansdk4android.Douban;
 import com.ryeeeeee.doubansdk4android.auth.IAuthListener;
 import com.ryeeeeee.doubansdk4android.auth.oauth.AccessTokenResponse;
 import com.ryeeeeee.doubansdk4android.auth.oauth.ErrorResponse;
 import com.ryeeeeee.doubansdk4android.exception.DoubanException;
+import com.ryeeeeee.doubansdk4android.util.JsonUtil;
 import com.ryeeeeee.doubansdk4android.util.LogUtil;
 
 
@@ -44,13 +46,19 @@ public class MainActivity extends ActionBarActivity {
 
     private Button mAuthButton;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        LogUtil.setLogEnabled(true);
+
         setContentView(R.layout.activity_main);
 
-        LogUtil.setLogEnabled(true);
+        String json = new String("{\"access_token\":\"65ce9f74cffaa4e7316bde5e6fefeeb5\",\"douban_user_name\":\"Ryeeeeee\",\"douban_user_id\":\"49037237\",\"expires_in\":604800,\"refresh_token\":\"8f9b877f28ce5573aed2967d7a6b0059\"}");
+        AccessTokenResponse response = JsonUtil.fromJson(json, AccessTokenResponse.class);
+        LogUtil.d(TAG, response.toString());
+
+        LogUtil.d(TAG, "Ryeeeeeee");
+
         Douban.init(this, "0abda2e1d3262fea2038e8a579728fbe", "9196f7a84f90c966",
                 "http://ryeeeeee.com");
 
@@ -62,22 +70,22 @@ public class MainActivity extends ActionBarActivity {
                 Douban.authorize(new IAuthListener() {
                     @Override
                     public void onAuthSuccess(String userId) {
-                        LogUtil.i(TAG, "onAuthSuccess");
+                        Toast.makeText(MainActivity.this, userId, Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
                     public void onAuthFailure(ErrorResponse response) {
-                        LogUtil.d(TAG, response.toString());
+                        Toast.makeText(MainActivity.this, response.toString(), Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
                     public void onError(DoubanException exception) {
-                        LogUtil.i(TAG, "onError");
+                        Toast.makeText(MainActivity.this, exception.toString(), Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
                     public void onCancel() {
-                        LogUtil.i(TAG, "onCancel");
+                        Toast.makeText(MainActivity.this, "取消授权", Toast.LENGTH_SHORT).show();
                     }
 
                     @Override

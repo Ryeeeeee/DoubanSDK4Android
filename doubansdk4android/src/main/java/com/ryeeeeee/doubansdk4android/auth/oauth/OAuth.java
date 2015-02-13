@@ -31,12 +31,16 @@ import com.loopj.android.http.RequestParams;
 import com.ryeeeeee.doubansdk4android.Douban;
 import com.ryeeeeee.doubansdk4android.auth.IAuthListener;
 import com.ryeeeeee.doubansdk4android.constant.HttpParam;
+import com.ryeeeeee.doubansdk4android.exception.DoubanException;
 import com.ryeeeeee.doubansdk4android.net.HttpHelper;
 import com.ryeeeeee.doubansdk4android.util.JsonUtil;
 import com.ryeeeeee.doubansdk4android.util.LogUtil;
 import com.ryeeeeee.doubansdk4android.util.PreferenceUtil;
 
 import org.apache.http.Header;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * @author Ryeeeeee
@@ -50,6 +54,7 @@ public class OAuth {
     public final static String EXPIRES_TIME_KEY = "expires_time";
     public final static String REFRESH_TOKEN_KEY = "refresh_token";
     public final static String USER_ID_KEY = "user_id";
+    public final static String USER_NAME_KEY = "user_name";
 
     private final static String sOAuthUrl = "https://www.douban.com/service/auth2/auth";
     private final static String sAccessTokenUrl = "https://www.douban.com/service/auth2/token";
@@ -84,6 +89,8 @@ public class OAuth {
      */
     public static void exchangeAccessToken(String authCode, final IAuthListener listener) {
 
+        LogUtil.d(TAG, "auth code:" + authCode);
+
         RequestParams params = new RequestParams();
         params.put(HttpParam.CLIENT_ID_KEY, Douban.getApiKey());
         params.put(HttpParam.REDIRECT_URI_KEY, Douban.getRedirectURI());
@@ -92,20 +99,22 @@ public class OAuth {
         params.put(HttpParam.CODE, authCode);
 
         HttpHelper.post(sAccessTokenUrl, params, new JsonHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, String responseString) {
 
-                AccessTokenResponse response = JsonUtil.fromJson(responseString, AccessTokenResponse.class);
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject jsonResponse) {
+                LogUtil.d(TAG, jsonResponse.toString());
+                AccessTokenResponse response = JsonUtil.fromJson(jsonResponse.toString(), AccessTokenResponse.class);
                 updateLocalAccessTokenInfo(response);
 
-                listener.onAuthSuccess(response.getUserID());
+                listener.onAuthSuccess(response.getDouban_user_id());
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                super.onFailure(statusCode, headers, responseString, throwable);
-                // TODO 回调错误
+                LogUtil.d(TAG + "onFailure", "status Code: " + statusCode);
+                listener.onError(new DoubanException(throwable));
             }
+
         });
     }
 
@@ -125,19 +134,18 @@ public class OAuth {
 
         HttpHelper.post(sAccessTokenUrl, params, new JsonHttpResponseHandler() {
             @Override
-            public void onSuccess(int statusCode, Header[] headers, String responseString) {
-                LogUtil.d(OAuth.TAG, responseString);
+            public void onSuccess(int statusCode, Header[] headers, JSONObject jsonResponse) {
 
-                AccessTokenResponse response = JsonUtil.fromJson(responseString, AccessTokenResponse.class);
+                AccessTokenResponse response = JsonUtil.fromJson(jsonResponse.toString(), AccessTokenResponse.class);
                 updateLocalAccessTokenInfo(response);
 
-                listener.onAuthSuccess(response.getUserID());
+                listener.onAuthSuccess(response.getDouban_user_id());
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 LogUtil.d(OAuth.TAG, responseString);
-                // TODO 回调错误
+                listener.onError(new DoubanException(throwable));
             }
         });
     }
@@ -155,10 +163,11 @@ public class OAuth {
      * @param response 认证成功后返回的 access token 信息
      */
     private static void updateLocalAccessTokenInfo(AccessTokenResponse response) {
-        PreferenceUtil.setString(Douban.getContext(), OAuth.ACCESS_TOKEN_KEY, response.getAccessToken());
-        PreferenceUtil.setString(Douban.getContext(), OAuth.REFRESH_TOKEN_KEY, response.getRefreshToken());
-        PreferenceUtil.setString(Douban.getContext(), OAuth.USER_ID_KEY, response.getUserID());
+        PreferenceUtil.setString(Douban.getContext(), OAuth.ACCESS_TOKEN_KEY, response.getAccess_token());
+        PreferenceUtil.setString(Douban.getContext(), OAuth.REFRESH_TOKEN_KEY, response.getRefresh_token());
+        PreferenceUtil.setString(Douban.getContext(), OAuth.USER_ID_KEY, response.getDouban_user_id());
+        PreferenceUtil.setString(Douban.getContext(), OAuth.USER_NAME_KEY, response.getDouban_user_name());
         PreferenceUtil.setLong(Douban.getContext(), OAuth.EXPIRES_TIME_KEY,
-                response.getExpiresIn() * 1000 + System.currentTimeMillis());
+                response.getExpires_in() * 1000 + System.currentTimeMillis());
     }
 }

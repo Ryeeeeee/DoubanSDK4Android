@@ -25,6 +25,8 @@ package com.ryeeeeee.doubansdk4android.auth.oauth;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.KeyEvent;
+import android.view.MotionEvent;
 
 import com.ryeeeeee.doubansdk4android.Douban;
 import com.ryeeeeee.doubansdk4android.auth.IAuthListener;
@@ -52,6 +54,21 @@ public class AuthActivity extends Activity implements IAuthListener{
         this.setContentView(mAuthWebView);
 
         mAuthWebView.loadUrl(getIntent().getStringExtra(OAUTH_URL));
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        // 当用户点击返回按键时，关闭授权页面，并回调取消认证
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            OAuth.getIAuthListener().onCancel();
+            this.finish();
+        }
+        return true;
     }
 
     @Override

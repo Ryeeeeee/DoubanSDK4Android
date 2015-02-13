@@ -103,10 +103,13 @@ public class Douban {
         // TODO check Douban init()
 
         long expires_time = PreferenceUtil.getLong(sContext, OAuth.EXPIRES_TIME_KEY);
+        LogUtil.d(TAG, "expires_time:" + expires_time);
         if (expires_time != -1) {
             if (expires_time > System.currentTimeMillis()) {
+                LogUtil.d(TAG, "ddd:" );
                 listener.onAuthSuccess(PreferenceUtil.getString(sContext, OAuth.USER_ID_KEY));
             } else {
+                LogUtil.d(TAG, "exprrrr:");
                 String refreshToken = PreferenceUtil.getString(sContext, OAuth.REFRESH_TOKEN_KEY);
                 OAuth.refreshAccessToken(refreshToken, listener);
             }

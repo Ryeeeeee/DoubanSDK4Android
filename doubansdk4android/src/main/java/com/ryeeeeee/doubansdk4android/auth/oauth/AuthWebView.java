@@ -38,6 +38,7 @@ import com.google.gson.Gson;
 import com.ryeeeeee.doubansdk4android.Douban;
 import com.ryeeeeee.doubansdk4android.auth.IAuthListener;
 import com.ryeeeeee.doubansdk4android.constant.HttpParam;
+import com.ryeeeeee.doubansdk4android.exception.DoubanException;
 import com.ryeeeeee.doubansdk4android.util.JsonUtil;
 import com.ryeeeeee.doubansdk4android.util.LogUtil;
 
@@ -90,31 +91,19 @@ public class AuthWebView extends RelativeLayout {
 
         this.addView(mWebView, webViewParam);
         this.addView(mProgressBar, progressBarParam);
-
     }
 
     /**
      * 用于处理 WebView 中界面相关操作的回调
      */
     private class AuthWebChromeClient extends WebChromeClient {
-
         @Override
         public void onProgressChanged(WebView view, int newProgress) {
-            LogUtil.d(TAG, "newProgress:" + newProgress);
-
             mProgressBar.setProgress(newProgress);
             if (newProgress >= mProgressBar.getMax()) {
                 mProgressBar.setVisibility(View.GONE);
             }
-
         }
-
-        @Override
-        public void onCloseWindow(WebView window) {
-            LogUtil.d(TAG, "onCloseWindow");
-        }
-
-
     }
 
     /**
@@ -124,15 +113,13 @@ public class AuthWebView extends RelativeLayout {
 
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
-            LogUtil.d(TAG, "OverrideUrl : " + url);
 
             // 拦截跳转值回调接口的 URL
             if (url.startsWith(Douban.getRedirectURI())) {
 
-                LogUtil.d(TAG, "call redirect_uri");
-
                 String httpParams = url.split("\\?")[1];
                 String[] bundles = httpParams.split("=");
+
                 if (bundles[0].equals(HttpParam.CODE)) {
                     // 成功认证，获取 authorization code
                     String code = bundles[1];
@@ -140,12 +127,11 @@ public class AuthWebView extends RelativeLayout {
                     OAuth.exchangeAccessToken(code, mAuthListener);
 
                 } else if (bundles[0].equals(HttpParam.ERROR)) {
-                    // 认证出错，获取错误信息
+                    // 用户拒绝认证
                     String error = bundles[1];
                     LogUtil.i(TAG, "authorization error:" + error);
                     mAuthListener.onCancel();
                 }
-
                 mWebView.stopLoading();
             }
 
@@ -164,13 +150,19 @@ public class AuthWebView extends RelativeLayout {
         @Override
         public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
             LogUtil.d(TAG, "onReceivedError :" + "errorCode:" + errorCode + "description:" + description + "failingUrl" + failingUrl);
+            mAuthListener.onError(new DoubanException(description));
         }
     }
 
     /**
-     * 用于获取 webview 中加在的页面内容
+     * 用于获取 WebView 中加在的页面内容
      */
     private final class JavascriptHandler {
+
+        /**
+         * javascript 调用，返回页面的内容
+         * @param htmlContent
+         */
         @JavascriptInterface
         public void getContent(String htmlContent){
             LogUtil.i(TAG, "html content:" + htmlContent);

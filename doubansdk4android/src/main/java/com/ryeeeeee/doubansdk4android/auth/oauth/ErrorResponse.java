@@ -38,6 +38,11 @@ public class ErrorResponse {
         this.request = request;
     }
 
+    @Override
+    public String toString() {
+        return super.toString() + "code: " + code + "msg: " + msg + "request:" + request;
+    }
+
     public int getCode() {
         return code;
     }
