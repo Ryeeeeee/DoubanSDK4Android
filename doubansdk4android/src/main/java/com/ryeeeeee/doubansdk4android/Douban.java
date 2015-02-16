@@ -100,8 +100,19 @@ public class Douban {
      * @param listener
      */
     public static void authorize(IAuthListener listener){
+        authorize(null, listener);
+    }
+
+    public static void authorize(String scope, IAuthListener listener) {
         // TODO check Douban init()
 
+        // TODO 检查 本地是否有着权限
+//        String[] scopes = scope.split(",");
+//        String[] localScopes = PreferenceUtil.getString(sContext, OAuth.SCOPE_KEY).split(",");
+//        if localScopes.
+
+
+        // 检查 access token 是否在有效期内
         long expires_time = PreferenceUtil.getLong(sContext, OAuth.EXPIRES_TIME_KEY);
         if (expires_time != -1) {
             if (expires_time > System.currentTimeMillis()) {
@@ -113,7 +124,8 @@ public class Douban {
             return;
         }
 
-        OAuth.authorize(sContext, listener);
+        OAuth.authorize(sContext, scope, listener);
+
     }
 
     /**

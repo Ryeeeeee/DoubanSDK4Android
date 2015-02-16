@@ -1,0 +1,14 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:colorPrimary">@color/theme_primary</item>
+        <item name="android:colorAccent">@color/theme_accent</item>
+        <item name="android:textColorSecondary">@color/theme_secondary_text</item>
+        <item name="android:divider">@color/theme_divider</item>
+        <item name="android:textColorPrimary">@color/theme_primary_text</item>
+        <item name="android:colorPrimaryDark">@color/theme_dark_primary</item>
+    </style>
+
+</resources>

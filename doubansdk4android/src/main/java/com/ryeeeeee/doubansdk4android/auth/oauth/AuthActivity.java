@@ -26,13 +26,9 @@ package com.ryeeeeee.doubansdk4android.auth.oauth;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.KeyEvent;
-import android.view.MotionEvent;
 
-import com.ryeeeeee.doubansdk4android.Douban;
 import com.ryeeeeee.doubansdk4android.auth.IAuthListener;
-import com.ryeeeeee.doubansdk4android.constant.HttpParam;
 import com.ryeeeeee.doubansdk4android.exception.DoubanException;
-import com.ryeeeeee.doubansdk4android.util.LogUtil;
 
 /**
  * @author Ryeeeeee

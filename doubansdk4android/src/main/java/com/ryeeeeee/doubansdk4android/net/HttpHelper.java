@@ -29,6 +29,7 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
+import org.apache.http.Header;
 import org.apache.http.client.ResponseHandler;
 
 /**
@@ -62,12 +63,14 @@ public class HttpHelper {
         sAsyncHttpClient.get(context, url, params, responseHandler);
     }
 
-    public static void get(Context context, String url, org.apache.http.Header[] headers,
+    public static void get(Context context, String url, Header[] headers,
                            RequestParams params, AsyncHttpResponseHandler responseHandler) {
         sAsyncHttpClient.get(context, url, headers, params, responseHandler);
     }
 
-    public static void post( String url, RequestParams params,
+
+
+    public static void post(String url, RequestParams params,
                             AsyncHttpResponseHandler responseHandler) {
         sAsyncHttpClient.post(url, params, responseHandler);
     }

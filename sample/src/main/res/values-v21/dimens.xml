@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- navigation -->
+    <dimen name="navigation_status_bar_offset">24dp</dimen>
+    <dimen name="navigation_account_padding_top">40dp</dimen>
+    <dimen name="navigation_current_account_height">164dp</dimen>
+</resources>

@@ -22,8 +22,9 @@
  * SOFTWARE.
  */
 
-package com.ryeeeeee.doubanx;
+package com.ryeeeeee.doubanx.ui;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -33,18 +34,21 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.ryeeeeee.doubansdk4android.Douban;
+import com.ryeeeeee.doubansdk4android.api.user.UserApi;
+import com.ryeeeeee.doubansdk4android.api.user.UserInfo;
+import com.ryeeeeee.doubansdk4android.api.user.UserListener;
 import com.ryeeeeee.doubansdk4android.auth.IAuthListener;
-import com.ryeeeeee.doubansdk4android.auth.oauth.AccessTokenResponse;
 import com.ryeeeeee.doubansdk4android.auth.oauth.ErrorResponse;
 import com.ryeeeeee.doubansdk4android.exception.DoubanException;
-import com.ryeeeeee.doubansdk4android.util.JsonUtil;
 import com.ryeeeeee.doubansdk4android.util.LogUtil;
+import com.ryeeeeee.doubanx.R;
 
 
 public class MainActivity extends ActionBarActivity {
     private final static String TAG = "DoubanX";
 
     private Button mAuthButton;
+    private Button mUserButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,10 +64,11 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 LogUtil.i(TAG, "认证 ...");
-                Douban.authorize(new IAuthListener() {
+                Douban.authorize("douban_basic_common,movie_basic_r,movie_basic_w", new IAuthListener() {
                     @Override
                     public void onAuthSuccess(String userId) {
                         Toast.makeText(MainActivity.this, userId, Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(MainActivity.this, BaseActivity.class));
                     }
 
                     @Override
@@ -84,6 +89,26 @@ public class MainActivity extends ActionBarActivity {
                     @Override
                     public void onFinish() {
                         LogUtil.i(TAG, "onFinish");
+                    }
+                });
+            }
+        });
+
+        mUserButton = (Button) this.findViewById(R.id.button_current_user);
+        mUserButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                UserApi.getCurrentUserInfo(new UserListener() {
+                    @Override
+                    public void onSuccess(Object object) {
+                        Toast.makeText(MainActivity.this, "获取认证用户成功！", Toast.LENGTH_SHORT).show();
+                        UserInfo userInfo = (UserInfo)object;
+                        LogUtil.d(TAG, userInfo.toString());
+                    }
+
+                    @Override
+                    public void onFailure(Object object) {
+                        Toast.makeText(MainActivity.this, "获取认证用户失败！", Toast.LENGTH_SHORT).show();
                     }
                 });
             }

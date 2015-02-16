@@ -30,7 +30,6 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.ryeeeeee.doubansdk4android.Douban;
 import com.ryeeeeee.doubansdk4android.auth.IAuthListener;
-import com.ryeeeeee.doubansdk4android.constant.HttpParam;
 import com.ryeeeeee.doubansdk4android.exception.DoubanException;
 import com.ryeeeeee.doubansdk4android.net.HttpHelper;
 import com.ryeeeeee.doubansdk4android.util.JsonUtil;
@@ -38,8 +37,6 @@ import com.ryeeeeee.doubansdk4android.util.LogUtil;
 import com.ryeeeeee.doubansdk4android.util.PreferenceUtil;
 
 import org.apache.http.Header;
-import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
@@ -55,6 +52,7 @@ public class OAuth {
     public final static String REFRESH_TOKEN_KEY = "refresh_token";
     public final static String USER_ID_KEY = "user_id";
     public final static String USER_NAME_KEY = "user_name";
+    public final static String SCOPE_KEY = "scope";
 
     private final static String sOAuthUrl = "https://www.douban.com/service/auth2/auth";
     private final static String sAccessTokenUrl = "https://www.douban.com/service/auth2/token";
@@ -66,7 +64,16 @@ public class OAuth {
      * @param listener
      */
     public static void authorize(Context context, IAuthListener listener) {
+        authorize(context, null, listener);
+    }
 
+    /**
+     * 认证
+     * @param context
+     * @param scope
+     * @param listener
+     */
+    public static void authorize(Context context, String scope, IAuthListener listener) {
         sIAuthListener = listener;
 
         StringBuilder urlStringBuilder = new StringBuilder();
@@ -74,13 +81,16 @@ public class OAuth {
         urlStringBuilder.append(HttpParam.CLIENT_ID_KEY).append("=").append(Douban.getApiKey());
         urlStringBuilder.append("&").append(HttpParam.REDIRECT_URI_KEY).append("=").append(Douban.getRedirectURI());
         urlStringBuilder.append("&").append(HttpParam.RESPONSE_TYPE_KEY).append("=").append("code");
+        if(scope != null && !scope.trim().equals("")) {
+            urlStringBuilder.append("&").append(HttpParam.SCOPE_KEY).append("=").append(scope);
+        }
 
         Intent intent = new Intent(context, AuthActivity.class);
         intent.putExtra(AuthActivity.OAUTH_URL, urlStringBuilder.toString());
 
         context.startActivity(intent);
-
     }
+
 
     /**
      * 使用 authorization code 换取 access token

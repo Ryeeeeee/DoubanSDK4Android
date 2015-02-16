@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.ryeeeeee.doubansdk4android.constant;
+package com.ryeeeeee.doubansdk4android.auth.oauth;
 
 /**
  * @author Ryeeeeee
