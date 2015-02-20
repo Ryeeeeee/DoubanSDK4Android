@@ -48,4 +48,13 @@
         android:background="@color/theme_primary"
         android:layout_below="@id/button_auth"/>
 
+    <Button
+        android:id="@+id/button_animation"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@id/button_current_user"
+        android:layout_marginTop="16dp"
+        android:background="@color/theme_dark_primary"
+        android:text="AnimationTest"/>
+
 </RelativeLayout>

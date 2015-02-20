@@ -24,12 +24,20 @@
 
 package com.ryeeeeee.doubanx.ui;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.annotation.TargetApi;
+import android.app.ActivityOptions;
 import android.content.Intent;
+import android.os.Build;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.transition.Explode;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewAnimationUtils;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -43,19 +51,24 @@ import com.ryeeeeee.doubansdk4android.exception.DoubanException;
 import com.ryeeeeee.doubansdk4android.util.LogUtil;
 import com.ryeeeeee.doubanx.R;
 
+import static android.app.ActivityOptions.makeSceneTransitionAnimation;
+
 
 public class MainActivity extends ActionBarActivity {
     private final static String TAG = "DoubanX";
 
     private Button mAuthButton;
     private Button mUserButton;
+    private Button mAnimationButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
 
         LogUtil.setLogEnabled(true);
+
         Douban.init(this, "0abda2e1d3262fea2038e8a579728fbe", "9196f7a84f90c966",
                 "http://ryeeeeee.com");
 
@@ -64,11 +77,11 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 LogUtil.i(TAG, "认证 ...");
-                Douban.authorize("douban_basic_common,movie_basic_r,movie_basic_w", new IAuthListener() {
+                Douban.authorize("douban_basic_common,movie_basic_r,movie_basic_w,shuo_basic_r,shuo_basic_w", new IAuthListener() {
                     @Override
                     public void onAuthSuccess(String userId) {
                         Toast.makeText(MainActivity.this, userId, Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(MainActivity.this, BaseActivity.class));
+                        startActivity(new Intent(MainActivity.this, HomeActivity.class));
                     }
 
                     @Override
@@ -111,6 +124,52 @@ public class MainActivity extends ActionBarActivity {
                         Toast.makeText(MainActivity.this, "获取认证用户失败！", Toast.LENGTH_SHORT).show();
                     }
                 });
+            }
+        });
+
+        mAnimationButton = (Button) this.findViewById(R.id.button_animation);
+        mAnimationButton.setOnClickListener(new View.OnClickListener() {
+            @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+            @Override
+            public void onClick(View view) {
+                if(mAnimationButton.getVisibility() == View.VISIBLE) {
+                    int cx = (mAnimationButton.getLeft() + mAnimationButton.getRight()) / 2;
+                    int cy = (mAnimationButton.getTop() + mAnimationButton.getBottom()) / 2;
+
+                    // get the initial radius for the clipping circle
+                    int initialRadius = mAnimationButton.getWidth();
+
+                    // create the animation (the final radius is zero)
+                    Animator anim = ViewAnimationUtils.createCircularReveal(mAnimationButton, cx, cy, initialRadius, 0);
+                    anim.setDuration(3000);
+
+                    // make the view invisible when the animation is done
+                    anim.addListener(new AnimatorListenerAdapter() {
+                        @Override
+                        public void onAnimationEnd(Animator animation) {
+                            super.onAnimationEnd(animation);
+                            mAnimationButton.setVisibility(View.INVISIBLE);
+                        }
+                    });
+                    // start the animation
+                    anim.start();
+
+                } else {
+                    // get the center for the clipping circle
+                    int cx = (mAnimationButton.getLeft() + mAnimationButton.getRight()) / 2;
+                    int cy = (mAnimationButton.getTop() + mAnimationButton.getBottom()) / 2;
+
+                    // get the final radius for the clipping circle
+                    int finalRadius = Math.max(mAnimationButton.getWidth(), mAnimationButton.getHeight());
+
+                    // create the animator for this view (the start radius is zero)
+                    Animator anim =
+                            ViewAnimationUtils.createCircularReveal(mAnimationButton, cx, cy, 0, finalRadius);
+
+                    // make the view visible and start the animation
+                    mAnimationButton.setVisibility(View.VISIBLE);
+                    anim.start();
+                }
             }
         });
 

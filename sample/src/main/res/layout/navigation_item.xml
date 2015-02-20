@@ -28,7 +28,8 @@
     android:layout_height="48dp"
     android:gravity="start|center_vertical"
     android:paddingLeft="@dimen/navigation_item_padding_left"
-    android:paddingRight="@dimen/navigation_item_padding_right">
+    android:paddingRight="@dimen/navigation_item_padding_right"
+    android:background="?android:attr/selectableItemBackground">
 
     <ImageView
         android:id="@+id/icon_image"
@@ -45,6 +46,7 @@
         android:fontFamily="@string/font_family_medium"
         android:textStyle="bold"
         android:textSize="14sp"
-        android:text="placehold_movie_fm_book_user_city_music"/>
+        android:text="placehold_movie_fm_book_user_city_music"
+        android:textColor="@color/black"/>
 
 </LinearLayout>

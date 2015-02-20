@@ -62,22 +62,7 @@ public class UserApi {
         String url = USER_API_BASE_URL + "~me";
 
         Header[] headers = new Header[] {
-                new Header() {
-                    @Override
-                    public String getName() {
-                        return "Authorization";
-                    }
-
-                    @Override
-                    public String getValue() {
-                        return "Bearer " + PreferenceUtil.getString(Douban.getContext(), OAuth.ACCESS_TOKEN_KEY);
-                    }
-
-                    @Override
-                    public HeaderElement[] getElements() throws ParseException {
-                        return new HeaderElement[0];
-                    }
-                }
+            OAuth.getTokenHeader()
         };
 
         HttpHelper.get(Douban.getContext(), url, headers, null, new JsonHttpResponseHandler() {
@@ -111,22 +96,7 @@ public class UserApi {
         String url = USER_API_BASE_URL + userId;
 
         Header[] headers = new Header[] {
-                new Header() {
-                    @Override
-                    public String getName() {
-                        return "Authorization";
-                    }
-
-                    @Override
-                    public String getValue() {
-                        return "Bearer " + PreferenceUtil.getString(Douban.getContext(), OAuth.ACCESS_TOKEN_KEY);
-                    }
-
-                    @Override
-                    public HeaderElement[] getElements() throws ParseException {
-                        return new HeaderElement[0];
-                    }
-                }
+            OAuth.getTokenHeader()
         };
 
         HttpHelper.get(Douban.getContext(), url, headers, null, new JsonHttpResponseHandler() {
@@ -151,7 +121,7 @@ public class UserApi {
      * @param count 返回结果的数量
      * @param listener
      */
-    public static void searchUser(String content, int start, int count, final UserListener listener) {
+    public static void searchUser(String content, int start , int count, final UserListener listener) {
         String url = USER_API_BASE_URL;
 
         RequestParams params = new RequestParams();

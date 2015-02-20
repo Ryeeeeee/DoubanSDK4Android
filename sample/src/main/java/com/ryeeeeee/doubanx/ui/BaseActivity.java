@@ -72,6 +72,7 @@ public class BaseActivity extends ActionBarActivity {
     protected final static int NAVIGATION_ITEM_MOVIE = 0;
     protected final static int NAVIGATION_ITEM_FM = 1;
     protected final static int NAVIGAtiON_ITEM_SETTING = 2;
+    protected final static int NAVIGATION_ITEM_HOME = 3;
     protected final static int NAVIGATION_ITEM_INVALID = -1;
     protected final static int NAVIGATION_ITEM_SEPARATOR = -2;
 
@@ -81,6 +82,7 @@ public class BaseActivity extends ActionBarActivity {
             put(NAVIGATION_ITEM_MOVIE, R.string.navigation_item_movie);
             put(NAVIGATION_ITEM_FM, R.string.navigation_item_FM);
             put(NAVIGAtiON_ITEM_SETTING, R.string.navigation_item_setting);
+            put(NAVIGATION_ITEM_HOME, R.string.navigation_item_home);
         }
     };
 
@@ -90,6 +92,7 @@ public class BaseActivity extends ActionBarActivity {
             put(NAVIGATION_ITEM_MOVIE, R.drawable.ic_movie_grey600_24dp);
             put(NAVIGATION_ITEM_FM, R.drawable.ic_radio_grey600_24dp);
             put(NAVIGAtiON_ITEM_SETTING, R.drawable.ic_settings_grey600_24dp);
+            put(NAVIGATION_ITEM_HOME, R.drawable.ic_home_grey600_24dp);
         }
     };
 
@@ -138,6 +141,7 @@ public class BaseActivity extends ActionBarActivity {
     private void populateNavigationItems() {
         mNavigationItems.clear();
 
+        mNavigationItems.add(NAVIGATION_ITEM_HOME);
         mNavigationItems.add(NAVIGATION_ITEM_MOVIE);
         mNavigationItems.add(NAVIGATION_ITEM_FM);
         mNavigationItems.add(NAVIGATION_ITEM_SEPARATOR);
@@ -211,6 +215,10 @@ public class BaseActivity extends ActionBarActivity {
     private void onNavigationItemClick(int itemId) {
         // TODO 添加回调逻辑
         switch (itemId) {
+            case NAVIGATION_ITEM_HOME:
+                startActivity(new Intent(this, HomeActivity.class));
+                this.finish();
+                break;
             case NAVIGATION_ITEM_MOVIE:
                 startActivity(new Intent(this, MovieActivity.class));
                 this.finish();

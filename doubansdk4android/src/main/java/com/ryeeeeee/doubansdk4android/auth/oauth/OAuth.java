@@ -37,6 +37,8 @@ import com.ryeeeeee.doubansdk4android.util.LogUtil;
 import com.ryeeeeee.doubansdk4android.util.PreferenceUtil;
 
 import org.apache.http.Header;
+import org.apache.http.HeaderElement;
+import org.apache.http.ParseException;
 import org.json.JSONObject;
 
 /**
@@ -81,7 +83,7 @@ public class OAuth {
         urlStringBuilder.append(HttpParam.CLIENT_ID_KEY).append("=").append(Douban.getApiKey());
         urlStringBuilder.append("&").append(HttpParam.REDIRECT_URI_KEY).append("=").append(Douban.getRedirectURI());
         urlStringBuilder.append("&").append(HttpParam.RESPONSE_TYPE_KEY).append("=").append("code");
-        if(scope != null && !scope.trim().equals("")) {
+        if(scope != null && scope.trim().equals("")) {
             urlStringBuilder.append("&").append(HttpParam.SCOPE_KEY).append("=").append(scope);
         }
 
@@ -158,6 +160,29 @@ public class OAuth {
                 listener.onError(new DoubanException(throwable));
             }
         });
+    }
+
+    /**
+     * 获得验证信息的请求头
+     * @return
+     */
+    public static Header getTokenHeader() {
+        return new Header() {
+            @Override
+            public String getName() {
+                return "Authorization";
+            }
+
+            @Override
+            public String getValue() {
+                return "Bearer " + PreferenceUtil.getString(Douban.getContext(), OAuth.ACCESS_TOKEN_KEY);
+            }
+
+            @Override
+            public HeaderElement[] getElements() throws ParseException {
+                return new HeaderElement[0];
+            }
+        };
     }
 
     public static IAuthListener getIAuthListener() {
