@@ -33,11 +33,18 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.ryeeeeee.doubansdk4android.api.shuo.Shuo;
 import com.ryeeeeee.doubansdk4android.api.shuo.ShuoApi;
+import com.ryeeeeee.doubansdk4android.api.shuo.ShuoListener;
+import com.ryeeeeee.doubansdk4android.util.LogUtil;
 import com.ryeeeeee.doubanx.R;
+
+import java.util.List;
 
 /**
  * @author Ryeeeeee
@@ -67,27 +74,50 @@ public class HomeActivity extends BaseActivity {
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        mAdapter = new RecyclerAdapter(new String[]{"adf", "adfasfa", "adfaawer","rqwer","eoka","ajf","q9r0", "q8dkjbfkas", "9ueqre"});
-        mRecyclerView.setAdapter(mAdapter);
+        ShuoApi.getTimeline(-1,-1,-1,-1, new ShuoListener() {
+            @Override
+            public void onSuccess(List<Shuo> shuoList) {
+                LogUtil.d(TAG, "onSuccess");
+                mAdapter = new RecyclerAdapter(shuoList);
+                mRecyclerView.setAdapter(mAdapter);
 
-        ShuoApi.getTimeline(-1,-1,-1,-1);
+            }
+
+            @Override
+            public void onFailure(Object object) {
+
+            }
+        });
+
     }
-
 
     private class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
 
-        private String[] mDataSet;
+        private List<Shuo> mShuoList;
         private int mLastPosition = -1;
 
-        RecyclerAdapter(String[] dataSet) {
-            mDataSet = dataSet;
+        RecyclerAdapter(List<Shuo> shuoList) {
+            mShuoList = shuoList;
         }
 
         public class ViewHolder extends RecyclerView.ViewHolder {
             public CardView mCardView;
+            public ImageView mAvatarView;
+            public TextView mNameView;
+            public TextView mPublishView;
+            public TextView mTagView;
+            public TextView mDescriptionView;
+            public ImageView mPictureView;
+
             public ViewHolder(CardView cardView) {
                 super(cardView);
                 mCardView = cardView;
+                mAvatarView = (ImageView) mCardView.findViewById(R.id.card_avatar_image);
+                mNameView = (TextView) mCardView.findViewById(R.id.card_name);
+                mPublishView = (TextView) mCardView.findViewById(R.id.card_publish);
+                mTagView = (TextView) mCardView.findViewWithTag(R.id.card_tag);
+                mDescriptionView = (TextView) mCardView.findViewById(R.id.card_item_description);
+                mPictureView = (ImageView) mCardView.findViewById(R.id.card_item_picture);
             }
         }
 
@@ -106,13 +136,21 @@ public class HomeActivity extends BaseActivity {
                 holder.mCardView.startAnimation(animation);
             }
 
+            Shuo currentShuo = mShuoList.get(position);
+
+            Glide.with(HomeActivity.this).load(currentShuo.getUser().getSmall_avatar()).into(holder.mAvatarView);
+            holder.mNameView.setText(currentShuo.getUser().getScreen_name());
+            holder.mPublishView.setText(currentShuo.getCreated_at());
+            holder.mDescriptionView.setText(currentShuo.getTitle());
+            //holder.mTagView.setText(currentShuo.getCategory());
+
             mLastPosition = position;
             //holder.mCardView.setText(mDataSet[position]);
         }
 
         @Override
         public int getItemCount() {
-            return mDataSet.length;
+            return mShuoList.size();
         }
     }
 

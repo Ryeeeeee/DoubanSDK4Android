@@ -41,15 +41,20 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.google.gson.reflect.TypeToken;
 import com.ryeeeeee.doubansdk4android.Douban;
+import com.ryeeeeee.doubansdk4android.api.shuo.Shuo;
 import com.ryeeeeee.doubansdk4android.api.user.UserApi;
 import com.ryeeeeee.doubansdk4android.api.user.UserInfo;
 import com.ryeeeeee.doubansdk4android.api.user.UserListener;
 import com.ryeeeeee.doubansdk4android.auth.IAuthListener;
 import com.ryeeeeee.doubansdk4android.auth.oauth.ErrorResponse;
 import com.ryeeeeee.doubansdk4android.exception.DoubanException;
+import com.ryeeeeee.doubansdk4android.util.JsonUtil;
 import com.ryeeeeee.doubansdk4android.util.LogUtil;
 import com.ryeeeeee.doubanx.R;
+
+import java.util.List;
 
 import static android.app.ActivityOptions.makeSceneTransitionAnimation;
 
@@ -68,6 +73,8 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
 
         LogUtil.setLogEnabled(true);
+
+        unitTest();
 
         Douban.init(this, "0abda2e1d3262fea2038e8a579728fbe", "9196f7a84f90c966",
                 "http://ryeeeeee.com");
@@ -175,7 +182,6 @@ public class MainActivity extends ActionBarActivity {
 
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -196,5 +202,9 @@ public class MainActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void unitTest() {
+
     }
 }

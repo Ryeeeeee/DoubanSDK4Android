@@ -21,20 +21,27 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.ryeeeeee.doubansdk4android.api.shuo;
-
-import com.ryeeeeee.doubansdk4android.api.BaseListener;
-
-import java.util.List;
+package com.ryeeeeee.doubansdk4android.api;
 
 /**
  * @author Ryeeeeee
- * @since 2015-02-20
+ * @since 2015-02-24
  */
-public interface ShuoListener extends BaseListener<List<Shuo>>{
-    @Override
-    void onSuccess(List<Shuo> shuoList);
-
-    @Override
-    void onFailure(Object object);
+public class StatusCode {
+    /** 请求成功 */
+    public static final int OK = 200;
+    /** 创建成功 */
+    public static final int CREATED = 201;
+    /** 更新成功 */
+    public static final int ACCEPTED = 202;
+    /** 请求的地址不存在或者包含不支持的参数 */
+    public static final int BAD_REQUEST = 400;
+    /** 未授权 */
+    public static final int UNAUTHORIZED = 401;
+    /** 被禁止访问 */
+    public static final int FORBIDDEN = 403;
+    /** 请求的资源不存在 */
+    public static final int NOT_FOUND = 404;
+    /** 内部错误 */
+    public static final int INTERNAL_SERVER_ERROR = 500;
 }

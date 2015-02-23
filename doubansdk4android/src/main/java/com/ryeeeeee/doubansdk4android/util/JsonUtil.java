@@ -25,6 +25,8 @@ package com.ryeeeeee.doubansdk4android.util;
 
 import com.google.gson.Gson;
 
+import java.lang.reflect.Type;
+
 /**
  * @author Ryeeeeee
  * @since 2015-01-29
@@ -39,6 +41,10 @@ public class JsonUtil {
 
     public static <T> T fromJson(String json, Class<T> classOfT) {
         return gson.fromJson(json, classOfT);
+    }
+
+    public static <T> T fromJson(java.lang.String json, Type typeOfT) {
+        return gson.fromJson(json, typeOfT);
     }
 
 }

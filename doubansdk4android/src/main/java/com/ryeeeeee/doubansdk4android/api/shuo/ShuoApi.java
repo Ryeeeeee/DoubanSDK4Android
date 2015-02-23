@@ -23,16 +23,21 @@
  */
 package com.ryeeeeee.doubansdk4android.api.shuo;
 
+import com.google.gson.reflect.TypeToken;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.ryeeeeee.doubansdk4android.Douban;
 import com.ryeeeeee.doubansdk4android.auth.oauth.OAuth;
 import com.ryeeeeee.doubansdk4android.net.HttpHelper;
+import com.ryeeeeee.doubansdk4android.util.JsonUtil;
 import com.ryeeeeee.doubansdk4android.util.LogUtil;
 
 import org.apache.http.Header;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.List;
 
 /**
  * @author Ryeeeeee
@@ -56,7 +61,7 @@ public class ShuoApi {
      * @param count 默认20，最大200
      * @param start 默认0
      */
-    public static void getTimeline(long sinceId, long untilId, int count, int start) {
+    public static void getTimeline(long sinceId, long untilId, int count, int start, final ShuoListener listener) {
         String url = SHUO_API_BASE_URL + "home_timeline";
 
         RequestParams params = new RequestParams();
@@ -78,10 +83,12 @@ public class ShuoApi {
         };
 
         HttpHelper.get(Douban.getContext(), url, headers, params, new JsonHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                LogUtil.d(TAG, "success:" + response.toString());
 
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
+                List<Shuo> shuoList = JsonUtil.fromJson(response.toString(),
+                        new TypeToken<List<Shuo>>() {}.getType());
+                listener.onSuccess(shuoList);
             }
 
             @Override
@@ -89,11 +96,6 @@ public class ShuoApi {
                 LogUtil.d(TAG, "error:" + errorResponse.toString());
             }
 
-            @Override
-            protected Object parseResponse(byte[] responseBody) throws JSONException {
-                LogUtil.d(TAG, "response:" + new String(responseBody));
-                return super.parseResponse(responseBody);
-            }
         });
 
     }

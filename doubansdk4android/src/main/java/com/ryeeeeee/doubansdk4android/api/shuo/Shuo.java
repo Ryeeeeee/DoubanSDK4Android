@@ -76,7 +76,7 @@ public class Shuo {
         this.user = user;
     }
 
-    private static class User {
+    public static class User {
         private String uid;
         private String description;
         private String large_avatar;
@@ -87,7 +87,7 @@ public class Shuo {
         private String id;
         private String screen_name;
 
-        private User(String uid, String description, String large_avatar, String original_site_url,
+        public User(String uid, String description, String large_avatar, String original_site_url,
                      String small_avatar, int original_site_id, String type, String id,
                      String screen_name) {
             this.uid = uid;
@@ -259,14 +259,14 @@ public class Shuo {
 
         public static class Media {
             private String src;
-            private List<Size> sizes;
+            private Size sizes;
             private String secret_pid;
             private String original_src;
             private String href;
             private String type;
             private boolean is_animated;
 
-            public Media(String src, List<Size> sizes, String secret_pid, String original_src,
+            public Media(String src, Size sizes, String secret_pid, String original_src,
                          String href, String type, boolean is_animated) {
                 this.src = src;
                 this.sizes = sizes;
@@ -332,11 +332,11 @@ public class Shuo {
                 this.src = src;
             }
 
-            public List<Size> getSizes() {
+            public Size getSizes() {
                 return sizes;
             }
 
-            public void setSizes(List<Size> sizes) {
+            public void setSizes(Size sizes) {
                 this.sizes = sizes;
             }
 

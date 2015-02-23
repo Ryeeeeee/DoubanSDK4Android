@@ -29,9 +29,9 @@ import com.ryeeeeee.doubansdk4android.exception.DoubanException;
  * @author Ryeeeeee
  * @since 2015-02-13
  */
-public interface BaseListener {
+public interface BaseListener<T> {
 
-    public void onSuccess(Object object);
+    public void onSuccess(T t);
 
     public void onFailure(Object object);
 
