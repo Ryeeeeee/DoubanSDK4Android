@@ -21,25 +21,58 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.ryeeeeee.doubanx.ui;
-
-import android.os.Bundle;
-
-import com.ryeeeeee.doubansdk4android.api.movie.MovieApi;
+package com.ryeeeeee.doubansdk4android.api.movie;
 
 /**
  * @author Ryeeeeee
- * @since 2015-02-16
+ * @since 2015-02-24
  */
-public class MovieActivity extends BaseActivity {
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        getSupportActionBar().setTitle("豆瓣电影");
+public class SimpleCelebrity {
+    /** 影人条目id */
+    private String id;
+    /** 中文名 */
+    private String name;
+    /** 影人条目URL */
+    private String alt;
+    /** 影人头像，分别提供420px x 600px(大)，140px x 200px(中) 70px x 100px(小)尺寸 */
+    private Image avatars;
 
-        MovieApi.getMovieSubject(1764796);
+    public SimpleCelebrity(String id, String name, String alt, Image avatars) {
+        this.id = id;
+        this.name = name;
+        this.alt = alt;
+        this.avatars = avatars;
+    }
 
-        MovieApi.getCelebrity(1054395);
+    public String getId() {
+        return id;
+    }
 
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getAlt() {
+        return alt;
+    }
+
+    public void setAlt(String alt) {
+        this.alt = alt;
+    }
+
+    public Image getAvatars() {
+        return avatars;
+    }
+
+    public void setAvatars(Image avatars) {
+        this.avatars = avatars;
     }
 }

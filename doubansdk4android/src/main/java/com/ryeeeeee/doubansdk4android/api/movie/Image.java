@@ -21,25 +21,44 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.ryeeeeee.doubanx.ui;
-
-import android.os.Bundle;
-
-import com.ryeeeeee.doubansdk4android.api.movie.MovieApi;
+package com.ryeeeeee.doubansdk4android.api.movie;
 
 /**
  * @author Ryeeeeee
- * @since 2015-02-16
+ * @since 2015-02-25
  */
-public class MovieActivity extends BaseActivity {
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        getSupportActionBar().setTitle("豆瓣电影");
+public class Image {
+    private String small;
+    private String large;
+    private String medium;
 
-        MovieApi.getMovieSubject(1764796);
+    public Image(String small, String large, String medium) {
+        this.small = small;
+        this.large = large;
+        this.medium = medium;
+    }
 
-        MovieApi.getCelebrity(1054395);
+    public String getSmall() {
+        return small;
+    }
 
+    public void setSmall(String small) {
+        this.small = small;
+    }
+
+    public String getLarge() {
+        return large;
+    }
+
+    public void setLarge(String large) {
+        this.large = large;
+    }
+
+    public String getMedium() {
+        return medium;
+    }
+
+    public void setMedium(String medium) {
+        this.medium = medium;
     }
 }

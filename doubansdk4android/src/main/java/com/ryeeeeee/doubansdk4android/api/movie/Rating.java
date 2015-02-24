@@ -21,25 +21,58 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.ryeeeeee.doubanx.ui;
-
-import android.os.Bundle;
-
-import com.ryeeeeee.doubansdk4android.api.movie.MovieApi;
+package com.ryeeeeee.doubansdk4android.api.movie;
 
 /**
  * @author Ryeeeeee
- * @since 2015-02-16
+ * @since 2015-02-24
  */
-public class MovieActivity extends BaseActivity {
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        getSupportActionBar().setTitle("豆瓣电影");
+public class Rating {
+    /** 最低评分 */
+    private int min;
+    /** 最高评分 */
+    private int max;
+    /** 评分 */
+    private float average;
+    /** 评星数 */
+    private int stars;
 
-        MovieApi.getMovieSubject(1764796);
+    public Rating(int min, int max, float average, int stars) {
+        this.min = min;
+        this.max = max;
+        this.average = average;
+        this.stars = stars;
+    }
 
-        MovieApi.getCelebrity(1054395);
+    public int getMin() {
+        return min;
+    }
 
+    public void setMin(int min) {
+        this.min = min;
+    }
+
+    public int getMax() {
+        return max;
+    }
+
+    public void setMax(int max) {
+        this.max = max;
+    }
+
+    public float getAverage() {
+        return average;
+    }
+
+    public void setAverage(float average) {
+        this.average = average;
+    }
+
+    public int getStars() {
+        return stars;
+    }
+
+    public void setStars(int stars) {
+        this.stars = stars;
     }
 }

@@ -84,7 +84,8 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 LogUtil.i(TAG, "认证 ...");
-                Douban.authorize("douban_basic_common,movie_basic_r,movie_basic_w,shuo_basic_r,shuo_basic_w", new IAuthListener() {
+                Douban.authorize("douban_basic_common,movie_basic_r,movie_basic_w,shuo_basic_r," +
+                        "shuo_basic_w,movie_basic,movie_basic_r,music_basic_w", new IAuthListener() {
                     @Override
                     public void onAuthSuccess(String userId) {
                         Toast.makeText(MainActivity.this, userId, Toast.LENGTH_SHORT).show();

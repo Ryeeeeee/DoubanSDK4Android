@@ -83,7 +83,7 @@ public class OAuth {
         urlStringBuilder.append(HttpParam.CLIENT_ID_KEY).append("=").append(Douban.getApiKey());
         urlStringBuilder.append("&").append(HttpParam.REDIRECT_URI_KEY).append("=").append(Douban.getRedirectURI());
         urlStringBuilder.append("&").append(HttpParam.RESPONSE_TYPE_KEY).append("=").append("code");
-        if(scope != null && scope.trim().equals("")) {
+        if(scope != null && !scope.trim().equals("")) {
             urlStringBuilder.append("&").append(HttpParam.SCOPE_KEY).append("=").append(scope);
         }
 
