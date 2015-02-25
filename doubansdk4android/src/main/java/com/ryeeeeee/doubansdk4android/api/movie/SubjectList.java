@@ -21,21 +21,56 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.ryeeeeee.doubansdk4android.api.shuo;
-
-import com.ryeeeeee.doubansdk4android.api.BaseListener;
-import com.ryeeeeee.doubansdk4android.api.RequestException;
+package com.ryeeeeee.doubansdk4android.api.movie;
 
 import java.util.List;
 
 /**
  * @author Ryeeeeee
- * @since 2015-02-20
+ * @since 2015-02-25
  */
-public interface ShuoListener<T> extends BaseListener<T, RequestException>{
-    @Override
-    void onSuccess(T t);
+public class SubjectList {
+    private int count;
+    private int start;
+    private int total;
+    private List<SimpleSubject> subjects;
 
-    @Override
-    void onFailure(RequestException exception);
+    public SubjectList(int count, int start, int total, List<SimpleSubject> subjects) {
+        this.count = count;
+        this.start = start;
+        this.total = total;
+        this.subjects = subjects;
+    }
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
+    }
+
+    public int getStart() {
+        return start;
+    }
+
+    public void setStart(int start) {
+        this.start = start;
+    }
+
+    public int getTotal() {
+        return total;
+    }
+
+    public void setTotal(int total) {
+        this.total = total;
+    }
+
+    public List<SimpleSubject> getSubjects() {
+        return subjects;
+    }
+
+    public void setSubjects(List<SimpleSubject> subjects) {
+        this.subjects = subjects;
+    }
 }

@@ -38,6 +38,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.ryeeeeee.doubansdk4android.api.RequestException;
 import com.ryeeeeee.doubansdk4android.api.shuo.Shuo;
 import com.ryeeeeee.doubansdk4android.api.shuo.ShuoApi;
 import com.ryeeeeee.doubansdk4android.api.shuo.ShuoListener;
@@ -74,7 +75,7 @@ public class HomeActivity extends BaseActivity {
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        ShuoApi.getTimeline(-1,-1,-1,-1, new ShuoListener() {
+        ShuoApi.getTimeline(-1,-1,-1,-1, new ShuoListener<List<Shuo>>() {
             @Override
             public void onSuccess(List<Shuo> shuoList) {
                 LogUtil.d(TAG, "onSuccess");
@@ -84,7 +85,7 @@ public class HomeActivity extends BaseActivity {
             }
 
             @Override
-            public void onFailure(Object object) {
+            public void onFailure(RequestException exception) {
 
             }
         });

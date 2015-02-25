@@ -57,7 +57,7 @@ public class UserApi {
      * 获得当前授权用户信息
      * @param listener
      */
-    public static void getCurrentUserInfo(final UserListener listener) {
+    public static void getCurrentUserInfo(final UserListener<UserInfo> listener) {
 
         String url = USER_API_BASE_URL + "~me";
 
@@ -91,7 +91,7 @@ public class UserApi {
      * @param userId 为 用户uid 或者 数字id
      * @param listener
      */
-    public static void getUserInfo(String userId, final UserListener listener) {
+    public static void getUserInfo(String userId, final UserListener<UserInfo> listener) {
 
         String url = USER_API_BASE_URL + userId;
 
@@ -121,7 +121,7 @@ public class UserApi {
      * @param count 返回结果的数量
      * @param listener
      */
-    public static void searchUser(String content, int start , int count, final UserListener listener) {
+    public static void searchUser(String content, int start , int count, final UserListener<UserList> listener) {
         String url = USER_API_BASE_URL;
 
         RequestParams params = new RequestParams();

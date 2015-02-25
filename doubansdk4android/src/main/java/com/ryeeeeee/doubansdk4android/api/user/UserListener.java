@@ -24,17 +24,18 @@
 package com.ryeeeeee.doubansdk4android.api.user;
 
 import com.ryeeeeee.doubansdk4android.api.BaseListener;
+import com.ryeeeeee.doubansdk4android.api.RequestException;
 
 /**
  * @author Ryeeeeee
  * @since 2015-02-13
  */
-public interface UserListener extends BaseListener {
+public interface UserListener<T> extends BaseListener<T,RequestException> {
 
     @Override
-    void onSuccess(Object object);
+    void onSuccess(T t);
 
     @Override
-    void onFailure(Object object);
+    void onFailure(RequestException exception);
 
 }

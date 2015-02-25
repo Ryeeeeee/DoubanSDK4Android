@@ -21,21 +21,19 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.ryeeeeee.doubansdk4android.api.shuo;
+package com.ryeeeeee.doubansdk4android.api;
 
-import com.ryeeeeee.doubansdk4android.api.BaseListener;
-import com.ryeeeeee.doubansdk4android.api.RequestException;
-
-import java.util.List;
+import com.ryeeeeee.doubansdk4android.exception.DoubanException;
 
 /**
  * @author Ryeeeeee
- * @since 2015-02-20
+ * @since 2015-02-25
  */
-public interface ShuoListener<T> extends BaseListener<T, RequestException>{
-    @Override
-    void onSuccess(T t);
+public class RequestException extends DoubanException {
+    private ErrorResponse mResponse;
 
-    @Override
-    void onFailure(RequestException exception);
+    public RequestException(Throwable throwable, ErrorResponse response) {
+        super(throwable);
+        mResponse = response;
+    }
 }

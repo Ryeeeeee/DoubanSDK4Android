@@ -21,18 +21,17 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.ryeeeeee.doubansdk4android.api.shuo;
+package com.ryeeeeee.doubansdk4android.api.movie;
 
 import com.ryeeeeee.doubansdk4android.api.BaseListener;
 import com.ryeeeeee.doubansdk4android.api.RequestException;
 
-import java.util.List;
-
 /**
  * @author Ryeeeeee
- * @since 2015-02-20
+ * @since 2015-02-25
  */
-public interface ShuoListener<T> extends BaseListener<T, RequestException>{
+public interface MovieListener<T> extends BaseListener<T, RequestException> {
+
     @Override
     void onSuccess(T t);
 

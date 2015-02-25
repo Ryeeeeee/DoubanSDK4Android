@@ -21,21 +21,46 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.ryeeeeee.doubansdk4android.api.shuo;
-
-import com.ryeeeeee.doubansdk4android.api.BaseListener;
-import com.ryeeeeee.doubansdk4android.api.RequestException;
+package com.ryeeeeee.doubansdk4android.api.movie;
 
 import java.util.List;
 
 /**
  * @author Ryeeeeee
- * @since 2015-02-20
+ * @since 2015-02-25
  */
-public interface ShuoListener<T> extends BaseListener<T, RequestException>{
-    @Override
-    void onSuccess(T t);
+public class UsBox {
+    private String title;
+    private String date;
+    private List<BoxSubject> subjects;
 
-    @Override
-    void onFailure(RequestException exception);
+    public UsBox(String title, String date, List<BoxSubject> subjects) {
+        this.title = title;
+        this.date = date;
+        this.subjects = subjects;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public List<BoxSubject> getSubjects() {
+        return subjects;
+    }
+
+    public void setSubjects(List<BoxSubject> subjects) {
+        this.subjects = subjects;
+    }
 }

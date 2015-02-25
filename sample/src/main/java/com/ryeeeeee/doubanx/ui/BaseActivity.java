@@ -39,6 +39,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.ryeeeeee.doubansdk4android.api.RequestException;
 import com.ryeeeeee.doubansdk4android.api.user.UserApi;
 import com.ryeeeeee.doubansdk4android.api.user.UserInfo;
 import com.ryeeeeee.doubansdk4android.api.user.UserListener;
@@ -256,17 +257,16 @@ public class BaseActivity extends ActionBarActivity {
             return;
         }
 
-        UserApi.getCurrentUserInfo(new UserListener() {
+        UserApi.getCurrentUserInfo(new UserListener<UserInfo>() {
             @Override
-            public void onSuccess(Object object) {
+            public void onSuccess(UserInfo userInfo) {
                 Toast.makeText(BaseActivity.this, "获取用户信息成功", Toast.LENGTH_SHORT).show();
-                UserInfo userInfo = (UserInfo)object;
                 AppManager.getInstance().setCurrentUserInfo(userInfo);
                 populateProfileInfo(userInfo);
             }
 
             @Override
-            public void onFailure(Object object) {
+            public void onFailure(RequestException exception) {
                 Toast.makeText(BaseActivity.this, "获取用户信息失败", Toast.LENGTH_SHORT).show();
             }
         });

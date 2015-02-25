@@ -26,9 +26,13 @@ package com.ryeeeeee.doubansdk4android.api.movie;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.ryeeeeee.doubansdk4android.Douban;
+import com.ryeeeeee.doubansdk4android.api.BaseListener;
+import com.ryeeeeee.doubansdk4android.api.ErrorResponse;
+import com.ryeeeeee.doubansdk4android.api.RequestException;
 import com.ryeeeeee.doubansdk4android.auth.oauth.HttpParam;
 import com.ryeeeeee.doubansdk4android.auth.oauth.OAuth;
 import com.ryeeeeee.doubansdk4android.net.HttpHelper;
+import com.ryeeeeee.doubansdk4android.util.JsonUtil;
 import com.ryeeeeee.doubansdk4android.util.LogUtil;
 
 import org.apache.http.Header;
@@ -50,7 +54,7 @@ public class MovieApi {
      * 获得电影条目信息
      * @param id
      */
-    public static void getMovieSubject(int id) {
+    public static void getMovieSubject(int id, final MovieListener<Subject> listener) {
         String url = MOVIE_API_BASE_URL + "subject/" + id;
 
         Header[] headers = new Header[] {
@@ -61,6 +65,8 @@ public class MovieApi {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 LogUtil.d(TAG, "getMovieSubject: " + response.toString());
+                Subject subject = JsonUtil.fromJson(response.toString(), Subject.class);
+                listener.onSuccess(subject);
             }
 
             @Override
@@ -87,6 +93,13 @@ public class MovieApi {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 LogUtil.d(TAG, "getCelebrity: " + response.toString());
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+                LogUtil.d(TAG, "onfailure1:" + " " + statusCode + " " + throwable.toString() + " " + errorResponse.toString() );
+
             }
 
             @Override
@@ -210,7 +223,7 @@ public class MovieApi {
      * @param start
      * @param count
      */
-    public static void getTop250(int start, int count) {
+    public static void getTop250(int start, int count, final MovieListener<SubjectList> listener) {
         String url = MOVIE_API_BASE_URL + "top250";
 
         RequestParams param = new RequestParams();
@@ -221,6 +234,15 @@ public class MovieApi {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 LogUtil.d(TAG, "getTop250: " + response.toString());
+                SubjectList subjectList = JsonUtil.fromJson(response.toString(), SubjectList.class);
+                listener.onSuccess(subjectList);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+                ErrorResponse response = JsonUtil.fromJson(errorResponse.toString(), ErrorResponse.class);
+                listener.onFailure(new RequestException(throwable, response));
             }
         });
     }
@@ -228,13 +250,15 @@ public class MovieApi {
     /**
      * 北美票房榜
      */
-    public static void getUsBox() {
+    public static void getUsBox(final MovieListener<UsBox> listener) {
         String url = MOVIE_API_BASE_URL + "us_box";
 
         HttpHelper.get(url, null, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 LogUtil.d(TAG, "getUsBox: " + response.toString());
+                UsBox usBox = JsonUtil.fromJson(response.toString(), UsBox.class);
+                listener.onSuccess(usBox);
             }
         });
     }
@@ -243,6 +267,7 @@ public class MovieApi {
      * 口碑榜
      */
     public static void getWeekly() {
+        // advance
         String url = MOVIE_API_BASE_URL + "weekly";
 
         HttpHelper.get(url, null, new JsonHttpResponseHandler() {

@@ -21,21 +21,48 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.ryeeeeee.doubansdk4android.api.shuo;
-
-import com.ryeeeeee.doubansdk4android.api.BaseListener;
-import com.ryeeeeee.doubansdk4android.api.RequestException;
-
-import java.util.List;
+package com.ryeeeeee.doubansdk4android.api;
 
 /**
  * @author Ryeeeeee
- * @since 2015-02-20
+ * @since 2015-02-25
  */
-public interface ShuoListener<T> extends BaseListener<T, RequestException>{
-    @Override
-    void onSuccess(T t);
+public class ErrorResponse {
 
-    @Override
-    void onFailure(RequestException exception);
+    /** 错误信息 */
+    private String msg;
+    /** 错误代码 */
+    private int code;
+    /** 请求信息 */
+    private String request;
+
+    public ErrorResponse(String msg, int code, String request) {
+        this.msg = msg;
+        this.code = code;
+        this.request = request;
+    }
+
+    public String getMsg() {
+        return msg;
+    }
+
+    public void setMsg(String msg) {
+        this.msg = msg;
+    }
+
+    public int getCode() {
+        return code;
+    }
+
+    public void setCode(int code) {
+        this.code = code;
+    }
+
+    public String getRequest() {
+        return request;
+    }
+
+    public void setRequest(String request) {
+        this.request = request;
+    }
 }
