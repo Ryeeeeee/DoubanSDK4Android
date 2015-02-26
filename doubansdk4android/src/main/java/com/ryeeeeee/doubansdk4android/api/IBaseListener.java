@@ -29,7 +29,7 @@ import com.ryeeeeee.doubansdk4android.exception.DoubanException;
  * @author Ryeeeeee
  * @since 2015-02-13
  */
-public interface BaseListener<T,E> {
+public interface IBaseListener<T,E> {
 
     public void onSuccess(T t);
 

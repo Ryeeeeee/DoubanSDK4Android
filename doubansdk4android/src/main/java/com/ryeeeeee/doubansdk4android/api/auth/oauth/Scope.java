@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.ryeeeeee.doubansdk4android.auth.oauth;
+package com.ryeeeeee.doubansdk4android.api.auth.oauth;
 
 import java.util.ArrayList;
 import java.util.Arrays;

@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.ryeeeeee.doubansdk4android.auth.oauth;
+package com.ryeeeeee.doubansdk4android.api.auth.oauth;
 
 import android.content.Context;
 import android.content.Intent;
@@ -29,7 +29,7 @@ import android.content.Intent;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.ryeeeeee.doubansdk4android.Douban;
-import com.ryeeeeee.doubansdk4android.auth.IAuthListener;
+import com.ryeeeeee.doubansdk4android.api.auth.IAuthListener;
 import com.ryeeeeee.doubansdk4android.exception.DoubanException;
 import com.ryeeeeee.doubansdk4android.net.HttpHelper;
 import com.ryeeeeee.doubansdk4android.util.JsonUtil;
@@ -40,6 +40,8 @@ import org.apache.http.Header;
 import org.apache.http.HeaderElement;
 import org.apache.http.ParseException;
 import org.json.JSONObject;
+
+import java.util.List;
 
 /**
  * @author Ryeeeeee
@@ -70,13 +72,44 @@ public class OAuth {
     }
 
     /**
-     * 认证
+     * 认证，首先先判断本地是否有缓存的认证信息
+     * 如果存在并且没有过期，则复用之前的 access token
+     * 如果存在但是过期了，则获取 fresh token 换取 access token
+     * 如果不存在缓存的信息，则重新进行 OAuth 认证
      * @param context
      * @param scope
      * @param listener
      */
     public static void authorize(Context context, String scope, IAuthListener listener) {
         sIAuthListener = listener;
+
+        // 检查本地 access token 是否有包含此权限
+        String localScope = PreferenceUtil.getString(Douban.getContext(), OAuth.SCOPE_KEY);
+        List<String> localScopeList = Scope.convertScopeString2List(localScope);
+        List<String> scopeList = Scope.convertScopeString2List(scope);
+
+        if (localScopeList.containsAll(scopeList)) {
+
+            // 检查 access token 是否在有效期内
+            long expires_time = PreferenceUtil.getLong(Douban.getContext(), OAuth.EXPIRES_TIME_KEY);
+            if (expires_time != -1) {
+
+                if (expires_time > System.currentTimeMillis()) {
+
+                    String userId = PreferenceUtil.getString(Douban.getContext(), OAuth.USER_ID_KEY);
+                    String userName = PreferenceUtil.getString(Douban.getContext(), OAuth.USER_NAME_KEY);
+                    listener.onAuthSuccess(userId, userName);
+
+                } else {
+
+                    String refreshToken = PreferenceUtil.getString(Douban.getContext(), OAuth.REFRESH_TOKEN_KEY);
+                    OAuth.refreshAccessToken(refreshToken, listener);
+
+                }
+
+                return;
+            }
+        }
 
         StringBuilder urlStringBuilder = new StringBuilder();
         urlStringBuilder.append(sOAuthUrl).append("?");
@@ -118,7 +151,7 @@ public class OAuth {
                 AccessTokenResponse response = JsonUtil.fromJson(jsonResponse.toString(), AccessTokenResponse.class);
                 updateLocalAccessTokenInfo(response);
 
-                listener.onAuthSuccess(response.getDouban_user_id());
+                listener.onAuthSuccess(response.getDouban_user_id(), response.getDouban_user_name());
             }
 
             @Override
@@ -135,7 +168,7 @@ public class OAuth {
      * @param refreshToken 同 access token 一并获取到的 refresh token
      * @param listener 认证回调
      */
-    public static void refreshAccessToken(String refreshToken, final IAuthListener listener) {
+    public static void refreshAccessToken(final String refreshToken, final IAuthListener listener) {
 
         RequestParams params = new RequestParams();
         params.put(HttpParam.CLIENT_ID_KEY, Douban.getApiKey());
@@ -151,7 +184,7 @@ public class OAuth {
                 AccessTokenResponse response = JsonUtil.fromJson(jsonResponse.toString(), AccessTokenResponse.class);
                 updateLocalAccessTokenInfo(response);
 
-                listener.onAuthSuccess(response.getDouban_user_id());
+                listener.onAuthSuccess(response.getDouban_user_id(), response.getDouban_user_name());
             }
 
             @Override
@@ -205,4 +238,12 @@ public class OAuth {
         PreferenceUtil.setLong(Douban.getContext(), OAuth.EXPIRES_TIME_KEY,
                 response.getExpires_in() * 1000 + System.currentTimeMillis());
     }
+
+    /**
+     * 清除本地缓存的 access token 信息
+     */
+    private static void clearLocalAccessTokenInfo() {
+
+    }
+
 }

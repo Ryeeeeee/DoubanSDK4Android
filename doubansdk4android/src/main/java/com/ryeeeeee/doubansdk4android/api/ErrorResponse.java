@@ -65,4 +65,9 @@ public class ErrorResponse {
     public void setRequest(String request) {
         this.request = request;
     }
+
+    @Override
+    public String toString() {
+        return super.toString() + "code: " + code + "msg: " + msg + "request:" + request;
+    }
 }

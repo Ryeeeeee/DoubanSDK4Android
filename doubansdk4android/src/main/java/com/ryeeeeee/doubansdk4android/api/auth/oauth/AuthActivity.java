@@ -21,14 +21,15 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.ryeeeeee.doubansdk4android.auth.oauth;
+package com.ryeeeeee.doubansdk4android.api.auth.oauth;
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.KeyEvent;
 
-import com.ryeeeeee.doubansdk4android.auth.IAuthListener;
+import com.ryeeeeee.doubansdk4android.api.auth.IAuthListener;
 import com.ryeeeeee.doubansdk4android.exception.DoubanException;
+import com.ryeeeeee.doubansdk4android.exception.RequestException;
 
 /**
  * @author Ryeeeeee
@@ -68,14 +69,14 @@ public class AuthActivity extends Activity implements IAuthListener{
     }
 
     @Override
-    public void onAuthSuccess(String userId) {
-        OAuth.getIAuthListener().onAuthSuccess(userId);
+    public void onAuthSuccess(String userId, String userName) {
+        OAuth.getIAuthListener().onAuthSuccess(userId, userName);
         onFinish();
     }
 
     @Override
-    public void onAuthFailure(ErrorResponse response) {
-        OAuth.getIAuthListener().onAuthFailure(response);
+    public void onAuthFailure(RequestException exception) {
+        OAuth.getIAuthListener().onAuthFailure(exception);
         onFinish();
     }
 

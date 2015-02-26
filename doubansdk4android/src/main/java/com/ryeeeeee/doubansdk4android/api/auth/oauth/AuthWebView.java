@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.ryeeeeee.doubansdk4android.auth.oauth;
+package com.ryeeeeee.doubansdk4android.api.auth.oauth;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -34,8 +34,10 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 
 import com.ryeeeeee.doubansdk4android.Douban;
-import com.ryeeeeee.doubansdk4android.auth.IAuthListener;
+import com.ryeeeeee.doubansdk4android.api.ErrorResponse;
+import com.ryeeeeee.doubansdk4android.api.auth.IAuthListener;
 import com.ryeeeeee.doubansdk4android.exception.DoubanException;
+import com.ryeeeeee.doubansdk4android.exception.RequestException;
 import com.ryeeeeee.doubansdk4android.util.JsonUtil;
 import com.ryeeeeee.doubansdk4android.util.LogUtil;
 
@@ -168,7 +170,7 @@ public class AuthWebView extends RelativeLayout {
 
             if (!htmlContent.equals("Undefined")) {
                 ErrorResponse errorResponse = JsonUtil.fromJson(htmlContent, ErrorResponse.class);
-                mAuthListener.onAuthFailure(errorResponse);
+                mAuthListener.onAuthFailure(new RequestException(errorResponse));
             }
         }
 

@@ -21,41 +21,25 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.ryeeeeee.doubansdk4android.auth;
+package com.ryeeeeee.doubansdk4android.exception;
 
-import com.ryeeeeee.doubansdk4android.auth.oauth.AccessTokenResponse;
-import com.ryeeeeee.doubansdk4android.auth.oauth.ErrorResponse;
+import com.ryeeeeee.doubansdk4android.api.ErrorResponse;
 import com.ryeeeeee.doubansdk4android.exception.DoubanException;
 
 /**
- * 认证回调接口
- *
  * @author Ryeeeeee
- * @since 2015-01-24
+ * @since 2015-02-25
  */
-public interface IAuthListener {
-    /**
-     * 认证成功回调
-     */
-    public void onAuthSuccess(String userId);
+public class RequestException extends DoubanException {
+    private ErrorResponse mResponse;
 
-    /**
-     * 认证失败回调
-     */
-    public void onAuthFailure(ErrorResponse response);
+    public RequestException(Throwable throwable, ErrorResponse response) {
+        super(throwable);
+        mResponse = response;
+    }
 
-    /**
-     * 认证出错回调
-     */
-    public void onError(DoubanException exception);
-
-    /**
-     * 取消认证回调
-     */
-    public void onCancel();
-
-    /**
-     * 无论认证成功或者失败都会回调
-     */
-    public void onFinish();
+    public RequestException(ErrorResponse response) {
+        super();
+        mResponse = response;
+    }
 }

@@ -23,14 +23,14 @@
  */
 package com.ryeeeeee.doubansdk4android.api.movie;
 
-import com.ryeeeeee.doubansdk4android.api.BaseListener;
-import com.ryeeeeee.doubansdk4android.api.RequestException;
+import com.ryeeeeee.doubansdk4android.api.IBaseListener;
+import com.ryeeeeee.doubansdk4android.exception.RequestException;
 
 /**
  * @author Ryeeeeee
  * @since 2015-02-25
  */
-public interface MovieListener<T> extends BaseListener<T, RequestException> {
+public interface IMovieListener<T> extends IBaseListener<T, RequestException> {
 
     @Override
     void onSuccess(T t);

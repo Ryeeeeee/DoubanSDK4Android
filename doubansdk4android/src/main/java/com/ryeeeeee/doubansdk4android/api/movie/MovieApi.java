@@ -26,17 +26,14 @@ package com.ryeeeeee.doubansdk4android.api.movie;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.ryeeeeee.doubansdk4android.Douban;
-import com.ryeeeeee.doubansdk4android.api.BaseListener;
 import com.ryeeeeee.doubansdk4android.api.ErrorResponse;
-import com.ryeeeeee.doubansdk4android.api.RequestException;
-import com.ryeeeeee.doubansdk4android.auth.oauth.HttpParam;
-import com.ryeeeeee.doubansdk4android.auth.oauth.OAuth;
+import com.ryeeeeee.doubansdk4android.exception.RequestException;
+import com.ryeeeeee.doubansdk4android.api.auth.oauth.OAuth;
 import com.ryeeeeee.doubansdk4android.net.HttpHelper;
 import com.ryeeeeee.doubansdk4android.util.JsonUtil;
 import com.ryeeeeee.doubansdk4android.util.LogUtil;
 
 import org.apache.http.Header;
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -54,7 +51,7 @@ public class MovieApi {
      * 获得电影条目信息
      * @param id
      */
-    public static void getMovieSubject(int id, final MovieListener<Subject> listener) {
+    public static void getMovieSubject(int id, final IMovieListener<Subject> listener) {
         String url = MOVIE_API_BASE_URL + "subject/" + id;
 
         Header[] headers = new Header[] {
@@ -223,7 +220,7 @@ public class MovieApi {
      * @param start
      * @param count
      */
-    public static void getTop250(int start, int count, final MovieListener<SubjectList> listener) {
+    public static void getTop250(int start, int count, final IMovieListener<SubjectList> listener) {
         String url = MOVIE_API_BASE_URL + "top250";
 
         RequestParams param = new RequestParams();
@@ -250,7 +247,7 @@ public class MovieApi {
     /**
      * 北美票房榜
      */
-    public static void getUsBox(final MovieListener<UsBox> listener) {
+    public static void getUsBox(final IMovieListener<UsBox> listener) {
         String url = MOVIE_API_BASE_URL + "us_box";
 
         HttpHelper.get(url, null, new JsonHttpResponseHandler() {

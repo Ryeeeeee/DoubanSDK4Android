@@ -25,9 +25,9 @@ package com.ryeeeeee.doubanx.ui;
 
 import android.os.Bundle;
 
-import com.ryeeeeee.doubansdk4android.api.RequestException;
+import com.ryeeeeee.doubansdk4android.exception.RequestException;
 import com.ryeeeeee.doubansdk4android.api.movie.MovieApi;
-import com.ryeeeeee.doubansdk4android.api.movie.MovieListener;
+import com.ryeeeeee.doubansdk4android.api.movie.IMovieListener;
 import com.ryeeeeee.doubansdk4android.api.movie.Subject;
 import com.ryeeeeee.doubansdk4android.api.movie.SubjectList;
 import com.ryeeeeee.doubansdk4android.api.movie.UsBox;
@@ -46,7 +46,7 @@ public class MovieActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         getSupportActionBar().setTitle("豆瓣电影");
 
-        MovieApi.getMovieSubject(1764796, new MovieListener<Subject>() {
+        MovieApi.getMovieSubject(1764796, new IMovieListener<Subject>() {
             @Override
             public void onSuccess(Subject subject) {
                 LogUtil.d(TAG, subject.toString());
@@ -60,7 +60,7 @@ public class MovieActivity extends BaseActivity {
 
         MovieApi.getCelebrity(1054395);
 
-        MovieApi.getTop250(0, 20, new MovieListener<SubjectList>() {
+        MovieApi.getTop250(0, 20, new IMovieListener<SubjectList>() {
             @Override
             public void onSuccess(SubjectList subjectList) {
 
@@ -72,7 +72,7 @@ public class MovieActivity extends BaseActivity {
             }
         });
 
-        MovieApi.getUsBox(new MovieListener<UsBox>() {
+        MovieApi.getUsBox(new IMovieListener<UsBox>() {
             @Override
             public void onSuccess(UsBox usBox) {
                 LogUtil.d(TAG, usBox.toString());

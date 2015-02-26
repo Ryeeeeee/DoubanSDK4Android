@@ -27,14 +27,13 @@ import com.google.gson.reflect.TypeToken;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.ryeeeeee.doubansdk4android.Douban;
-import com.ryeeeeee.doubansdk4android.auth.oauth.OAuth;
+import com.ryeeeeee.doubansdk4android.api.auth.oauth.OAuth;
 import com.ryeeeeee.doubansdk4android.net.HttpHelper;
 import com.ryeeeeee.doubansdk4android.util.JsonUtil;
 import com.ryeeeeee.doubansdk4android.util.LogUtil;
 
 import org.apache.http.Header;
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.List;
@@ -61,7 +60,7 @@ public class ShuoApi {
      * @param count 默认20，最大200
      * @param start 默认0
      */
-    public static void getTimeline(long sinceId, long untilId, int count, int start, final ShuoListener listener) {
+    public static void getTimeline(long sinceId, long untilId, int count, int start, final IShuoListener listener) {
         String url = SHUO_API_BASE_URL + "home_timeline";
 
         RequestParams params = new RequestParams();

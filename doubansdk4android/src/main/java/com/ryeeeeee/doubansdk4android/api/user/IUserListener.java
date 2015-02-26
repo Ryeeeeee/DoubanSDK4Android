@@ -21,19 +21,21 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.ryeeeeee.doubansdk4android.api;
+package com.ryeeeeee.doubansdk4android.api.user;
 
-import com.ryeeeeee.doubansdk4android.exception.DoubanException;
+import com.ryeeeeee.doubansdk4android.api.IBaseListener;
+import com.ryeeeeee.doubansdk4android.exception.RequestException;
 
 /**
  * @author Ryeeeeee
- * @since 2015-02-25
+ * @since 2015-02-13
  */
-public class RequestException extends DoubanException {
-    private ErrorResponse mResponse;
+public interface IUserListener<T> extends IBaseListener<T,RequestException> {
 
-    public RequestException(Throwable throwable, ErrorResponse response) {
-        super(throwable);
-        mResponse = response;
-    }
+    @Override
+    void onSuccess(T t);
+
+    @Override
+    void onFailure(RequestException exception);
+
 }

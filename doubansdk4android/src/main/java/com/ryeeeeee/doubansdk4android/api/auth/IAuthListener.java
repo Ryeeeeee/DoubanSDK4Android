@@ -21,49 +21,40 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.ryeeeeee.doubansdk4android.auth.oauth;
+package com.ryeeeeee.doubansdk4android.api.auth;
+
+import com.ryeeeeee.doubansdk4android.exception.DoubanException;
+import com.ryeeeeee.doubansdk4android.exception.RequestException;
 
 /**
+ * 认证回调接口
+ *
  * @author Ryeeeeee
- * @since 2015-01-27
+ * @since 2015-01-24
  */
-public class ErrorResponse {
-    private int code;
-    private String msg;
-    private String request;
+public interface IAuthListener {
+    /**
+     * 认证成功回调
+     */
+    public void onAuthSuccess(String userId, String userName);
 
-    public ErrorResponse(int code, String msg, String request) {
-        this.code = code;
-        this.msg = msg;
-        this.request = request;
-    }
+    /**
+     * 认证失败回调
+     */
+    public void onAuthFailure(RequestException exception);
 
-    @Override
-    public String toString() {
-        return super.toString() + "code: " + code + "msg: " + msg + "request:" + request;
-    }
+    /**
+     * 认证出错回调
+     */
+    public void onError(DoubanException exception);
 
-    public int getCode() {
-        return code;
-    }
+    /**
+     * 取消认证回调
+     */
+    public void onCancel();
 
-    public void setCode(int code) {
-        this.code = code;
-    }
-
-    public String getMsg() {
-        return msg;
-    }
-
-    public void setMsg(String msg) {
-        this.msg = msg;
-    }
-
-    public String getRequest() {
-        return request;
-    }
-
-    public void setRequest(String request) {
-        this.request = request;
-    }
+    /**
+     * 无论认证成功或者失败都会回调
+     */
+    public void onFinish();
 }

@@ -27,32 +27,25 @@ package com.ryeeeeee.doubanx.ui;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
-import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Build;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.transition.Explode;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewAnimationUtils;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.google.gson.reflect.TypeToken;
 import com.ryeeeeee.doubansdk4android.Douban;
-import com.ryeeeeee.doubansdk4android.api.RequestException;
-import com.ryeeeeee.doubansdk4android.api.shuo.Shuo;
+import com.ryeeeeee.doubansdk4android.exception.RequestException;
 import com.ryeeeeee.doubansdk4android.api.user.UserApi;
 import com.ryeeeeee.doubansdk4android.api.user.UserInfo;
-import com.ryeeeeee.doubansdk4android.api.user.UserListener;
-import com.ryeeeeee.doubansdk4android.auth.IAuthListener;
-import com.ryeeeeee.doubansdk4android.auth.oauth.ErrorResponse;
-import com.ryeeeeee.doubansdk4android.auth.oauth.Scope;
+import com.ryeeeeee.doubansdk4android.api.user.IUserListener;
+import com.ryeeeeee.doubansdk4android.api.auth.IAuthListener;
+import com.ryeeeeee.doubansdk4android.api.auth.oauth.Scope;
 import com.ryeeeeee.doubansdk4android.exception.DoubanException;
-import com.ryeeeeee.doubansdk4android.util.JsonUtil;
 import com.ryeeeeee.doubansdk4android.util.LogUtil;
 import com.ryeeeeee.doubanx.R;
 
@@ -88,14 +81,15 @@ public class MainActivity extends ActionBarActivity {
                 LogUtil.i(TAG, "认证 ...");
                 Douban.authorize(Scope.getAllScopeByString(), new IAuthListener() {
                     @Override
-                    public void onAuthSuccess(String userId) {
-                        Toast.makeText(MainActivity.this, userId, Toast.LENGTH_SHORT).show();
+                    public void onAuthSuccess(String userId, String userName) {
+                        Toast.makeText(MainActivity.this, "userId:" + userId + " userName:" + userName,
+                                Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(MainActivity.this, HomeActivity.class));
                     }
 
                     @Override
-                    public void onAuthFailure(ErrorResponse response) {
-                        Toast.makeText(MainActivity.this, response.toString(), Toast.LENGTH_SHORT).show();
+                    public void onAuthFailure(RequestException exception) {
+                        Toast.makeText(MainActivity.this, exception.toString(), Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
@@ -120,7 +114,7 @@ public class MainActivity extends ActionBarActivity {
         mUserButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                UserApi.getCurrentUserInfo(new UserListener<UserInfo>() {
+                UserApi.getCurrentUserInfo(new IUserListener<UserInfo>() {
                     @Override
                     public void onSuccess(UserInfo userInfo) {
                         Toast.makeText(MainActivity.this, "获取认证用户成功！", Toast.LENGTH_SHORT).show();

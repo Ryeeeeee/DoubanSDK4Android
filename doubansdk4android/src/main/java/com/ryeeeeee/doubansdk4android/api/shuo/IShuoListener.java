@@ -21,21 +21,19 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.ryeeeeee.doubansdk4android.api.user;
+package com.ryeeeeee.doubansdk4android.api.shuo;
 
-import com.ryeeeeee.doubansdk4android.api.BaseListener;
-import com.ryeeeeee.doubansdk4android.api.RequestException;
+import com.ryeeeeee.doubansdk4android.api.IBaseListener;
+import com.ryeeeeee.doubansdk4android.exception.RequestException;
 
 /**
  * @author Ryeeeeee
- * @since 2015-02-13
+ * @since 2015-02-20
  */
-public interface UserListener<T> extends BaseListener<T,RequestException> {
-
+public interface IShuoListener<T> extends IBaseListener<T, RequestException> {
     @Override
     void onSuccess(T t);
 
     @Override
     void onFailure(RequestException exception);
-
 }

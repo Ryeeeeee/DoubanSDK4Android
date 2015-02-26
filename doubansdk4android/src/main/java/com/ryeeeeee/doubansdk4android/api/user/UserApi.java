@@ -26,15 +26,12 @@ package com.ryeeeeee.doubansdk4android.api.user;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.ryeeeeee.doubansdk4android.Douban;
-import com.ryeeeeee.doubansdk4android.auth.oauth.OAuth;
+import com.ryeeeeee.doubansdk4android.api.auth.oauth.OAuth;
 import com.ryeeeeee.doubansdk4android.net.HttpHelper;
 import com.ryeeeeee.doubansdk4android.util.JsonUtil;
 import com.ryeeeeee.doubansdk4android.util.LogUtil;
-import com.ryeeeeee.doubansdk4android.util.PreferenceUtil;
 
 import org.apache.http.Header;
-import org.apache.http.HeaderElement;
-import org.apache.http.ParseException;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -57,7 +54,7 @@ public class UserApi {
      * 获得当前授权用户信息
      * @param listener
      */
-    public static void getCurrentUserInfo(final UserListener<UserInfo> listener) {
+    public static void getCurrentUserInfo(final IUserListener<UserInfo> listener) {
 
         String url = USER_API_BASE_URL + "~me";
 
@@ -91,7 +88,7 @@ public class UserApi {
      * @param userId 为 用户uid 或者 数字id
      * @param listener
      */
-    public static void getUserInfo(String userId, final UserListener<UserInfo> listener) {
+    public static void getUserInfo(String userId, final IUserListener<UserInfo> listener) {
 
         String url = USER_API_BASE_URL + userId;
 
@@ -121,7 +118,7 @@ public class UserApi {
      * @param count 返回结果的数量
      * @param listener
      */
-    public static void searchUser(String content, int start , int count, final UserListener<UserList> listener) {
+    public static void searchUser(String content, int start , int count, final IUserListener<UserList> listener) {
         String url = USER_API_BASE_URL;
 
         RequestParams params = new RequestParams();
