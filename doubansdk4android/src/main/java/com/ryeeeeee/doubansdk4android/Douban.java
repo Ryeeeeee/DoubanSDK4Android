@@ -97,7 +97,6 @@ public class Douban {
 
     public static void authorize(String scope, IAuthListener listener) {
         // TODO check Douban init()
-
         OAuth.authorize(sContext, scope, listener);
     }
 

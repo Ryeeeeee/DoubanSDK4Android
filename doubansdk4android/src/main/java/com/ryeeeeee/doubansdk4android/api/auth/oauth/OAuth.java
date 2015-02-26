@@ -29,8 +29,10 @@ import android.content.Intent;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.ryeeeeee.doubansdk4android.Douban;
+import com.ryeeeeee.doubansdk4android.api.ErrorResponse;
 import com.ryeeeeee.doubansdk4android.api.auth.IAuthListener;
 import com.ryeeeeee.doubansdk4android.exception.DoubanException;
+import com.ryeeeeee.doubansdk4android.exception.RequestException;
 import com.ryeeeeee.doubansdk4android.net.HttpHelper;
 import com.ryeeeeee.doubansdk4android.util.JsonUtil;
 import com.ryeeeeee.doubansdk4android.util.LogUtil;
@@ -86,9 +88,10 @@ public class OAuth {
         // 检查本地 access token 是否有包含此权限
         String localScope = PreferenceUtil.getString(Douban.getContext(), OAuth.SCOPE_KEY);
         List<String> localScopeList = Scope.convertScopeString2List(localScope);
+
         List<String> scopeList = Scope.convertScopeString2List(scope);
 
-        if (localScopeList.containsAll(scopeList)) {
+        if (localScopeList != null && localScopeList.containsAll(scopeList)) {
 
             // 检查 access token 是否在有效期内
             long expires_time = PreferenceUtil.getLong(Douban.getContext(), OAuth.EXPIRES_TIME_KEY);
@@ -155,9 +158,10 @@ public class OAuth {
             }
 
             @Override
-            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 LogUtil.d(TAG + "onFailure", "status Code: " + statusCode);
-                listener.onError(new DoubanException(throwable));
+                ErrorResponse response = JsonUtil.fromJson(errorResponse.toString(), ErrorResponse.class);
+                listener.onAuthFailure(new RequestException(response));
             }
 
         });
@@ -183,15 +187,17 @@ public class OAuth {
 
                 AccessTokenResponse response = JsonUtil.fromJson(jsonResponse.toString(), AccessTokenResponse.class);
                 updateLocalAccessTokenInfo(response);
-
                 listener.onAuthSuccess(response.getDouban_user_id(), response.getDouban_user_name());
             }
 
             @Override
-            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                LogUtil.d(OAuth.TAG, responseString);
-                listener.onError(new DoubanException(throwable));
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                LogUtil.d(OAuth.TAG, errorResponse.toString());
+
+                ErrorResponse response = JsonUtil.fromJson(errorResponse.toString(), ErrorResponse.class);
+                listener.onAuthFailure(new RequestException(response));
             }
+
         });
     }
 
@@ -231,6 +237,7 @@ public class OAuth {
      * @param response 认证成功后返回的 access token 信息
      */
     private static void updateLocalAccessTokenInfo(AccessTokenResponse response) {
+        // TODO 添加scope的认证
         PreferenceUtil.setString(Douban.getContext(), OAuth.ACCESS_TOKEN_KEY, response.getAccess_token());
         PreferenceUtil.setString(Douban.getContext(), OAuth.REFRESH_TOKEN_KEY, response.getRefresh_token());
         PreferenceUtil.setString(Douban.getContext(), OAuth.USER_ID_KEY, response.getDouban_user_id());

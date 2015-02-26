@@ -68,6 +68,10 @@ public class ErrorResponse {
 
     @Override
     public String toString() {
-        return super.toString() + "code: " + code + "msg: " + msg + "request:" + request;
+        return "ErrorResponse{" +
+                "msg='" + msg + '\'' +
+                ", code=" + code +
+                ", request='" + request + '\'' +
+                '}';
     }
 }

@@ -203,9 +203,6 @@ public class MainActivity extends ActionBarActivity {
     }
 
     private void unitTest() {
-        List<String> list = Scope.convertScopeString2List(Scope.getAllScopeByString());
-        for(String scope: list){
-            LogUtil.d(TAG, "scope:" + scope);
-        }
+
     }
 }

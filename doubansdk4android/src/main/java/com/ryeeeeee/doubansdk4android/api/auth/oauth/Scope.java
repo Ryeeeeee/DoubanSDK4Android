@@ -147,8 +147,12 @@ public class Scope {
      * @return
      */
     public static List<String> convertScopeString2List(String scope) {
-        String[] scopes = scope.split(",");
-        List<String> list = Arrays.asList(scopes);
-        return list;
+
+        if (scope != null && !scope.trim().equals("")) {
+            String[] scopes = scope.split(",");
+            List<String> list = Arrays.asList(scopes);
+            return list;
+        }
+        return null;
     }
 }

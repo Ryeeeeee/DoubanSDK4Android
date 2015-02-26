@@ -55,4 +55,11 @@ public class PreferenceUtil {
         editor.putString(key, value);
         editor.apply();
     }
+
+    public static void clearAllPreferences(Context context) {
+        SharedPreferences preferences = context.getSharedPreferences(PREFERENCE_KEY, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.clear();
+        editor.apply();
+    }
 }

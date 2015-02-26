@@ -42,4 +42,11 @@ public class RequestException extends DoubanException {
         super();
         mResponse = response;
     }
+
+    @Override
+    public String toString() {
+        return "RequestException{" +
+                "mResponse=" + mResponse +
+                '}';
+    }
 }
