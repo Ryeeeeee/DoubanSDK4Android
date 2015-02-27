@@ -120,4 +120,18 @@ public class SimpleSubject {
     public void setSubtype(String subtype) {
         this.subtype = subtype;
     }
+
+    @Override
+    public String toString() {
+        return "SimpleSubject{" +
+                "id='" + id + '\'' +
+                ", title='" + title + '\'' +
+                ", original_title='" + original_title + '\'' +
+                ", alt='" + alt + '\'' +
+                ", images=" + images +
+                ", rating=" + rating +
+                ", year='" + year + '\'' +
+                ", subtype='" + subtype + '\'' +
+                '}';
+    }
 }

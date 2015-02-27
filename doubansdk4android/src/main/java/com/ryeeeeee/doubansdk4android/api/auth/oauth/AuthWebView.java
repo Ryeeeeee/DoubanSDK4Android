@@ -35,7 +35,7 @@ import android.widget.RelativeLayout;
 
 import com.ryeeeeee.doubansdk4android.Douban;
 import com.ryeeeeee.doubansdk4android.api.ErrorResponse;
-import com.ryeeeeee.doubansdk4android.api.auth.IAuthListener;
+import com.ryeeeeee.doubansdk4android.api.auth.AuthListener;
 import com.ryeeeeee.doubansdk4android.exception.DoubanException;
 import com.ryeeeeee.doubansdk4android.exception.RequestException;
 import com.ryeeeeee.doubansdk4android.util.JsonUtil;
@@ -57,9 +57,9 @@ public class AuthWebView extends RelativeLayout {
     /** */
     private WebView mWebView;
     /** */
-    private IAuthListener mAuthListener;
+    private AuthListener mAuthListener;
 
-    public AuthWebView(Context context, IAuthListener listener) {
+    public AuthWebView(Context context, AuthListener listener) {
         super(context);
 
         init(context, listener);
@@ -70,7 +70,7 @@ public class AuthWebView extends RelativeLayout {
     }
 
     @SuppressLint({"SetJavaScriptEnabled", "AddJavascriptInterface"})
-    private void init(Context context, IAuthListener listener) {
+    private void init(Context context, AuthListener listener) {
 
         this.mContext = context;
         this.mAuthListener = listener;

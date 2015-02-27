@@ -143,4 +143,20 @@ public class UserInfo {
     public void setDesc(String desc) {
         this.desc = desc;
     }
+
+    @Override
+    public String toString() {
+        return "UserInfo{" +
+                "id='" + id + '\'' +
+                ", uid='" + uid + '\'' +
+                ", name='" + name + '\'' +
+                ", avatar='" + avatar + '\'' +
+                ", alt='" + alt + '\'' +
+                ", relation='" + relation + '\'' +
+                ", created='" + created + '\'' +
+                ", loc_id='" + loc_id + '\'' +
+                ", loc_name='" + loc_name + '\'' +
+                ", desc='" + desc + '\'' +
+                '}';
+    }
 }

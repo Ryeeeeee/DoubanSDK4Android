@@ -172,6 +172,21 @@ public class Shuo {
         public void setScreen_name(String screen_name) {
             this.screen_name = screen_name;
         }
+
+        @Override
+        public String toString() {
+            return "User{" +
+                    "uid='" + uid + '\'' +
+                    ", description='" + description + '\'' +
+                    ", large_avatar='" + large_avatar + '\'' +
+                    ", original_site_url='" + original_site_url + '\'' +
+                    ", small_avatar='" + small_avatar + '\'' +
+                    ", original_site_id=" + original_site_id +
+                    ", type='" + type + '\'' +
+                    ", id='" + id + '\'' +
+                    ", screen_name='" + screen_name + '\'' +
+                    '}';
+        }
     }
 
     public static class Source  {
@@ -227,6 +242,15 @@ public class Shuo {
 
         public void setUrls(List<Url> urls) {
             this.urls = urls;
+        }
+
+        @Override
+        public String toString() {
+            return "Entity{" +
+                    "user_mentions=" + user_mentions +
+                    ", topics=" + topics +
+                    ", urls=" + urls +
+                    '}';
         }
     }
 
@@ -322,6 +346,16 @@ public class Shuo {
                 public void setIsmall(List<Integer> ismall) {
                     this.ismall = ismall;
                 }
+
+                @Override
+                public String toString() {
+                    return "Size{" +
+                            "small=" + small +
+                            ", raw=" + raw +
+                            ", median=" + median +
+                            ", ismall=" + ismall +
+                            '}';
+                }
             }
 
             public String getSrc() {
@@ -378,6 +412,19 @@ public class Shuo {
 
             public void setIs_animated(boolean is_animated) {
                 this.is_animated = is_animated;
+            }
+
+            @Override
+            public String toString() {
+                return "Media{" +
+                        "src='" + src + '\'' +
+                        ", sizes=" + sizes +
+                        ", secret_pid='" + secret_pid + '\'' +
+                        ", original_src='" + original_src + '\'' +
+                        ", href='" + href + '\'' +
+                        ", type='" + type + '\'' +
+                        ", is_animated=" + is_animated +
+                        '}';
             }
         }
 
@@ -443,6 +490,20 @@ public class Shuo {
 
         public void setExpaned_href(String expaned_href) {
             this.expaned_href = expaned_href;
+        }
+
+        @Override
+        public String toString() {
+            return "Attachment{" +
+                    "description='" + description + '\'' +
+                    ", title='" + title + '\'' +
+                    ", media=" + media +
+                    ", properties=" + properties +
+                    ", caption='" + caption + '\'' +
+                    ", href='" + href + '\'' +
+                    ", type='" + type + '\'' +
+                    ", expaned_href='" + expaned_href + '\'' +
+                    '}';
         }
     }
 
@@ -596,5 +657,30 @@ public class Shuo {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    @Override
+    public String toString() {
+        return "Shuo{" +
+                "category='" + category + '\'' +
+                ", reshared_count=" + reshared_count +
+                ", layout=" + layout +
+                ", from_subscription=" + from_subscription +
+                ", title='" + title + '\'' +
+                ", text='" + text + '\'' +
+                ", created_at='" + created_at + '\'' +
+                ", can_reply=" + can_reply +
+                ", liked=" + liked +
+                ", attachments=" + attachments +
+                ", entities=" + entities +
+                ", like_count=" + like_count +
+                ", comments_count=" + comments_count +
+                ", source=" + source +
+                ", is_follow=" + is_follow +
+                ", has_photo=" + has_photo +
+                ", type=" + type +
+                ", id=" + id +
+                ", user=" + user +
+                '}';
     }
 }

@@ -301,4 +301,36 @@ public class Subject {
     public void setAka(List<String> aka) {
         this.aka = aka;
     }
+
+    @Override
+    public String toString() {
+        return "Subject{" +
+                "rating=" + rating +
+                ", reviews_count=" + reviews_count +
+                ", wish_count=" + wish_count +
+                ", collect_count=" + collect_count +
+                ", douban_site='" + douban_site + '\'' +
+                ", year='" + year + '\'' +
+                ", images=" + images +
+                ", alt='" + alt + '\'' +
+                ", id='" + id + '\'' +
+                ", mobile_url='" + mobile_url + '\'' +
+                ", title='" + title + '\'' +
+                ", do_count='" + do_count + '\'' +
+                ", seasons_count='" + seasons_count + '\'' +
+                ", schedule_url='" + schedule_url + '\'' +
+                ", episodes_count='" + episodes_count + '\'' +
+                ", genres=" + genres +
+                ", countries=" + countries +
+                ", casts=" + casts +
+                ", current_season='" + current_season + '\'' +
+                ", original_title='" + original_title + '\'' +
+                ", summary='" + summary + '\'' +
+                ", subtype='" + subtype + '\'' +
+                ", directors=" + directors +
+                ", comments_count=" + comments_count +
+                ", ratings_count=" + ratings_count +
+                ", aka=" + aka +
+                '}';
+    }
 }

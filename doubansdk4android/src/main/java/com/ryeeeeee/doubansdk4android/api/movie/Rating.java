@@ -75,4 +75,14 @@ public class Rating {
     public void setStars(int stars) {
         this.stars = stars;
     }
+
+    @Override
+    public String toString() {
+        return "Rating{" +
+                "min=" + min +
+                ", max=" + max +
+                ", average=" + average +
+                ", stars=" + stars +
+                '}';
+    }
 }

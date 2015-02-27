@@ -51,7 +51,7 @@ public class MovieApi {
      * 获得电影条目信息
      * @param id
      */
-    public static void getMovieSubject(int id, final IMovieListener<Subject> listener) {
+    public static void getMovieSubject(int id, final MovieListener<Subject> listener) {
         String url = MOVIE_API_BASE_URL + "subject/" + id;
 
         Header[] headers = new Header[] {
@@ -198,7 +198,8 @@ public class MovieApi {
      * @param start
      * @param count
      */
-    public static void search(String content, String tag, int start, int count) {
+    public static void search(String content, String tag, int start, int count,
+                              final MovieListener<MovieList> listener) {
         String url = MOVIE_API_BASE_URL + "search";
 
         RequestParams param = new RequestParams();
@@ -211,6 +212,14 @@ public class MovieApi {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 LogUtil.d(TAG, "search: " + response.toString());
+                MovieList list = JsonUtil.fromJson(response.toString(), MovieList.class);
+                listener.onSuccess(list);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                ErrorResponse response = JsonUtil.fromJson(errorResponse.toString(), ErrorResponse.class);
+                listener.onFailure(new RequestException(throwable, response));
             }
         });
     }
@@ -220,7 +229,7 @@ public class MovieApi {
      * @param start
      * @param count
      */
-    public static void getTop250(int start, int count, final IMovieListener<SubjectList> listener) {
+    public static void getTop250(int start, int count, final MovieListener<SubjectList> listener) {
         String url = MOVIE_API_BASE_URL + "top250";
 
         RequestParams param = new RequestParams();
@@ -247,7 +256,7 @@ public class MovieApi {
     /**
      * 北美票房榜
      */
-    public static void getUsBox(final IMovieListener<UsBox> listener) {
+    public static void getUsBox(final MovieListener<UsBox> listener) {
         String url = MOVIE_API_BASE_URL + "us_box";
 
         HttpHelper.get(url, null, new JsonHttpResponseHandler() {

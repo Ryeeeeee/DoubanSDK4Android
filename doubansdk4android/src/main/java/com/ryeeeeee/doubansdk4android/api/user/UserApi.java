@@ -26,7 +26,9 @@ package com.ryeeeeee.doubansdk4android.api.user;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.ryeeeeee.doubansdk4android.Douban;
+import com.ryeeeeee.doubansdk4android.api.ErrorResponse;
 import com.ryeeeeee.doubansdk4android.api.auth.oauth.OAuth;
+import com.ryeeeeee.doubansdk4android.exception.RequestException;
 import com.ryeeeeee.doubansdk4android.net.HttpHelper;
 import com.ryeeeeee.doubansdk4android.util.JsonUtil;
 import com.ryeeeeee.doubansdk4android.util.LogUtil;
@@ -44,7 +46,7 @@ public class UserApi {
     private final static String TAG = "UserApi";
 
     /** 用户 API base url */
-    private final static String USER_API_BASE_URL = "https://api.douban.com/v2/user/";
+    private final static String USER_API_BASE_URL = "https://api.douban.com/v2/user";
 
     private final static String SEARCH_KEY = "q";
     private final static String START_KEY = "start";
@@ -54,9 +56,9 @@ public class UserApi {
      * 获得当前授权用户信息
      * @param listener
      */
-    public static void getCurrentUserInfo(final IUserListener<UserInfo> listener) {
+    public static void getCurrentUserInfo(final UserListener<UserInfo> listener) {
 
-        String url = USER_API_BASE_URL + "~me";
+        String url = USER_API_BASE_URL + "/~me";
 
         Header[] headers = new Header[] {
             OAuth.getTokenHeader()
@@ -70,8 +72,9 @@ public class UserApi {
             }
 
             @Override
-            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                super.onFailure(statusCode, headers, responseString, throwable);
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                ErrorResponse response = JsonUtil.fromJson(errorResponse.toString(), ErrorResponse.class);
+                listener.onFailure(new RequestException(throwable, response));
             }
 
             @Override
@@ -88,9 +91,9 @@ public class UserApi {
      * @param userId 为 用户uid 或者 数字id
      * @param listener
      */
-    public static void getUserInfo(String userId, final IUserListener<UserInfo> listener) {
+    public static void getUserInfo(String userId, final UserListener<UserInfo> listener) {
 
-        String url = USER_API_BASE_URL + userId;
+        String url = USER_API_BASE_URL + "/" +userId;
 
         Header[] headers = new Header[] {
             OAuth.getTokenHeader()
@@ -104,9 +107,11 @@ public class UserApi {
             }
 
             @Override
-            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                super.onFailure(statusCode, headers, responseString, throwable);
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                ErrorResponse response = JsonUtil.fromJson(errorResponse.toString(), ErrorResponse.class);
+                listener.onFailure(new RequestException(throwable, response));
             }
+
         });
 
     }
@@ -118,7 +123,7 @@ public class UserApi {
      * @param count 返回结果的数量
      * @param listener
      */
-    public static void searchUser(String content, int start , int count, final IUserListener<UserList> listener) {
+    public static void searchUser(String content, int start , int count, final UserListener<UserList> listener) {
         String url = USER_API_BASE_URL;
 
         RequestParams params = new RequestParams();
@@ -134,11 +139,12 @@ public class UserApi {
             }
 
             @Override
-            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                super.onFailure(statusCode, headers, responseString, throwable);
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                ErrorResponse response = JsonUtil.fromJson(errorResponse.toString(), ErrorResponse.class);
+                listener.onFailure(new RequestException(throwable, response));
             }
         });
-
     }
+
 
 }

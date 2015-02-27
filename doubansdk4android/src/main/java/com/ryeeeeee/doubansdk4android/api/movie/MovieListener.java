@@ -21,18 +21,20 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.ryeeeeee.doubansdk4android.api;
+package com.ryeeeeee.doubansdk4android.api.movie;
 
-import com.ryeeeeee.doubansdk4android.exception.DoubanException;
+import com.ryeeeeee.doubansdk4android.api.BaseListener;
+import com.ryeeeeee.doubansdk4android.exception.RequestException;
 
 /**
  * @author Ryeeeeee
- * @since 2015-02-13
+ * @since 2015-02-25
  */
-public interface IBaseListener<T,E> {
+public interface MovieListener<T> extends BaseListener<T, RequestException> {
 
-    public void onSuccess(T t);
+    @Override
+    void onSuccess(T t);
 
-    public void onFailure(E e);
-
+    @Override
+    void onFailure(RequestException exception);
 }

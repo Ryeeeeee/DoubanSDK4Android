@@ -64,4 +64,13 @@ public class SimpleRating {
     public void setValue(int value) {
         this.value = value;
     }
+
+    @Override
+    public String toString() {
+        return "SimpleRating{" +
+                "min=" + min +
+                ", max=" + max +
+                ", value=" + value +
+                '}';
+    }
 }

@@ -39,8 +39,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.ryeeeeee.doubansdk4android.api.user.UserListener;
 import com.ryeeeeee.doubansdk4android.exception.RequestException;
-import com.ryeeeeee.doubansdk4android.api.user.IUserListener;
 import com.ryeeeeee.doubansdk4android.api.user.UserApi;
 import com.ryeeeeee.doubansdk4android.api.user.UserInfo;
 import com.ryeeeeee.doubanx.R;
@@ -255,7 +255,7 @@ public class BaseActivity extends ActionBarActivity {
             return;
         }
 
-        UserApi.getCurrentUserInfo(new IUserListener<UserInfo>() {
+        UserApi.getCurrentUserInfo(new UserListener<UserInfo>() {
             @Override
             public void onSuccess(UserInfo userInfo) {
                 Toast.makeText(BaseActivity.this, "获取用户信息成功", Toast.LENGTH_SHORT).show();

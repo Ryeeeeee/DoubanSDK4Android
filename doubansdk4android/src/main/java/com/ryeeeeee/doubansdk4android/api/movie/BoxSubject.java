@@ -74,4 +74,14 @@ public class BoxSubject {
     public void setSubject(SimpleSubject subject) {
         this.subject = subject;
     }
+
+    @Override
+    public String toString() {
+        return "BoxSubject{" +
+                "rank=" + rank +
+                ", box=" + box +
+                ", isNew=" + isNew +
+                ", subject=" + subject +
+                '}';
+    }
 }

@@ -99,4 +99,15 @@ public class User {
     public void setAlt(String alt) {
         this.alt = alt;
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id='" + id + '\'' +
+                ", uid='" + uid + '\'' +
+                ", name='" + name + '\'' +
+                ", avatar='" + avatar + '\'' +
+                ", alt='" + alt + '\'' +
+                '}';
+    }
 }

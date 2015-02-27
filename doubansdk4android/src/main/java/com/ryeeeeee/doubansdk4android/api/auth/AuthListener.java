@@ -21,20 +21,40 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.ryeeeeee.doubansdk4android.api.movie;
+package com.ryeeeeee.doubansdk4android.api.auth;
 
-import com.ryeeeeee.doubansdk4android.api.IBaseListener;
+import com.ryeeeeee.doubansdk4android.exception.DoubanException;
 import com.ryeeeeee.doubansdk4android.exception.RequestException;
 
 /**
+ * 认证回调接口
+ *
  * @author Ryeeeeee
- * @since 2015-02-25
+ * @since 2015-01-24
  */
-public interface IMovieListener<T> extends IBaseListener<T, RequestException> {
+public interface AuthListener {
+    /**
+     * 认证成功回调
+     */
+    public void onAuthSuccess(String userId, String userName);
 
-    @Override
-    void onSuccess(T t);
+    /**
+     * 认证失败回调
+     */
+    public void onAuthFailure(RequestException exception);
 
-    @Override
-    void onFailure(RequestException exception);
+    /**
+     * 认证出错回调
+     */
+    public void onError(DoubanException exception);
+
+    /**
+     * 取消认证回调
+     */
+    public void onCancel();
+
+    /**
+     * 无论认证成功或者失败都会回调
+     */
+    public void onFinish();
 }

@@ -73,4 +73,14 @@ public class SubjectList {
     public void setSubjects(List<SimpleSubject> subjects) {
         this.subjects = subjects;
     }
+
+    @Override
+    public String toString() {
+        return "SubjectList{" +
+                "count=" + count +
+                ", start=" + start +
+                ", total=" + total +
+                ", subjects=" + subjects +
+                '}';
+    }
 }

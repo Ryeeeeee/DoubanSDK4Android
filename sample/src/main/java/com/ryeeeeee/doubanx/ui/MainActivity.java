@@ -39,17 +39,23 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.ryeeeeee.doubansdk4android.Douban;
+import com.ryeeeeee.doubansdk4android.api.auth.AuthListener;
+import com.ryeeeeee.doubansdk4android.api.movie.MovieApi;
+import com.ryeeeeee.doubansdk4android.api.movie.MovieList;
+import com.ryeeeeee.doubansdk4android.api.movie.MovieListener;
+import com.ryeeeeee.doubansdk4android.api.movie.Subject;
+import com.ryeeeeee.doubansdk4android.api.movie.SubjectList;
+import com.ryeeeeee.doubansdk4android.api.movie.UsBox;
+import com.ryeeeeee.doubansdk4android.api.shuo.Shuo;
+import com.ryeeeeee.doubansdk4android.api.user.UserList;
 import com.ryeeeeee.doubansdk4android.exception.RequestException;
 import com.ryeeeeee.doubansdk4android.api.user.UserApi;
 import com.ryeeeeee.doubansdk4android.api.user.UserInfo;
-import com.ryeeeeee.doubansdk4android.api.user.IUserListener;
-import com.ryeeeeee.doubansdk4android.api.auth.IAuthListener;
+import com.ryeeeeee.doubansdk4android.api.user.UserListener;
 import com.ryeeeeee.doubansdk4android.api.auth.oauth.Scope;
 import com.ryeeeeee.doubansdk4android.exception.DoubanException;
 import com.ryeeeeee.doubansdk4android.util.LogUtil;
 import com.ryeeeeee.doubanx.R;
-
-import java.util.List;
 
 import static android.app.ActivityOptions.makeSceneTransitionAnimation;
 
@@ -60,6 +66,8 @@ public class MainActivity extends ActionBarActivity {
     private Button mAuthButton;
     private Button mUserButton;
     private Button mAnimationButton;
+    private Button mSearchUserButton;
+    private Button mGetUserInfoButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,17 +82,16 @@ public class MainActivity extends ActionBarActivity {
         Douban.init(this, "0abda2e1d3262fea2038e8a579728fbe", "9196f7a84f90c966",
                 "http://ryeeeeee.com");
 
-        mAuthButton = (Button) this.findViewById(R.id.button_auth);
-        mAuthButton.setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.button_auth).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 LogUtil.i(TAG, "认证 ...");
-                Douban.authorize(Scope.getAllScopeByString(), new IAuthListener() {
+                Douban.authorize(Scope.getAllScopeByString(), new AuthListener() {
                     @Override
                     public void onAuthSuccess(String userId, String userName) {
                         Toast.makeText(MainActivity.this, "userId:" + userId + " userName:" + userName,
                                 Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(MainActivity.this, HomeActivity.class));
+                        //startActivity(new Intent(MainActivity.this, HomeActivity.class));
                     }
 
                     @Override
@@ -110,11 +117,10 @@ public class MainActivity extends ActionBarActivity {
             }
         });
 
-        mUserButton = (Button) this.findViewById(R.id.button_current_user);
-        mUserButton.setOnClickListener(new View.OnClickListener() {
+        this.findViewById(R.id.button_current_user).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                UserApi.getCurrentUserInfo(new IUserListener<UserInfo>() {
+                UserApi.getCurrentUserInfo(new UserListener<UserInfo>() {
                     @Override
                     public void onSuccess(UserInfo userInfo) {
                         Toast.makeText(MainActivity.this, "获取认证用户成功！", Toast.LENGTH_SHORT).show();
@@ -130,8 +136,7 @@ public class MainActivity extends ActionBarActivity {
             }
         });
 
-        mAnimationButton = (Button) this.findViewById(R.id.button_animation);
-        mAnimationButton.setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.button_animation).setOnClickListener(new View.OnClickListener() {
             @TargetApi(Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onClick(View view) {
@@ -176,8 +181,114 @@ public class MainActivity extends ActionBarActivity {
             }
         });
 
+        findViewById(R.id.button_search_user).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                UserApi.searchUser("Ryeeeeee", 1, 20, new UserListener<UserList>() {
+                    @Override
+                    public void onSuccess(UserList userList) {
+                        LogUtil.d(TAG, "searchUserButton:" + userList.toString());
+                    }
 
+                    @Override
+                    public void onFailure(RequestException exception) {
+                        LogUtil.d(TAG, "searchUserButton:" + exception.toString());
+                    }
+                });
+            }
+        });
 
+        findViewById(R.id.button_get_user_info).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                UserApi.getUserInfo("Ryeeeeee", new UserListener<UserInfo>() {
+                    @Override
+                    public void onSuccess(UserInfo userInfo) {
+                        LogUtil.d(TAG, "getUserInfoButton:" + userInfo.toString());
+                    }
+
+                    @Override
+                    public void onFailure(RequestException exception) {
+                        LogUtil.d(TAG, "getUserInfoButton:" + exception.toString());
+                    }
+                });
+            }
+        });
+
+        findViewById(R.id.button_get_movie_celebrity).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MovieApi.getCelebrity(1054395);
+            }
+        });
+
+        findViewById(R.id.button_get_movie_subject).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MovieApi.getMovieSubject(1764796, new MovieListener<Subject>() {
+                    @Override
+                    public void onSuccess(Subject subject) {
+                        LogUtil.d(TAG, "GET_MOVIE_SUBJECT: " + subject.toString());
+                    }
+
+                    @Override
+                    public void onFailure(RequestException exception) {
+                        LogUtil.d(TAG, "GET_MOVIE_SUBJECT: " + exception.toString());
+                    }
+                });
+            }
+        });
+
+        findViewById(R.id.button_get_movie_top250).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MovieApi.getTop250(0, 20, new MovieListener<SubjectList>() {
+                    @Override
+                    public void onSuccess(SubjectList subjectList) {
+                        LogUtil.d(TAG, "GET_MOVIE_TOP250: " + subjectList.toString());
+                    }
+
+                    @Override
+                    public void onFailure(RequestException exception) {
+                        LogUtil.d(TAG, "GET_MOVIE_TOP250: " + exception.toString());
+                    }
+                });
+            }
+        });
+
+        findViewById(R.id.button_get_movie_us_box).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MovieApi.getUsBox(new MovieListener<UsBox>() {
+                    @Override
+                    public void onSuccess(UsBox usBox) {
+                        LogUtil.d(TAG, "GET_MOVIE_US_BOX: " + usBox.toString());
+                    }
+
+                    @Override
+                    public void onFailure(RequestException exception) {
+                        LogUtil.d(TAG, "GET_MOVIE_US_BOX: " + exception.toString());
+                    }
+                });
+            }
+        });
+
+        findViewById(R.id.button_search_movie).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MovieApi.search("肖申克", null, 0, 20, new MovieListener<MovieList>() {
+                    @Override
+                    public void onSuccess(MovieList movieList) {
+                        LogUtil.d(TAG, "search_movie: " + movieList.toString());
+                    }
+
+                    @Override
+                    public void onFailure(RequestException exception) {
+                        LogUtil.d(TAG, "search_movie : " + exception.toString());
+                    }
+                });
+            }
+        });
     }
 
     @Override

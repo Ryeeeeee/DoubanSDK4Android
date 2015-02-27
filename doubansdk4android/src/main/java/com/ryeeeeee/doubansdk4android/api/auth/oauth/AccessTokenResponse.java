@@ -94,8 +94,12 @@ public class AccessTokenResponse {
 
     @Override
     public String toString() {
-        return super.toString() + " access_token:" + access_token + " refresh_token: " + refresh_token
-                + " douban_user_id: " + douban_user_id + " douban_user_name: " + douban_user_name
-                + " expires_in: " + expires_in;
+        return "AccessTokenResponse{" +
+                "access_token='" + access_token + '\'' +
+                ", expires_in=" + expires_in +
+                ", refresh_token='" + refresh_token + '\'' +
+                ", douban_user_id='" + douban_user_id + '\'' +
+                ", douban_user_name='" + douban_user_name + '\'' +
+                '}';
     }
 }

@@ -27,7 +27,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.KeyEvent;
 
-import com.ryeeeeee.doubansdk4android.api.auth.IAuthListener;
+import com.ryeeeeee.doubansdk4android.api.auth.AuthListener;
 import com.ryeeeeee.doubansdk4android.exception.DoubanException;
 import com.ryeeeeee.doubansdk4android.exception.RequestException;
 
@@ -35,7 +35,7 @@ import com.ryeeeeee.doubansdk4android.exception.RequestException;
  * @author Ryeeeeee
  * @since 2015-01-24
  */
-public class AuthActivity extends Activity implements IAuthListener{
+public class AuthActivity extends Activity implements AuthListener {
 
     private final static String TAG = "AuthActivity";
 
@@ -62,7 +62,7 @@ public class AuthActivity extends Activity implements IAuthListener{
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         // 当用户点击返回按键时，关闭授权页面，并回调取消认证
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            OAuth.getIAuthListener().onCancel();
+            OAuth.getAuthListener().onCancel();
             this.finish();
         }
         return true;
@@ -70,31 +70,31 @@ public class AuthActivity extends Activity implements IAuthListener{
 
     @Override
     public void onAuthSuccess(String userId, String userName) {
-        OAuth.getIAuthListener().onAuthSuccess(userId, userName);
+        OAuth.getAuthListener().onAuthSuccess(userId, userName);
         onFinish();
     }
 
     @Override
     public void onAuthFailure(RequestException exception) {
-        OAuth.getIAuthListener().onAuthFailure(exception);
+        OAuth.getAuthListener().onAuthFailure(exception);
         onFinish();
     }
 
     @Override
     public void onError(DoubanException exception) {
-        OAuth.getIAuthListener().onError(exception);
+        OAuth.getAuthListener().onError(exception);
         onFinish();
     }
 
     @Override
     public void onCancel() {
-        OAuth.getIAuthListener().onCancel();
+        OAuth.getAuthListener().onCancel();
         onFinish();
     }
 
     @Override
     public void onFinish() {
         this.finish();
-        OAuth.getIAuthListener().onFinish();
+        OAuth.getAuthListener().onFinish();
     }
 }

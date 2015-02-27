@@ -30,8 +30,7 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.ryeeeeee.doubansdk4android.Douban;
 import com.ryeeeeee.doubansdk4android.api.ErrorResponse;
-import com.ryeeeeee.doubansdk4android.api.auth.IAuthListener;
-import com.ryeeeeee.doubansdk4android.exception.DoubanException;
+import com.ryeeeeee.doubansdk4android.api.auth.AuthListener;
 import com.ryeeeeee.doubansdk4android.exception.RequestException;
 import com.ryeeeeee.doubansdk4android.net.HttpHelper;
 import com.ryeeeeee.doubansdk4android.util.JsonUtil;
@@ -62,14 +61,14 @@ public class OAuth {
 
     private final static String sOAuthUrl = "https://www.douban.com/service/auth2/auth";
     private final static String sAccessTokenUrl = "https://www.douban.com/service/auth2/token";
-    private static IAuthListener sIAuthListener;
+    private static AuthListener sAuthListener;
 
     /**
      * 认证
      * @param context
      * @param listener
      */
-    public static void authorize(Context context, IAuthListener listener) {
+    public static void authorize(Context context, AuthListener listener) {
         authorize(context, null, listener);
     }
 
@@ -82,13 +81,12 @@ public class OAuth {
      * @param scope
      * @param listener
      */
-    public static void authorize(Context context, String scope, IAuthListener listener) {
-        sIAuthListener = listener;
+    public static void authorize(Context context, String scope, AuthListener listener) {
+        sAuthListener = listener;
 
         // 检查本地 access token 是否有包含此权限
         String localScope = PreferenceUtil.getString(Douban.getContext(), OAuth.SCOPE_KEY);
         List<String> localScopeList = Scope.convertScopeString2List(localScope);
-
         List<String> scopeList = Scope.convertScopeString2List(scope);
 
         if (localScopeList != null && localScopeList.containsAll(scopeList)) {
@@ -114,6 +112,8 @@ public class OAuth {
             }
         }
 
+        PreferenceUtil.setString(Douban.getContext(), SCOPE_KEY, scope);
+
         StringBuilder urlStringBuilder = new StringBuilder();
         urlStringBuilder.append(sOAuthUrl).append("?");
         urlStringBuilder.append(HttpParam.CLIENT_ID_KEY).append("=").append(Douban.getApiKey());
@@ -135,7 +135,7 @@ public class OAuth {
      * @param authCode
      * @param listener
      */
-    public static void exchangeAccessToken(String authCode, final IAuthListener listener) {
+    public static void exchangeAccessToken(String authCode, final AuthListener listener) {
 
         LogUtil.d(TAG, "auth code:" + authCode);
 
@@ -153,7 +153,6 @@ public class OAuth {
                 LogUtil.d(TAG, jsonResponse.toString());
                 AccessTokenResponse response = JsonUtil.fromJson(jsonResponse.toString(), AccessTokenResponse.class);
                 updateLocalAccessTokenInfo(response);
-
                 listener.onAuthSuccess(response.getDouban_user_id(), response.getDouban_user_name());
             }
 
@@ -161,6 +160,7 @@ public class OAuth {
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 LogUtil.d(TAG + "onFailure", "status Code: " + statusCode);
                 ErrorResponse response = JsonUtil.fromJson(errorResponse.toString(), ErrorResponse.class);
+                PreferenceUtil.clearAllPreferences(Douban.getContext());
                 listener.onAuthFailure(new RequestException(response));
             }
 
@@ -172,7 +172,7 @@ public class OAuth {
      * @param refreshToken 同 access token 一并获取到的 refresh token
      * @param listener 认证回调
      */
-    public static void refreshAccessToken(final String refreshToken, final IAuthListener listener) {
+    public static void refreshAccessToken(final String refreshToken, final AuthListener listener) {
 
         RequestParams params = new RequestParams();
         params.put(HttpParam.CLIENT_ID_KEY, Douban.getApiKey());
@@ -184,7 +184,6 @@ public class OAuth {
         HttpHelper.post(sAccessTokenUrl, params, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject jsonResponse) {
-
                 AccessTokenResponse response = JsonUtil.fromJson(jsonResponse.toString(), AccessTokenResponse.class);
                 updateLocalAccessTokenInfo(response);
                 listener.onAuthSuccess(response.getDouban_user_id(), response.getDouban_user_name());
@@ -193,8 +192,8 @@ public class OAuth {
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 LogUtil.d(OAuth.TAG, errorResponse.toString());
-
                 ErrorResponse response = JsonUtil.fromJson(errorResponse.toString(), ErrorResponse.class);
+                PreferenceUtil.clearAllPreferences(Douban.getContext());
                 listener.onAuthFailure(new RequestException(response));
             }
 
@@ -224,12 +223,12 @@ public class OAuth {
         };
     }
 
-    public static IAuthListener getIAuthListener() {
-        return sIAuthListener;
+    public static AuthListener getAuthListener() {
+        return sAuthListener;
     }
 
-    public static void setIAuthListener(IAuthListener IAuthListener) {
-        sIAuthListener = IAuthListener;
+    public static void setAuthListener(AuthListener authListener) {
+        sAuthListener = authListener;
     }
 
     /**

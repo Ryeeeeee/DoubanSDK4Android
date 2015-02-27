@@ -60,7 +60,7 @@ public class ShuoApi {
      * @param count 默认20，最大200
      * @param start 默认0
      */
-    public static void getTimeline(long sinceId, long untilId, int count, int start, final IShuoListener listener) {
+    public static void getTimeline(long sinceId, long untilId, int count, int start, final ShuoListener listener) {
         String url = SHUO_API_BASE_URL + "home_timeline";
 
         RequestParams params = new RequestParams();

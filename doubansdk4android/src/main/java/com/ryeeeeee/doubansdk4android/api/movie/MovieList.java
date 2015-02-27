@@ -27,48 +27,81 @@ import java.util.List;
 
 /**
  * @author Ryeeeeee
- * @since 2015-02-25
+ * @since 2015-02-28
  */
-public class UsBox {
-    private String title;
-    private String date;
-    private List<BoxSubject> subjects;
+public class MovieList {
+    private int start;
+    private int count;
+    private int total;
+    private String query;
+    private String tag;
+    private List<SimpleSubject> subjects;
 
-    public UsBox(String title, String date, List<BoxSubject> subjects) {
-        this.title = title;
-        this.date = date;
+    public MovieList(int start, int count, int total, String query, String tag, List<SimpleSubject> subjects) {
+        this.start = start;
+        this.count = count;
+        this.total = total;
+        this.query = query;
+        this.tag = tag;
         this.subjects = subjects;
     }
 
-    public String getTitle() {
-        return title;
+    public int getStart() {
+        return start;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setStart(int start) {
+        this.start = start;
     }
 
-    public String getDate() {
-        return date;
+    public int getCount() {
+        return count;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setCount(int count) {
+        this.count = count;
     }
 
-    public List<BoxSubject> getSubjects() {
+    public int getTotal() {
+        return total;
+    }
+
+    public void setTotal(int total) {
+        this.total = total;
+    }
+
+    public String getQuery() {
+        return query;
+    }
+
+    public void setQuery(String query) {
+        this.query = query;
+    }
+
+    public String getTag() {
+        return tag;
+    }
+
+    public void setTag(String tag) {
+        this.tag = tag;
+    }
+
+    public List<SimpleSubject> getSubjects() {
         return subjects;
     }
 
-    public void setSubjects(List<BoxSubject> subjects) {
+    public void setSubjects(List<SimpleSubject> subjects) {
         this.subjects = subjects;
     }
 
     @Override
     public String toString() {
-        return "UsBox{" +
-                "title='" + title + '\'' +
-                ", date='" + date + '\'' +
+        return "MovieList{" +
+                "start=" + start +
+                ", count=" + count +
+                ", total=" + total +
+                ", query='" + query + '\'' +
+                ", tag='" + tag + '\'' +
                 ", subjects=" + subjects +
                 '}';
     }

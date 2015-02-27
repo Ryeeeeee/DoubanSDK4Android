@@ -75,4 +75,14 @@ public class SimpleCelebrity {
     public void setAvatars(Image avatars) {
         this.avatars = avatars;
     }
+
+    @Override
+    public String toString() {
+        return "SimpleCelebrity{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", alt='" + alt + '\'' +
+                ", avatars=" + avatars +
+                '}';
+    }
 }

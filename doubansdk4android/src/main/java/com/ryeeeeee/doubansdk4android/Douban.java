@@ -25,7 +25,7 @@ package com.ryeeeeee.doubansdk4android;
 
 import android.content.Context;
 
-import com.ryeeeeee.doubansdk4android.api.auth.IAuthListener;
+import com.ryeeeeee.doubansdk4android.api.auth.AuthListener;
 import com.ryeeeeee.doubansdk4android.api.auth.oauth.OAuth;
 import com.ryeeeeee.doubansdk4android.util.LogUtil;
 
@@ -91,11 +91,11 @@ public class Douban {
      * 进行 OAuth 认证
      * @param listener
      */
-    public static void authorize(IAuthListener listener){
+    public static void authorize(AuthListener listener){
         authorize(null, listener);
     }
 
-    public static void authorize(String scope, IAuthListener listener) {
+    public static void authorize(String scope, AuthListener listener) {
         // TODO check Douban init()
         OAuth.authorize(sContext, scope, listener);
     }
