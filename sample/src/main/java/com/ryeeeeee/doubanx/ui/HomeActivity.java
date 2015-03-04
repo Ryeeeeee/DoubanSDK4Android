@@ -28,6 +28,7 @@ import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -94,6 +95,7 @@ public class HomeActivity extends BaseActivity {
     private class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
 
         private List<Shuo> mShuoList;
+        /** 最新显示的 card 的位置 */
         private int mLastPosition = -1;
 
         RecyclerAdapter(List<Shuo> shuoList) {
@@ -109,9 +111,9 @@ public class HomeActivity extends BaseActivity {
             public TextView mDescriptionView;
             public ImageView mPictureView;
 
-            public ViewHolder(CardView cardView) {
-                super(cardView);
-                mCardView = cardView;
+            public ViewHolder(View view) {
+                super(view);
+                mCardView = (CardView) findViewById(R.id.card_view);
                 mAvatarView = (ImageView) mCardView.findViewById(R.id.card_avatar_image);
                 mNameView = (TextView) mCardView.findViewById(R.id.card_name);
                 mPublishView = (TextView) mCardView.findViewById(R.id.card_publish);
@@ -123,10 +125,8 @@ public class HomeActivity extends BaseActivity {
 
         @Override
         public RecyclerAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            CardView cardView = (CardView) LayoutInflater.from(parent.getContext()).inflate(R.layout.home_card_item, parent, false);
-
-            ViewHolder viewHolder = new ViewHolder(cardView);
-            return viewHolder;
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.home_card_item, parent, false);
+            return new ViewHolder(view);
         }
 
         @Override

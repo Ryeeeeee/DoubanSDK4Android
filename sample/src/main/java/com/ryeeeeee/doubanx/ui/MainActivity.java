@@ -28,6 +28,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -47,6 +48,7 @@ import com.ryeeeeee.doubansdk4android.api.movie.Subject;
 import com.ryeeeeee.doubansdk4android.api.movie.SubjectList;
 import com.ryeeeeee.doubansdk4android.api.movie.UsBox;
 import com.ryeeeeee.doubansdk4android.api.shuo.Shuo;
+import com.ryeeeeee.doubansdk4android.api.shuo.ShuoApi;
 import com.ryeeeeee.doubansdk4android.api.user.UserList;
 import com.ryeeeeee.doubansdk4android.exception.RequestException;
 import com.ryeeeeee.doubansdk4android.api.user.UserApi;
@@ -54,6 +56,7 @@ import com.ryeeeeee.doubansdk4android.api.user.UserInfo;
 import com.ryeeeeee.doubansdk4android.api.user.UserListener;
 import com.ryeeeeee.doubansdk4android.api.auth.oauth.Scope;
 import com.ryeeeeee.doubansdk4android.exception.DoubanException;
+import com.ryeeeeee.doubansdk4android.util.JsonUtil;
 import com.ryeeeeee.doubansdk4android.util.LogUtil;
 import com.ryeeeeee.doubanx.R;
 
@@ -63,11 +66,7 @@ import static android.app.ActivityOptions.makeSceneTransitionAnimation;
 public class MainActivity extends ActionBarActivity {
     private final static String TAG = "DoubanX";
 
-    private Button mAuthButton;
-    private Button mUserButton;
     private Button mAnimationButton;
-    private Button mSearchUserButton;
-    private Button mGetUserInfoButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -289,6 +288,15 @@ public class MainActivity extends ActionBarActivity {
                 });
             }
         });
+
+        findViewById(R.id.button_post_shuo).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ShuoApi.postShuo("just for test", "from DoubanX",
+                        MainActivity.this.getResources().getDrawable(R.drawable.ic_launcher),
+                        "a", "b", "c", "d");
+            }
+        });
     }
 
     @Override
@@ -314,6 +322,5 @@ public class MainActivity extends ActionBarActivity {
     }
 
     private void unitTest() {
-
     }
 }

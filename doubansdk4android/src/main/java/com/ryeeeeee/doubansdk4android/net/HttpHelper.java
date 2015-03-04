@@ -30,6 +30,7 @@ import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
 import org.apache.http.Header;
+import org.apache.http.HttpEntity;
 import org.apache.http.client.ResponseHandler;
 
 /**
@@ -68,8 +69,6 @@ public class HttpHelper {
         sAsyncHttpClient.get(context, url, headers, params, responseHandler);
     }
 
-
-
     public static void post(String url, RequestParams params,
                             AsyncHttpResponseHandler responseHandler) {
         sAsyncHttpClient.post(url, params, responseHandler);
@@ -80,4 +79,35 @@ public class HttpHelper {
         sAsyncHttpClient.post(context, url, params, responseHandler);
     }
 
+    public static void post(Context context, String url, HttpEntity entity, String contentType,
+                            AsyncHttpResponseHandler responseHandler) {
+        sAsyncHttpClient.post(context, url, entity, contentType, responseHandler);
+    }
+
+    public static void post(Context context, String url, Header[] headers, HttpEntity entity,
+                            String contentType, AsyncHttpResponseHandler responseHandler) {
+        sAsyncHttpClient.post(context, url, headers, entity, contentType, responseHandler);
+    }
+
+    public static void post(Context context, String url, Header[] headers, RequestParams params,
+                            String contentType, AsyncHttpResponseHandler responseHandler) {
+        sAsyncHttpClient.post(context, url, headers, params, contentType, responseHandler);
+    }
+
+    public static void delete(String url, AsyncHttpResponseHandler responseHandler) {
+        sAsyncHttpClient.delete(url, responseHandler);
+    }
+
+    public static void delete(Context context, String url, AsyncHttpResponseHandler responseHandler) {
+        sAsyncHttpClient.delete(context, url, responseHandler);
+    }
+
+    public static void delete(Context context, String url, Header[] headers, AsyncHttpResponseHandler responseHandler) {
+        sAsyncHttpClient.delete(context, url, headers, responseHandler);
+    }
+
+    public static void delete(Context context, String url, Header[] headers, RequestParams params,
+                              AsyncHttpResponseHandler responseHandler) {
+        sAsyncHttpClient.delete(context, url, headers, params, responseHandler);
+    }
 }
