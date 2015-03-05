@@ -14,4 +14,9 @@
     <dimen name="navigation_account_padding_top">16dp</dimen>
     <!-- toolbar -->
     <dimen name="toolbar_title_margin_left">16dp</dimen>
+
+    <!-- movie card view -->
+    <dimen name="movie_card_height">150dp</dimen>
+    <dimen name="movie_card_image_height">@dimen/movie_card_height</dimen>
+    <dimen name="movie_card_image_width">92dp</dimen>
 </resources>

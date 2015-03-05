@@ -90,7 +90,7 @@ public class MainActivity extends ActionBarActivity {
                     public void onAuthSuccess(String userId, String userName) {
                         Toast.makeText(MainActivity.this, "userId:" + userId + " userName:" + userName,
                                 Toast.LENGTH_SHORT).show();
-                        //startActivity(new Intent(MainActivity.this, HomeActivity.class));
+                        startActivity(new Intent(MainActivity.this, HomeActivity.class));
                     }
 
                     @Override
