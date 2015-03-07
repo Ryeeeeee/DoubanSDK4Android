@@ -29,7 +29,9 @@
     android:id="@+id/card_view"
     android:layout_width="match_parent"
     android:layout_height="@dimen/movie_card_height"
-    android:background="@android:color/white">
+    android:background="?android:attr/selectableItemBackground"
+    card_view:cardBackgroundColor="@android:color/white"
+    android:transitionName="@string/movie_card_transition_name">
 
     <RelativeLayout
         android:layout_width="match_parent"

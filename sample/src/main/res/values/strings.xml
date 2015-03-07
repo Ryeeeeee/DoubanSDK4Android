@@ -10,5 +10,11 @@
     <string name="navigation_item_FM">FM</string>
     <string name="navigation_item_setting">设置</string>
     <string name="navigation_item_home">主页</string>
+
+    <!-- shared element name -->
+    <string name="movie_card_transition_name">movie_card</string>
+
+    <!-- tip -->
+    <string name="failed_to_get_information">获取信息失败</string>
     
 </resources>

@@ -1,14 +1,24 @@
 <resources>
 
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <!-- application theme for Lollipop -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="android:windowTranslucentStatus">true</item>
+        <item name="windowActionBar">false</item>
+        <item name="android:windowNoTitle">true</item>
+        <!-- material color -->
         <item name="android:colorPrimary">@color/theme_primary</item>
         <item name="android:colorAccent">@color/theme_accent</item>
         <item name="android:textColorSecondary">@color/theme_secondary_text</item>
         <item name="android:divider">@color/theme_divider</item>
         <item name="android:textColorPrimary">@color/theme_primary_text</item>
         <item name="android:colorPrimaryDark">@color/theme_dark_primary</item>
+        <!-- material transitions -->
+        <item name="android:windowContentTransitions">true</item>
+        <item name="android:windowEnterTransition">@transition/explode</item>
+        <item name="android:windowExitTransition">@transition/explode</item>
+        <item name="android:windowSharedElementEnterTransition">@transition/change_image_transform</item>
+        <item name="android:windowSharedElementExitTransition">@transition/change_image_transform</item>
+        <!--  -->
     </style>
 
 </resources>

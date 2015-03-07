@@ -23,6 +23,9 @@
  */
 package com.ryeeeeee.doubanx.ui;
 
+import android.app.ActivityOptions;
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
@@ -30,8 +33,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -70,7 +71,6 @@ public class MovieActivity extends BaseActivity {
         FrameLayout frameLayout = (FrameLayout) this.findViewById(R.id.content_frame);
         RelativeLayout relativeLayout = (RelativeLayout) getLayoutInflater().inflate(R.layout.activity_movie,
                 frameLayout, false);
-
         frameLayout.addView(relativeLayout);
 
         mRecyclerView = (RecyclerView) this.findViewById(R.id.recycler_view);
@@ -168,14 +168,41 @@ public class MovieActivity extends BaseActivity {
         }
 
         @Override
-        public void onBindViewHolder(ViewHolder holder, int position) {
-            SimpleSubject subject = mSimpleSubjects.get(position);
+        public void onBindViewHolder(final ViewHolder holder, int position) {
+            final SimpleSubject subject = mSimpleSubjects.get(position);
 
             Glide.with(MovieActivity.this).load(subject.getImages().getLarge()).into(holder.mPictureView);
             holder.mNameView.setText(subject.getTitle());
             holder.mRatingView.setText(subject.getRating().getValue() + "");
             holder.mYearView.setText(subject.getYear());
             holder.mSubtypeView.setText(subject.getSubtype());
+
+            holder.mCardView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    Intent intent = new Intent(MovieActivity.this, MovieDetailActivity.class);
+                    intent.putExtra(MovieDetailActivity.EXTRA_MOVIE_PICTURE, subject.getImages().getLarge());
+                    intent.putExtra(MovieDetailActivity.EXTRA_MOVIE_NAME, subject.getTitle());
+                    intent.putExtra(MovieDetailActivity.EXTRA_MOVIE_RATING, subject.getRating().getValue());
+                    intent.putExtra(MovieDetailActivity.EXTRA_MOVIE_YEAR, subject.getYear());
+                    intent.putExtra(MovieDetailActivity.EXTRA_MOVIE_SUBTYPE, subject.getSubtype());
+                    intent.putExtra(MovieDetailActivity.EXTRA_MOVIE_ID, subject.getId());
+
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+
+                        ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(MovieActivity.this,
+                                holder.mCardView, getResources().getString(R.string.movie_card_transition_name));
+                        MovieActivity.this.startActivity(intent, options.toBundle());
+
+                    } else {
+
+                        MovieActivity.this.startActivity(intent);
+
+                    }
+
+                }
+            });
 
         }
 

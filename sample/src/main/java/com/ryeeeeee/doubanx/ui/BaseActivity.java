@@ -23,17 +23,23 @@
  */
 package com.ryeeeeee.doubanx.ui;
 
+import android.annotation.TargetApi;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
+import android.transition.ChangeBounds;
+import android.transition.ChangeTransform;
+import android.transition.Explode;
 import android.util.SparseIntArray;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -97,6 +103,7 @@ public class BaseActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        enableTransition();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_base);
 
@@ -246,7 +253,9 @@ public class BaseActivity extends ActionBarActivity {
 
     }
 
-    /** */
+    /**
+     * 获得当前授权用户的信息
+     */
     private void getCurrentUserInfo() {
 
         UserInfo userInfo = AppManager.getInstance().getCurrentUserInfo();
@@ -268,5 +277,32 @@ public class BaseActivity extends ActionBarActivity {
                 Toast.makeText(BaseActivity.this, "获取用户信息失败", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    /**
+     * 在 Lollipop 上启用 transition
+     */
+    private void enableTransition() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+
+            // inside your activity (if you did not enable transitions in your theme)
+            getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
+
+            // To start an enter transition as soon as possible,
+            // use the Window.setAllowEnterTransitionOverlap() method on the called activity.
+            // This lets you have more dramatic enter transitions.
+            getWindow().setAllowEnterTransitionOverlap(true);
+
+            // set an exit transition
+            getWindow().setExitTransition(new Explode());
+            // set an enter transition
+            getWindow().setEnterTransition(new Explode());
+
+            // set an exit transition for shared element
+            getWindow().setSharedElementExitTransition(new ChangeTransform());
+            // set an enter transition for shared element
+            getWindow().setSharedElementEnterTransition(new ChangeTransform());
+
+        }
     }
 }

@@ -30,32 +30,57 @@ import java.util.List;
  * @since 2015-02-24
  */
 public class Subject {
-
+    /** 评分 */
     private Rating rating;
+    /** 影评数量 */
     private int reviews_count;
+    /** 想看人数 */
     private int wish_count;
+    /** 看过人数 */
     private int collect_count;
+    /** 豆瓣小站 */
     private String douban_site;
+    /** 年代 */
     private String year;
+    /** 电影海报图 */
     private Image images;
+    /** 条目页URL */
     private String alt;
+    /** 条目 id */
     private String id;
+    /** 移动版条目页URL */
     private String mobile_url;
+    /** 中文名 */
     private String title;
+    /** 在看人数，如果是电视剧，默认值为0，如果是电影值为 null */
     private String do_count;
+    /** 总季数 (tv only) */
     private String seasons_count;
+    /** 影讯页URL (movie only) */
     private String schedule_url;
+    /** 当前季的集数 (tv only) */
     private String episodes_count;
+    /** 影片类型，最多提供3个 */
     private List<String> genres;
+    /** 制片国家/地区 */
     private List<String> countries;
+    /** 主演 */
     private List<SimpleCelebrity> casts;
+    /** 当前季数 (tv only) */
     private String current_season;
+    /** 原名 */
     private String original_title;
+    /** 简介 */
     private String summary;
+    /** 条目分类, movie 或者 tv */
     private String subtype;
+    /** 导演 */
     private List<SimpleCelebrity> directors;
+    /** 短评数量 */
     private int comments_count;
+    /** 评分人数 */
     private int ratings_count;
+    /** 又名 */
     private List<String> aka;
 
     public Subject(Rating rating, int reviews_count, int wish_count, int collect_count,

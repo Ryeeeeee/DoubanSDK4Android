@@ -52,6 +52,14 @@ public class MovieApi {
      * @param id
      */
     public static void getMovieSubject(int id, final MovieListener<Subject> listener) {
+        getMovieSubject(String.valueOf(id), listener);
+    }
+
+    /**
+     * 获得电影条目信息
+     * @param id
+     */
+    public static void getMovieSubject(String id, final MovieListener<Subject> listener) {
         String url = MOVIE_API_BASE_URL + "subject/" + id;
 
         Header[] headers = new Header[] {
@@ -72,7 +80,6 @@ public class MovieApi {
                 return super.parseResponse(responseBody);
             }
         });
-
     }
 
     /**
