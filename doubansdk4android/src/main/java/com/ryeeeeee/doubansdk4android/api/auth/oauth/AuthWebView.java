@@ -76,10 +76,13 @@ public class AuthWebView extends RelativeLayout {
         this.mAuthListener = listener;
 
         // 为了能最终做成 jar 的形式，尽量使用 java 代码而不是使用 layout 实现界面
+        // 实现进度条
         mProgressBar = new ProgressBar(context, null, android.R.attr.progressBarStyleHorizontal);
+        mProgressBar.setIndeterminate(true);
         LayoutParams progressBarParam = new LayoutParams(LayoutParams.MATCH_PARENT, 40);
         progressBarParam.addRule(RelativeLayout.ALIGN_PARENT_TOP);
 
+        // 实现 webview
         mWebView = new WebView(context);
         mWebView.setWebChromeClient(new AuthWebChromeClient());
         mWebView.setWebViewClient(new AuthWebViewClient());
@@ -98,7 +101,9 @@ public class AuthWebView extends RelativeLayout {
     private class AuthWebChromeClient extends WebChromeClient {
         @Override
         public void onProgressChanged(WebView view, int newProgress) {
+            mProgressBar.setIndeterminate(false);
             mProgressBar.setProgress(newProgress);
+            mProgressBar.setVisibility(VISIBLE);
             if (newProgress >= mProgressBar.getMax()) {
                 mProgressBar.setVisibility(View.GONE);
             }
@@ -118,6 +123,8 @@ public class AuthWebView extends RelativeLayout {
             if (url.startsWith(Douban.getRedirectURI())) {
 
                 LogUtil.d(TAG, "call redirect_uri");
+                mProgressBar.setIndeterminate(true);
+                mProgressBar.setVisibility(View.VISIBLE);
 
                 String httpParams = url.split("\\?")[1];
                 String[] bundles = httpParams.split("=");

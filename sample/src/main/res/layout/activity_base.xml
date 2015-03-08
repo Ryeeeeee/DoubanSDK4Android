@@ -36,7 +36,7 @@
         android:background="@color/holo_red_light">
         <include
             android:id="@+id/toolbar"
-            layout="@layout/toolbar"/>
+            layout="@layout/framelayout_toolbar_with_search"/>
         <FrameLayout
             android:id="@+id/content_frame"
             android:layout_width="match_parent"

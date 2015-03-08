@@ -19,4 +19,14 @@
     <dimen name="movie_card_height">150dp</dimen>
     <dimen name="movie_card_image_height">@dimen/movie_card_height</dimen>
     <dimen name="movie_card_image_width">92dp</dimen>
+
+    <!-- movie search view-->
+    <dimen name="search_leading_button_width">56.0dip</dimen>
+    <dimen name="search_ending_button_width">56.0dip</dimen>
+    <dimen name="search_text_padding_left">16.0dip</dimen>
+    <dimen name="search_text_padding_right">16.0dip</dimen>
+
+    <!-- activity keyline -->
+    <dimen name="activity_padding_left">16dp</dimen>
+    <dimen name="activity_padding_right">16dp</dimen>
 </resources>

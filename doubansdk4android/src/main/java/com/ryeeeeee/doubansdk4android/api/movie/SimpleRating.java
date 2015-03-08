@@ -25,7 +25,7 @@ package com.ryeeeeee.doubansdk4android.api.movie;
 
 /**
  * @author Ryeeeeee
- * @since 2015-02-25
+ * @since 2015-02-24
  */
 public class SimpleRating {
     /** 最低评分 */
@@ -33,12 +33,15 @@ public class SimpleRating {
     /** 最高评分 */
     private int max;
     /** 评分 */
-    private int value;
+    private float average;
+    /** 评星数 */
+    private int stars;
 
-    public SimpleRating(int min, int max, int value) {
+    public SimpleRating(int min, int max, float average, int stars) {
         this.min = min;
         this.max = max;
-        this.value = value;
+        this.average = average;
+        this.stars = stars;
     }
 
     public int getMin() {
@@ -57,20 +60,29 @@ public class SimpleRating {
         this.max = max;
     }
 
-    public int getValue() {
-        return value;
+    public float getAverage() {
+        return average;
     }
 
-    public void setValue(int value) {
-        this.value = value;
+    public void setAverage(float average) {
+        this.average = average;
+    }
+
+    public int getStars() {
+        return stars;
+    }
+
+    public void setStars(int stars) {
+        this.stars = stars;
     }
 
     @Override
     public String toString() {
-        return "SimpleRating{" +
+        return "Rating{" +
                 "min=" + min +
                 ", max=" + max +
-                ", value=" + value +
+                ", average=" + average +
+                ", stars=" + stars +
                 '}';
     }
 }

@@ -49,7 +49,7 @@ public class MovieApi {
 
     /**
      * 获得电影条目信息
-     * @param id
+     * @param id 电影条目ID
      */
     public static void getMovieSubject(int id, final MovieListener<Subject> listener) {
         getMovieSubject(String.valueOf(id), listener);
@@ -57,7 +57,7 @@ public class MovieApi {
 
     /**
      * 获得电影条目信息
-     * @param id
+     * @param id 电影条目ID
      */
     public static void getMovieSubject(String id, final MovieListener<Subject> listener) {
         String url = MOVIE_API_BASE_URL + "subject/" + id;

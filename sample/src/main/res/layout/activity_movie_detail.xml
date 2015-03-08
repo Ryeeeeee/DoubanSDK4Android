@@ -40,6 +40,41 @@
 
             <include layout="@layout/movie_card_item"/>
 
+            <!-- expandable textview for description -->
+            <!-- dont modify the ids  -->
+            <com.ryeeeeee.doubanx.ui.component.ExpandableTextView
+                xmlns:expandableTextView="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/expand_text_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/activity_padding_left"
+                android:paddingRight="@dimen/activity_padding_right"
+                android:layout_marginTop="8dp"
+                android:orientation="vertical"
+                expandableTextView:maxCollapsedLines="6"
+                expandableTextView:animDuration="200">
+
+                <TextView
+                    android:id="@id/expandable_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:textColor="#666666"/>
+
+                <ImageButton
+                    android:id="@id/expand_collapse"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:layout_gravity="right|bottom"
+                    android:background="@android:color/transparent"/>
+
+            </com.ryeeeeee.doubanx.ui.component.ExpandableTextView>
+
+
+
         </LinearLayout>
 
     </ScrollView>

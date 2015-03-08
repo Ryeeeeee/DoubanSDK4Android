@@ -22,13 +22,12 @@
  * SOFTWARE.
  */
 
-package com.ryeeeeee.doubanx.ui;
+package com.ryeeeeee.doubanx.ui.activity;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.content.Intent;
-import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -47,7 +46,6 @@ import com.ryeeeeee.doubansdk4android.api.movie.MovieListener;
 import com.ryeeeeee.doubansdk4android.api.movie.Subject;
 import com.ryeeeeee.doubansdk4android.api.movie.SubjectList;
 import com.ryeeeeee.doubansdk4android.api.movie.UsBox;
-import com.ryeeeeee.doubansdk4android.api.shuo.Shuo;
 import com.ryeeeeee.doubansdk4android.api.shuo.ShuoApi;
 import com.ryeeeeee.doubansdk4android.api.user.UserList;
 import com.ryeeeeee.doubansdk4android.exception.RequestException;
@@ -56,7 +54,6 @@ import com.ryeeeeee.doubansdk4android.api.user.UserInfo;
 import com.ryeeeeee.doubansdk4android.api.user.UserListener;
 import com.ryeeeeee.doubansdk4android.api.auth.oauth.Scope;
 import com.ryeeeeee.doubansdk4android.exception.DoubanException;
-import com.ryeeeeee.doubansdk4android.util.JsonUtil;
 import com.ryeeeeee.doubansdk4android.util.LogUtil;
 import com.ryeeeeee.doubanx.R;
 

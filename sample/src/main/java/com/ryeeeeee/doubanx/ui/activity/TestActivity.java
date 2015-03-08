@@ -21,56 +21,23 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.ryeeeeee.doubansdk4android.api.movie;
+
+package com.ryeeeeee.doubanx.ui.activity;
+
+import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 
 /**
  * @author Ryeeeeee
- * @since 2015-02-25
+ * @since 2015-03-08
  */
-public class Rating {
-    /** 最低评分 */
-    private int min;
-    /** 最高评分 */
-    private int max;
-    /** 评分 */
-    private int value;
-
-    public Rating(int min, int max, int value) {
-        this.min = min;
-        this.max = max;
-        this.value = value;
-    }
-
-    public int getMin() {
-        return min;
-    }
-
-    public void setMin(int min) {
-        this.min = min;
-    }
-
-    public int getMax() {
-        return max;
-    }
-
-    public void setMax(int max) {
-        this.max = max;
-    }
-
-    public int getValue() {
-        return value;
-    }
-
-    public void setValue(int value) {
-        this.value = value;
-    }
+public class TestActivity extends BaseActivity {
 
     @Override
-    public String toString() {
-        return "SimpleRating{" +
-                "min=" + min +
-                ", max=" + max +
-                ", value=" + value +
-                '}';
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+
+
     }
 }

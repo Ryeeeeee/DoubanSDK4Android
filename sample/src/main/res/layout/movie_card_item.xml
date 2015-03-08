@@ -39,8 +39,8 @@
 
         <ImageView
             android:id="@+id/card_picture"
-            android:layout_width="@dimen/movie_card_image_width"
-            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
             android:contentDescription="Loading"
             android:src="@color/theme_divider"
             android:layout_alignParentLeft="true"/>
@@ -51,32 +51,71 @@
             android:layout_height="24dp"
             android:text="Gone girl"
             android:layout_toRightOf="@id/card_picture"
-            android:layout_marginLeft="16dp"/>
-        
-        <TextView
-            android:id="@+id/card_rating"
-            android:layout_width="wrap_content"
-            android:layout_height="24dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="8dp"
+            android:textStyle="bold"
+            android:textSize="16sp"/>
+
+        <LinearLayout
+            android:id="@+id/card_rating_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
             android:layout_alignLeft="@id/card_name"
-            android:text="6"
-            android:layout_below="@id/card_name"/>
+            android:layout_below="@id/card_name">
+
+            <RatingBar
+                android:id="@+id/card_rating_bar"
+                android:layout_width="wrap_content"
+                android:layout_height="24dp"
+                style="?android:attr/ratingBarStyleSmall"
+                android:numStars="5"/>
+
+            <TextView
+                android:id="@+id/card_rating"
+                android:layout_width="wrap_content"
+                android:layout_height="24dp"
+                android:layout_marginLeft="16dp"/>
+
+        </LinearLayout>
 
         <TextView
             android:id="@+id/card_year"
             android:layout_width="wrap_content"
             android:layout_height="24dp"
             android:layout_alignLeft="@id/card_name"
-            android:text="1942-2-2"
-            android:layout_below="@id/card_rating"/>
+            android:layout_below="@id/card_rating_layout"/>
 
         <TextView
             android:id="@+id/card_subtype"
             android:layout_width="wrap_content"
             android:layout_height="24dp"
             android:layout_alignLeft="@id/card_name"
-            android:text="喜剧"
             android:layout_below="@id/card_year"/>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="24dp"
+            android:orientation="horizontal"
+            android:layout_below="@id/card_subtype"
+            android:layout_alignLeft="@id/card_name">
+
+            <Button
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:background="@color/theme_accent"
+                android:text="想看"
+                android:textColor="@android:color/white"/>
+
+            <Button
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:background="@color/theme_accent"
+                android:layout_marginLeft="16dp"
+                android:text="看过"
+                android:textColor="@android:color/white"/>
+
+        </LinearLayout>
 
 </RelativeLayout>
 

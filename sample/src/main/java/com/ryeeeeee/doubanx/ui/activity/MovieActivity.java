@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.ryeeeeee.doubanx.ui;
+package com.ryeeeeee.doubanx.ui.activity;
 
 import android.app.ActivityOptions;
 import android.content.Intent;
@@ -30,11 +30,16 @@ import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -51,22 +56,31 @@ import com.ryeeeeee.doubanx.R;
 
 import java.util.List;
 
+import static com.ryeeeeee.doubanx.R.id.toolbar_search_back_button;
+
 /**
  * @author Ryeeeeee
  * @since 2015-02-16
  */
 public class MovieActivity extends BaseActivity {
 
-    private final static String TAG = "MovieActivity";
+    private final static String TAG = MovieActivity.class.getSimpleName();
 
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
 
+    /** toolbar */
+    private Toolbar mNormalToolbar;
+    private Toolbar mSearchToolbar;
+    private ImageView mSearchBackView;
+    private EditText mSearchEditText;
+    private ImageView mSearchEndingView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getSupportActionBar().setTitle("豆瓣电影");
+        initToolBar();
 
         FrameLayout frameLayout = (FrameLayout) this.findViewById(R.id.content_frame);
         RelativeLayout relativeLayout = (RelativeLayout) getLayoutInflater().inflate(R.layout.activity_movie,
@@ -147,6 +161,7 @@ public class MovieActivity extends BaseActivity {
             private TextView mNameView;
             private ImageView mPictureView;
             private TextView mRatingView;
+            private RatingBar mRatingBar;
             private TextView mYearView;
             private TextView mSubtypeView;
 
@@ -156,6 +171,7 @@ public class MovieActivity extends BaseActivity {
                 mNameView = (TextView) itemView.findViewById(R.id.card_name);
                 mPictureView = (ImageView) itemView.findViewById(R.id.card_picture);
                 mRatingView = (TextView) itemView.findViewById(R.id.card_rating);
+                mRatingBar = (RatingBar) itemView.findViewById(R.id.card_rating_bar);
                 mYearView = (TextView) itemView.findViewById(R.id.card_year);
                 mSubtypeView = (TextView) itemView.findViewById(R.id.card_subtype);
             }
@@ -173,7 +189,8 @@ public class MovieActivity extends BaseActivity {
 
             Glide.with(MovieActivity.this).load(subject.getImages().getLarge()).into(holder.mPictureView);
             holder.mNameView.setText(subject.getTitle());
-            holder.mRatingView.setText(subject.getRating().getValue() + "");
+            holder.mRatingView.setText(subject.getRating().getAverage() + "");
+            holder.mRatingBar.setRating(subject.getRating().getAverage() / 2);
             holder.mYearView.setText(subject.getYear());
             holder.mSubtypeView.setText(subject.getSubtype());
 
@@ -184,7 +201,7 @@ public class MovieActivity extends BaseActivity {
                     Intent intent = new Intent(MovieActivity.this, MovieDetailActivity.class);
                     intent.putExtra(MovieDetailActivity.EXTRA_MOVIE_PICTURE, subject.getImages().getLarge());
                     intent.putExtra(MovieDetailActivity.EXTRA_MOVIE_NAME, subject.getTitle());
-                    intent.putExtra(MovieDetailActivity.EXTRA_MOVIE_RATING, subject.getRating().getValue());
+                    intent.putExtra(MovieDetailActivity.EXTRA_MOVIE_RATING, subject.getRating().getAverage());
                     intent.putExtra(MovieDetailActivity.EXTRA_MOVIE_YEAR, subject.getYear());
                     intent.putExtra(MovieDetailActivity.EXTRA_MOVIE_SUBTYPE, subject.getSubtype());
                     intent.putExtra(MovieDetailActivity.EXTRA_MOVIE_ID, subject.getId());
@@ -210,5 +227,46 @@ public class MovieActivity extends BaseActivity {
         public int getItemCount() {
             return mSimpleSubjects.size();
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_movie, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        int id = item.getItemId();
+        if (id == R.id.action_search) {
+            LogUtil.d(TAG, "Ryeeeeee, on clicked search");
+            mNormalToolbar.setVisibility(View.GONE);
+            mSearchToolbar.setVisibility(View.VISIBLE);
+            setSupportActionBar(mSearchToolbar);
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    /**
+     *
+     */
+    private void initToolBar() {
+        getSupportActionBar().setTitle("豆瓣电影");
+        mNormalToolbar = (Toolbar) findViewById(R.id.toolbar_normal);
+        mSearchToolbar = (Toolbar) findViewById(R.id.toolbar_search);
+        mSearchBackView = (ImageView) findViewById(R.id.toolbar_search_back_button);
+        mSearchEditText = (EditText) findViewById(R.id.toolbar_search_query_text);
+        mSearchEndingView = (ImageView) findViewById(R.id.toolbar_search_ending_button);
+        mSearchBackView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mNormalToolbar.setVisibility(View.VISIBLE);
+                mSearchToolbar.setVisibility(View.GONE);
+                setSupportActionBar(mNormalToolbar);
+            }
+        });
     }
 }

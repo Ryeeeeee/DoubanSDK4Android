@@ -20,8 +20,13 @@
     <color name="grey_200">#EEEEEE</color>
     <color name="grey_300">#E0E0E0</color>
     <color name="grey_400">#BDBDBD</color>
+    <color name="grey_text">#ff757575</color>
 
     <!-- black -->
     <color name="black">#000000</color>
+
+    <!-- movie -->
+    <color name="search_query_text">@color/black</color>
+    <color name="search_query_hint_text">@color/grey_text</color>
 
 </resources>

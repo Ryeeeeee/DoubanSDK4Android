@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.ryeeeeee.doubanx.ui;
+package com.ryeeeeee.doubanx.ui.activity;
 
 import android.os.Bundle;
 import android.support.v7.widget.CardView;

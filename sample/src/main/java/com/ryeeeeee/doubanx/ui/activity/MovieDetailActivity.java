@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package com.ryeeeeee.doubanx.ui;
+package com.ryeeeeee.doubanx.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -30,8 +30,9 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.CardView;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -42,6 +43,7 @@ import com.ryeeeeee.doubansdk4android.api.movie.Subject;
 import com.ryeeeeee.doubansdk4android.exception.RequestException;
 import com.ryeeeeee.doubansdk4android.util.LogUtil;
 import com.ryeeeeee.doubanx.R;
+import com.ryeeeeee.doubanx.ui.component.ExpandableTextView;
 
 /**
  * @author Ryeeeeee
@@ -60,14 +62,20 @@ public class MovieDetailActivity extends BaseActivity implements SwipeRefreshLay
 
     public final static int INVALID_MOVIE_RATING = -1;
 
+    /**  */
     private CardView mCardView;
     private TextView mNameView;
     private ImageView mPictureView;
     private TextView mRatingView;
+    private RatingBar mRatingBar;
     private TextView mYearView;
     private TextView mSubtypeView;
 
     private SwipeRefreshLayout mSwipeRefreshLayout;
+    /** 简介 */
+    private ExpandableTextView mExpandableTextView;
+    private TextView mDescriptionTextView;
+    private ImageButton mExpandableImageButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,6 +91,10 @@ public class MovieDetailActivity extends BaseActivity implements SwipeRefreshLay
         mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
         mSwipeRefreshLayout.setOnRefreshListener(this);
 
+        mExpandableTextView = (ExpandableTextView) findViewById(R.id.expand_text_view);
+        mDescriptionTextView = (TextView) findViewById(R.id.expandable_text);
+        mExpandableImageButton = (ImageButton) findViewById(R.id.expand_collapse);
+
         initCardView();
 
         updateViewWithMovieId(getIntent().getStringExtra(EXTRA_MOVIE_ID));
@@ -94,13 +106,15 @@ public class MovieDetailActivity extends BaseActivity implements SwipeRefreshLay
         mNameView = (TextView) findViewById(R.id.card_name);
         mPictureView = (ImageView) findViewById(R.id.card_picture);
         mRatingView = (TextView) findViewById(R.id.card_rating);
+        mRatingBar = (RatingBar) findViewById(R.id.card_rating_bar);
         mYearView = (TextView) findViewById(R.id.card_year);
         mSubtypeView = (TextView) findViewById(R.id.card_subtype);
 
         Intent intent = getIntent();
         mNameView.setText(intent.getStringExtra(EXTRA_MOVIE_NAME));
         Glide.with(MovieDetailActivity.this).load(intent.getStringExtra(EXTRA_MOVIE_PICTURE)).into(mPictureView);
-        mRatingView.setText(intent.getIntExtra(EXTRA_MOVIE_RATING, INVALID_MOVIE_RATING) + "");
+        mRatingView.setText(intent.getFloatExtra(EXTRA_MOVIE_RATING, INVALID_MOVIE_RATING) + "");
+        mRatingBar.setRating(intent.getFloatExtra(EXTRA_MOVIE_RATING, INVALID_MOVIE_RATING) / 2);
         mYearView.setText(intent.getStringExtra(EXTRA_MOVIE_YEAR));
         mSubtypeView.setText(intent.getStringExtra(EXTRA_MOVIE_SUBTYPE));
     }
@@ -115,11 +129,14 @@ public class MovieDetailActivity extends BaseActivity implements SwipeRefreshLay
      * @param id
      */
     private void updateViewWithMovieId(String id) {
+
         if (id == null || id.trim().equals("")) {
             Toast.makeText(MovieDetailActivity.this, R.string.failed_to_get_information, Toast.LENGTH_SHORT).show();
             mSwipeRefreshLayout.setRefreshing(false);
             return;
         }
+
+        mSwipeRefreshLayout.setRefreshing(true);
 
         MovieApi.getMovieSubject(id, new MovieListener<Subject>() {
             @Override
@@ -142,5 +159,6 @@ public class MovieDetailActivity extends BaseActivity implements SwipeRefreshLay
      */
     private void updateViewWithMovieSubject(Subject subject) {
         LogUtil.d(TAG, subject.toString());
+        mExpandableTextView.setText(subject.getSummary());
     }
 }

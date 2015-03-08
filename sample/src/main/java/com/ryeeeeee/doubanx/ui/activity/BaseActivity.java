@@ -21,9 +21,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.ryeeeeee.doubanx.ui;
+package com.ryeeeeee.doubanx.ui.activity;
 
-import android.annotation.TargetApi;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -33,6 +32,7 @@ import android.support.v7.widget.Toolbar;
 import android.transition.ChangeBounds;
 import android.transition.ChangeTransform;
 import android.transition.Explode;
+import android.transition.Fade;
 import android.util.SparseIntArray;
 import android.view.Gravity;
 import android.view.Menu;
@@ -109,7 +109,7 @@ public class BaseActivity extends ActionBarActivity {
 
         mDrawerLayout = (DrawerLayout) this.findViewById(R.id.drawer_layout);
 
-        Toolbar toolbar = (Toolbar) this.findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) this.findViewById(R.id.toolbar_normal);
         setSupportActionBar(toolbar);
         toolbar.setNavigationIcon(R.drawable.ic_menu_white_24dp);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -294,14 +294,14 @@ public class BaseActivity extends ActionBarActivity {
             getWindow().setAllowEnterTransitionOverlap(true);
 
             // set an exit transition
-            getWindow().setExitTransition(new Explode());
+            getWindow().setExitTransition(new Fade());
             // set an enter transition
-            getWindow().setEnterTransition(new Explode());
+            getWindow().setEnterTransition(new Fade());
 
             // set an exit transition for shared element
-            getWindow().setSharedElementExitTransition(new ChangeTransform());
+            getWindow().setSharedElementExitTransition(new ChangeBounds().setDuration(200));
             // set an enter transition for shared element
-            getWindow().setSharedElementEnterTransition(new ChangeTransform());
+            getWindow().setSharedElementEnterTransition(new ChangeBounds().setDuration(200));
 
         }
     }

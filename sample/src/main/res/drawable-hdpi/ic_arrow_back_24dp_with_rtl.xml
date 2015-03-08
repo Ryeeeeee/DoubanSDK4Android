@@ -23,26 +23,8 @@
   ~ SOFTWARE.
   -->
 
-<resources>
-
-    <string name="app_name">DoubanX</string>
-    <string name="action_settings">Settings</string>
-    <string name="auth">认证</string>
-    
-    <!-- navigation -->
-    <string name="navigation_item_movie">电影</string>
-    <string name="navigation_item_FM">FM</string>
-    <string name="navigation_item_setting">设置</string>
-    <string name="navigation_item_home">主页</string>
-
-    <!-- shared element name -->
-    <string name="movie_card_transition_name">movie_card</string>
-
-    <!-- tip -->
-    <string name="failed_to_get_information">获取信息失败</string>
-
-    <!-- movie search-->
-    <string name="search_hint">搜索</string>
-    <string name="search_back_description">关闭搜索</string>
-    
-</resources>
+<rotate
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:drawable="@drawable/ic_arrow_back_24dp"
+    android:fromDegrees="180.0"
+    android:toDegrees="180.0"/>
