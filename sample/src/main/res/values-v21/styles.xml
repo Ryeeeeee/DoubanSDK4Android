@@ -2,9 +2,11 @@
 
     <!-- application theme for Lollipop -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <item name="windowActionBar">false</item>
         <item name="android:windowNoTitle">true</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+
         <!-- material color -->
         <item name="android:colorPrimary">@color/theme_primary</item>
         <item name="android:colorAccent">@color/theme_accent</item>

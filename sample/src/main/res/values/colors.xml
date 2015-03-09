@@ -7,11 +7,11 @@
     <color name="holo_red_light">#ffff4444</color>
 
     <!-- customized theme color-->
-    <color name="theme_dark_primary">#00796B</color>
-    <color name="theme_primary">#009688</color>
-    <color name="theme_light_primary">#B2DFDB</color>
-    <color name="theme_accent">#FF4081</color>
-    <color name="theme_primary_text">#212121</color>
+    <color name="theme_dark_primary">@color/indigo_700</color>
+    <color name="theme_primary">@color/indigo_500</color>
+    <color name="theme_light_primary">@color/indigo_100</color>
+    <color name="theme_accent">@color/pink_accent_200</color>
+    <color name="theme_primary_text">@color/grey_900</color>
     <color name="theme_secondary_text">#727272</color>
     <color name="theme_divider">#B6B6B6</color>
     <color name="theme_text_or_icon">#FFFFFF</color>
@@ -20,7 +20,48 @@
     <color name="grey_200">#EEEEEE</color>
     <color name="grey_300">#E0E0E0</color>
     <color name="grey_400">#BDBDBD</color>
+    <color name="grey_900">#212121</color>
     <color name="grey_text">#ff757575</color>
+
+    <!-- light blue -->
+    <color name="blue_50">#E1F5FE</color>
+    <color name="blue_100">#B3E5FC</color>
+    <color name="blue_200">#81D4FA</color>
+    <color name="blue_300">#4FC3F7</color>
+    <color name="blue_400">#29B6F6</color>
+    <color name="blue_500">#03A9F4</color>
+    <color name="blue_600">#039BE5</color>
+    <color name="blue_700">#0288D1</color>
+    <color name="blue_800">#0277BD</color>
+    <color name="blue_900">#01579B</color>
+
+    <!-- Indigo -->
+    <color name="indigo_50">#E8EAF6</color>
+    <color name="indigo_100">#C5CAE9</color>
+    <color name="indigo_200">#9FA8DA</color>
+    <color name="indigo_300">#7986CB</color>
+    <color name="indigo_400">#5C6BC0</color>
+    <color name="indigo_500">#3F51B5</color>
+    <color name="indigo_600">#3949AB</color>
+    <color name="indigo_700">#303F9F</color>
+    <color name="indigo_800">#283593</color>
+    <color name="indigo_900">#1A237E</color>
+
+    <!-- pink -->
+    <color name="pink_50">#FCE4EC</color>
+    <color name="pink_100">#F8BBD0</color>
+    <color name="pink_200">#F48FB1</color>
+    <color name="pink_300">#F06292</color>
+    <color name="pink_400">#EC407A</color>
+    <color name="pink_500">#E91E63</color>
+    <color name="pink_600">#D81B60</color>
+    <color name="pink_700">#C2185B</color>
+    <color name="pink_800">#AD1457</color>
+    <color name="pink_900">#880E4F</color>
+    <color name="pink_accent_100">#FF80AB</color>
+    <color name="pink_accent_200">#FF4081</color>
+    <color name="pink_accent_400">#F50057</color>
+    <color name="pink_accent_700">#C51162</color>
 
     <!-- black -->
     <color name="black">#000000</color>

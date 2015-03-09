@@ -108,6 +108,7 @@ public class BaseActivity extends ActionBarActivity {
         setContentView(R.layout.activity_base);
 
         mDrawerLayout = (DrawerLayout) this.findViewById(R.id.drawer_layout);
+        mDrawerLayout.setStatusBarBackground(R.color.theme_dark_primary);
 
         Toolbar toolbar = (Toolbar) this.findViewById(R.id.toolbar_normal);
         setSupportActionBar(toolbar);
