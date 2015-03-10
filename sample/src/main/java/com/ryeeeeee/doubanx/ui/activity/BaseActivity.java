@@ -23,6 +23,7 @@
  */
 package com.ryeeeeee.doubanx.ui.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -55,6 +56,8 @@ import com.ryeeeeee.doubanx.util.UIUtil;
 
 import java.util.ArrayList;
 
+import static com.ryeeeeee.doubanx.R.id.title_text;
+
 /**
  * @author Ryeeeeee
  * @since 2015-02-14
@@ -72,6 +75,8 @@ public class BaseActivity extends ActionBarActivity {
     private ImageView mAvatarView;
     private TextView mNameView;
     private TextView mAccountView;
+    /** navigation item 是否点击 */
+    private boolean mOnNavigationClicked = false;
 
     /** 定义导航栏选项 */
     protected final static int NAVIGATION_ITEM_MOVIE = 0;
@@ -94,10 +99,10 @@ public class BaseActivity extends ActionBarActivity {
     /** 导航栏选项 Icon ID */
     private static final SparseIntArray NAVIGATION_ICON_RES_ID = new SparseIntArray() {
         {
-            put(NAVIGATION_ITEM_MOVIE, R.drawable.ic_movie_grey600_24dp);
-            put(NAVIGATION_ITEM_FM, R.drawable.ic_radio_grey600_24dp);
-            put(NAVIGAtiON_ITEM_SETTING, R.drawable.ic_settings_grey600_24dp);
-            put(NAVIGATION_ITEM_HOME, R.drawable.ic_home_grey600_24dp);
+            put(NAVIGATION_ITEM_MOVIE, R.drawable.ic_movie_24dp);
+            put(NAVIGATION_ITEM_FM, R.drawable.ic_radio_24dp);
+            put(NAVIGAtiON_ITEM_SETTING, R.drawable.ic_settings_24dp);
+            put(NAVIGATION_ITEM_HOME, R.drawable.ic_home_24dp);
         }
     };
 
@@ -135,11 +140,20 @@ public class BaseActivity extends ActionBarActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.action_settings) {
-            return true;
-        }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    /** 选中导航栏选项 */
+    protected void setNavigationItemViewSelected(int navigationItem) {
+        for(int i = 0; i < mNavigationItems.size(); i++) {
+            if (mNavigationItems.get(i) == navigationItem) {
+                mNavigationItemViews[i].setSelected(true);
+//                TextView textView = (TextView) mNavigationItemViews[i].findViewById(title_text);
+//                textView.;
+                break;
+            }
+        }
     }
 
     /**
@@ -173,7 +187,6 @@ public class BaseActivity extends ActionBarActivity {
             mNavigationItemViews[i] = makeNavigationDrawerItem(mNavigationItems.get(i), mNavigationItemContainer);
             mNavigationItemContainer.addView(mNavigationItemViews[i]);
         }
-
     }
 
     /**
@@ -192,7 +205,7 @@ public class BaseActivity extends ActionBarActivity {
 
             view = this.getLayoutInflater().inflate(R.layout.navigation_item, container, false);
             ImageView iconView = (ImageView) view.findViewById(R.id.icon_image);
-            TextView titleView = (TextView) view.findViewById(R.id.title_text);
+            TextView titleView = (TextView) view.findViewById(title_text);
 
             int iconId = NAVIGATION_ICON_RES_ID.get(itemId);
             int titleId = NAVIGATION_TITLE_RES_ID.get(itemId);
@@ -220,18 +233,16 @@ public class BaseActivity extends ActionBarActivity {
      * @param itemId
      */
     private void onNavigationItemClick(int itemId) {
-        // TODO 添加回调逻辑
+
         switch (itemId) {
             case NAVIGATION_ITEM_HOME:
-                startActivity(new Intent(this, HomeActivity.class));
-                this.finish();
+                closeDrawersAndSwitchActivity(HomeActivity.class);
                 break;
             case NAVIGATION_ITEM_MOVIE:
-                startActivity(new Intent(this, MovieActivity.class));
-                this.finish();
+                closeDrawersAndSwitchActivity(MovieActivity.class);
                 break;
             case NAVIGATION_ITEM_FM:
-                startActivity(new Intent(this, FMActivity.class));
+                closeDrawersAndSwitchActivity(FMActivity.class);
                 break;
             case NAVIGAtiON_ITEM_SETTING:
                 break;
@@ -306,4 +317,36 @@ public class BaseActivity extends ActionBarActivity {
 
         }
     }
+
+    /**
+     * 关闭侧边栏，并切换Activity
+     */
+    private void closeDrawersAndSwitchActivity(final Class classType) {
+        mOnNavigationClicked = true;
+        mDrawerLayout.closeDrawers();
+        mDrawerLayout.setDrawerListener(new DrawerLayout.DrawerListener() {
+            @Override
+            public void onDrawerSlide(View drawerView, float slideOffset) {
+
+            }
+
+            @Override
+            public void onDrawerOpened(View drawerView) {
+
+            }
+
+            @Override
+            public void onDrawerClosed(View drawerView) {
+                startActivity(new Intent(BaseActivity.this, classType));
+                mDrawerLayout.setDrawerListener(null);
+                BaseActivity.this.finish();
+            }
+
+            @Override
+            public void onDrawerStateChanged(int newState) {
+
+            }
+        });
+    }
+
 }

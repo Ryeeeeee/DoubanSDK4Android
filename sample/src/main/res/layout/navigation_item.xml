@@ -47,6 +47,6 @@
         android:textStyle="bold"
         android:textSize="14sp"
         android:text="placehold_movie_fm_book_user_city_music"
-        android:textColor="@color/black"/>
+        android:textColor="@drawable/cl_navigation_item_text"/>
 
 </LinearLayout>

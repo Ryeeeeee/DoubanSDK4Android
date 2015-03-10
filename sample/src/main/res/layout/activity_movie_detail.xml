@@ -73,7 +73,14 @@
 
             </com.ryeeeeee.doubanx.ui.component.ExpandableTextView>
 
+            <RecyclerView
+                android:id="@+id/recycler_comments"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp">
 
+
+            </RecyclerView>
 
         </LinearLayout>
 

@@ -27,42 +27,50 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/toolbar_search"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="?actionBarSize"
     android:background="@android:color/white"
     android:visibility="gone"
-    android:alpha="0.0">
+    android:elevation="2.0dip">
 
-    <ImageView
-        android:id="@+id/toolbar_search_back_button"
-        android:background="?android:selectableItemBackground"
-        android:layout_width="@dimen/search_leading_button_width"
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@drawable/ic_arrow_back_24dp_with_rtl"
-        android:scaleType="center"
-        android:contentDescription="@string/search_back_description" />
+        android:orientation="horizontal">
 
-    <EditText
-        android:id="@+id/toolbar_search_query_text"
-        android:textSize="16.0sp"
-        android:textColor="@color/search_query_text"
-        android:textColorHint="@color/search_query_hint_text"
-        android:gravity="center_vertical"
-        android:background="@android:color/transparent"
-        android:paddingLeft="@dimen/search_text_padding_left"
-        android:paddingRight="@dimen/search_text_padding_right"
-        android:layout_width="0.0dip"
-        android:layout_height="fill_parent"
-        android:hint="@string/search_hint"
-        android:singleLine="true"
-        android:layout_weight="1.0"
-        android:inputType="textNoSuggestions"
-        android:imeOptions="actionSearch|flagNoExtractUi"/>
+        <ImageView
+            android:id="@+id/toolbar_search_back_button"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_arrow_back_grey600_24dp"
+            android:scaleType="center"
+            android:contentDescription="@string/search_back_description"
+            />
 
-    <ImageView
-        android:id="@+id/toolbar_search_ending_button"
-        android:background="?android:selectableItemBackground"
-        android:layout_width="@dimen/search_ending_button_width"
-        android:layout_height="match_parent"
-        android:scaleType="center" />
+        <EditText
+            android:id="@+id/toolbar_search_query_text"
+            android:textSize="16.0sp"
+            android:textColor="@color/search_query_text"
+            android:textColorHint="@color/search_query_hint_text"
+            android:gravity="center_vertical"
+            android:background="@android:color/transparent"
+            android:paddingLeft="@dimen/search_text_margin_left"
+            android:paddingRight="@dimen/search_text_margin_right"
+            android:layout_width="0.0dip"
+            android:layout_height="fill_parent"
+            android:hint="@string/search_hint"
+            android:singleLine="true"
+            android:layout_weight="1.0"
+            android:inputType="textNoSuggestions"
+            android:imeOptions="actionSearch|flagNoExtractUi"/>
+
+        <ImageView
+            android:id="@+id/toolbar_search_ending_button"
+            android:background="?android:selectableItemBackground"
+            android:layout_width="@dimen/search_ending_button_width"
+            android:layout_height="match_parent"
+            android:scaleType="center" />
+
+    </LinearLayout>
 
 </android.support.v7.widget.Toolbar>

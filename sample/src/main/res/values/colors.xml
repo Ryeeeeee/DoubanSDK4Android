@@ -65,6 +65,7 @@
 
     <!-- black -->
     <color name="black">#000000</color>
+    <color name="white">#FFFFFF</color>
 
     <!-- movie -->
     <color name="search_query_text">@color/black</color>

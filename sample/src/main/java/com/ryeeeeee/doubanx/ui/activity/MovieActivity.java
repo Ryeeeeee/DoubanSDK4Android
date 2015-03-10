@@ -56,8 +56,6 @@ import com.ryeeeeee.doubanx.R;
 
 import java.util.List;
 
-import static com.ryeeeeee.doubanx.R.id.toolbar_search_back_button;
-
 /**
  * @author Ryeeeeee
  * @since 2015-02-16
@@ -92,6 +90,9 @@ public class MovieActivity extends BaseActivity {
 
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
+
+        // 选中左侧的导航选项
+        setNavigationItemViewSelected(NAVIGATION_ITEM_MOVIE);
 
         MovieApi.getTop250(0, 20, new MovieListener<SubjectList>() {
             @Override
@@ -194,6 +195,7 @@ public class MovieActivity extends BaseActivity {
             holder.mYearView.setText(subject.getYear());
             holder.mSubtypeView.setText(subject.getSubtype());
 
+            /** 点击电影时，跳转到电影详细界面 */
             holder.mCardView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -240,10 +242,9 @@ public class MovieActivity extends BaseActivity {
 
         int id = item.getItemId();
         if (id == R.id.action_search) {
-            LogUtil.d(TAG, "Ryeeeeee, on clicked search");
+            // 点击搜索栏时，toolbar 切换为搜索界面
             mNormalToolbar.setVisibility(View.GONE);
             mSearchToolbar.setVisibility(View.VISIBLE);
-            setSupportActionBar(mSearchToolbar);
             return true;
         }
 
@@ -265,7 +266,6 @@ public class MovieActivity extends BaseActivity {
             public void onClick(View view) {
                 mNormalToolbar.setVisibility(View.VISIBLE);
                 mSearchToolbar.setVisibility(View.GONE);
-                setSupportActionBar(mNormalToolbar);
             }
         });
     }

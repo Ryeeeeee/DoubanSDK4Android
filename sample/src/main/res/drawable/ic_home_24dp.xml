@@ -23,19 +23,7 @@
   ~ SOFTWARE.
   -->
 
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="?actionBarSize"
-    android:elevation="2.0dip"
-    android:touchscreenBlocksFocus="true">
-
-    <include
-        android:id="@+id/toolbar_normal"
-        layout="@layout/toolbar" />
-
-    <include
-        android:id="@+id/toolbar_search"
-        layout="@layout/toolbar_search" />
-
-</FrameLayout>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_selected="true" android:drawable="@drawable/ic_home_black_24dp"/>
+    <item android:drawable="@drawable/ic_home_grey600_24dp"/>
+</selector>

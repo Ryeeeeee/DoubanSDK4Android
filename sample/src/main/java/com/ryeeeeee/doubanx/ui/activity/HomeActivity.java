@@ -75,6 +75,9 @@ public class HomeActivity extends BaseActivity {
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
+        // 选中左侧的导航选项
+        setNavigationItemViewSelected(NAVIGATION_ITEM_HOME);
+
         ShuoApi.getTimeline(-1,-1,-1,-1, new ShuoListener<List<Shuo>>() {
             @Override
             public void onSuccess(List<Shuo> shuoList) {

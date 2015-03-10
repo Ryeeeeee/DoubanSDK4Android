@@ -100,24 +100,7 @@ public class MovieDetailActivity extends BaseActivity implements SwipeRefreshLay
         updateViewWithMovieId(getIntent().getStringExtra(EXTRA_MOVIE_ID));
     }
 
-    private void initCardView() {
 
-        mCardView = (CardView) findViewById(R.id.card_view);
-        mNameView = (TextView) findViewById(R.id.card_name);
-        mPictureView = (ImageView) findViewById(R.id.card_picture);
-        mRatingView = (TextView) findViewById(R.id.card_rating);
-        mRatingBar = (RatingBar) findViewById(R.id.card_rating_bar);
-        mYearView = (TextView) findViewById(R.id.card_year);
-        mSubtypeView = (TextView) findViewById(R.id.card_subtype);
-
-        Intent intent = getIntent();
-        mNameView.setText(intent.getStringExtra(EXTRA_MOVIE_NAME));
-        Glide.with(MovieDetailActivity.this).load(intent.getStringExtra(EXTRA_MOVIE_PICTURE)).into(mPictureView);
-        mRatingView.setText(intent.getFloatExtra(EXTRA_MOVIE_RATING, INVALID_MOVIE_RATING) + "");
-        mRatingBar.setRating(intent.getFloatExtra(EXTRA_MOVIE_RATING, INVALID_MOVIE_RATING) / 2);
-        mYearView.setText(intent.getStringExtra(EXTRA_MOVIE_YEAR));
-        mSubtypeView.setText(intent.getStringExtra(EXTRA_MOVIE_SUBTYPE));
-    }
 
     @Override
     public void onRefresh() {
@@ -160,5 +143,24 @@ public class MovieDetailActivity extends BaseActivity implements SwipeRefreshLay
     private void updateViewWithMovieSubject(Subject subject) {
         LogUtil.d(TAG, subject.toString());
         mExpandableTextView.setText(subject.getSummary());
+    }
+
+    /** 初始化顶端的 CardView */
+    private void initCardView() {
+        mCardView = (CardView) findViewById(R.id.card_view);
+        mNameView = (TextView) findViewById(R.id.card_name);
+        mPictureView = (ImageView) findViewById(R.id.card_picture);
+        mRatingView = (TextView) findViewById(R.id.card_rating);
+        mRatingBar = (RatingBar) findViewById(R.id.card_rating_bar);
+        mYearView = (TextView) findViewById(R.id.card_year);
+        mSubtypeView = (TextView) findViewById(R.id.card_subtype);
+
+        Intent intent = getIntent();
+        mNameView.setText(intent.getStringExtra(EXTRA_MOVIE_NAME));
+        Glide.with(MovieDetailActivity.this).load(intent.getStringExtra(EXTRA_MOVIE_PICTURE)).into(mPictureView);
+        mRatingView.setText(intent.getFloatExtra(EXTRA_MOVIE_RATING, INVALID_MOVIE_RATING) + "");
+        mRatingBar.setRating(intent.getFloatExtra(EXTRA_MOVIE_RATING, INVALID_MOVIE_RATING) / 2);
+        mYearView.setText(intent.getStringExtra(EXTRA_MOVIE_YEAR));
+        mSubtypeView.setText(intent.getStringExtra(EXTRA_MOVIE_SUBTYPE));
     }
 }

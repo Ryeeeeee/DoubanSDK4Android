@@ -35,5 +35,8 @@ public class FMActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getSupportActionBar().setTitle("豆瓣FM");
+
+        // 选中左侧的导航选项
+        setNavigationItemViewSelected(NAVIGATION_ITEM_FM);
     }
 }
