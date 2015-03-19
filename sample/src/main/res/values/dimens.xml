@@ -2,4 +2,31 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
+
+    <!-- navigation -->
+    <dimen name="navigation_horizontal_padding">16dp</dimen>
+    <dimen name="navigation_width">304dp</dimen>
+    <dimen name="navigation_item_padding_left">16dp</dimen>
+    <dimen name="navigation_item_padding_right">16dp</dimen>
+    <dimen name="navigation_current_account_height">140dp</dimen>
+    <dimen name="navigation_profile_image_size">64dp</dimen>
+    <dimen name="navigation_status_bar_offset">0dp</dimen>
+    <dimen name="navigation_account_padding_top">16dp</dimen>
+    <!-- toolbar -->
+    <dimen name="toolbar_title_margin_left">16dp</dimen>
+
+    <!-- movie card view -->
+    <dimen name="movie_card_height">150dp</dimen>
+    <dimen name="movie_card_image_height">@dimen/movie_card_height</dimen>
+    <dimen name="movie_card_image_width">92dp</dimen>
+
+    <!-- movie search view-->
+    <dimen name="search_leading_button_width">24.0dip</dimen>
+    <dimen name="search_ending_button_width">24.0dip</dimen>
+    <dimen name="search_text_margin_left">32.0dip</dimen>
+    <dimen name="search_text_margin_right">32.0dip</dimen>
+
+    <!-- activity keyline -->
+    <dimen name="activity_padding_left">16dp</dimen>
+    <dimen name="activity_padding_right">16dp</dimen>
 </resources>

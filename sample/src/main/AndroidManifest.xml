@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.ryeeeeee.doubanx" >
-
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.activity.MainActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -16,6 +17,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".ui.activity.BaseActivity"
+                  android:label="@string/app_name"/>
+        <activity android:name="com.ryeeeeee.doubansdk4android.api.auth.oauth.AuthActivity"></activity>
+        <activity android:name=".ui.activity.FMActivity"/>
+        <activity android:name=".ui.activity.MovieActivity"/>
+        <activity android:name=".ui.activity.HomeActivity"/>
+        <activity android:name=".ui.activity.MovieDetailActivity"/>
     </application>
 
 </manifest>
